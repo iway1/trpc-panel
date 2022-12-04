@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "ESNext",
+      "dom",
+      "ES2022"
+    ], 
+    "outDir": "lib", 
+    "removeComments": true, 
+    "target": "ES6", 
+    "declaration": true,
+    "module": "ES2022",
+
+    "rootDir": "./",
+    "baseUrl": "./", 
+    "esModuleInterop": true, 
+    "moduleResolution": "node", 
+    "paths": {}, 
+
+    "sourceMap": true,
+    "sourceRoot": "/",
+
+    "alwaysStrict": true,
+    "allowUnreachableCode": false,
+    "noImplicitAny": true, 
+    "strictNullChecks": true, 
+
+    "noImplicitReturns": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true, 
+    "resolveJsonModule": true,
+    "jsx": "react"
+  },
+  "include": ["./src/**/*", "src/react-app"],
+  "exclude": [
+    "node_modules/**/*",
+    "lib/**/*"
+  ]
+}
