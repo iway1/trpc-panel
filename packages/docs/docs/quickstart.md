@@ -19,18 +19,3 @@ app.use("/panel", (_, res) => {
 Then you're ready to test:
 
 ![Screenshot Of Panel](./assets/screenshot.png)
-
-## Data Transformers
-
-Trpc panel supports `superjson`, just pass it into the transformer option:
-
-```js
-app.use("/panel", (_, res) => {
-    return res.send(
-        renderTrpcPanel(myTrpcRouter, {
-            url: "http://localhost:4000/trpc",
-            transformer: "superjson",
-        })
-    );
-});
-```

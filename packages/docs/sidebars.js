@@ -19,6 +19,7 @@ const sidebars = {
     tutorialSidebar: [
         "index",
         "quickstart",
+        "data-transformers",
         // Not sure if these are super useful pages
         // {
         //     type: "category",
