@@ -78,7 +78,7 @@ const userRouter = t.router({
         return fakeData.user;
     }),
     updateUser: t.procedure.input(UserSchema).mutation(({ input }) => {
-        fakeData.user = input;
+        return input;
     }),
     deleteUser: t.procedure.input(IDSchema).mutation(() => {
         return {

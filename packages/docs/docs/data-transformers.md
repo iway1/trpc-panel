@@ -13,4 +13,4 @@ app.use("/panel", (_, res) => {
 });
 ```
 
-No other data transformers are available at the moment, but feel free to [open an issue](https://github.com/iway/trpc-panel/issues) and / or submit a PR.
+No other data transformers are available at the moment, but feel free to [open an issue](https://github.com/iway1/trpc-panel/issues) and / or submit a PR.
