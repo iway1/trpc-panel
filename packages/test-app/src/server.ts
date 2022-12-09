@@ -287,7 +287,7 @@ expressApp.use(
     })
 );
 
-expressApp.get("/test-render", (_req, res) => {
+expressApp.get("/", (_req, res) => {
     res.send(
         renderTrpcPanel(router, {
             url: `${serverUrl}${port ? `:${port}` : ""}/${trpcPath}`,

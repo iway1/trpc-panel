@@ -18,4 +18,6 @@ app.use("/panel", (_, res) => {
 
 Then you're ready to test:
 
+![Screenshot Of Panel](./assets/screenshot.png)
+
 `trpc-panel` is just a big string containing a prebuilt React app, so it will work with any backend framework.

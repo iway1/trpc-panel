@@ -6,6 +6,10 @@ title: Introduction
 
 tRPC Panel automatically generates a trpc native testing UI for your tRPC backend with one line of code with zero developer overhead:
 
+![]
+
+You can check out the example app at [app.trpcpanel.io](app.trpcpanel.io)
+
 ### Features
 
 -   Automatically inspect your tRPC router and recursively generate typesafe UI
