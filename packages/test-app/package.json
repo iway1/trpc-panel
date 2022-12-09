@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
+    "superjson": "^1.12.0",
     "typescript": "^4.8.4"
   }
 }

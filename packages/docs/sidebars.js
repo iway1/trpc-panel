@@ -19,11 +19,12 @@ const sidebars = {
     tutorialSidebar: [
         "index",
         "quickstart",
-        {
-            type: "category",
-            label: "Comparisons",
-            items: ["comparisons/openapi", "comparisons/playground"],
-        },
+        // Not sure if these are super useful pages
+        // {
+        //     type: "category",
+        //     label: "Comparisons",
+        //     items: ["comparisons/openapi", "comparisons/playground"],
+        // },
         "contributing",
     ],
 };

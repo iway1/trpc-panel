@@ -18,6 +18,7 @@ trpc panel moves as fast as your trpc backend with no extra effort.
 -   SideNav to quickly find procedures of interest
 
 ## Quick Start
+
 Install with your preferred package manager:
 
 `yarn add trpc-panel`
@@ -29,7 +30,22 @@ import { renderTrpcPanel } from "trpc-panel";
 // ...
 app.use("/panel", (_, res) => {
     return res.send(
-        renderTrpcPanel(myTrpcRouter, { trpcUrl: "http://localhost:4000/trpc" })
+        renderTrpcPanel(myTrpcRouter, { url: "http://localhost:4000/trpc" })
+    );
+});
+```
+
+## Data Transformers
+
+Trpc panel supports `superjson`, just pass it into the transformer option:
+
+```js
+app.use("/panel", (_, res) => {
+    return res.send(
+        renderTrpcPanel(myTrpcRouter, {
+            url: "http://localhost:4000/trpc",
+            transformer: "superjson",
+        })
     );
 });
 ```

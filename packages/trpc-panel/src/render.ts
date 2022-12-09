@@ -2,14 +2,15 @@ import { Router } from "@trpc/server";
 import fs from "fs";
 import { fileURLToPath } from "node:url";
 import { dirname } from "node:path";
-import { parseRouter, ParseRouterOptions } from "./parse/parse-router";
+import { parseRouter, TrpcPanelExtraOptions } from "./parse/parse-router";
 
 export type RenderOptions = {
     url: string;
-} & Partial<ParseRouterOptions>;
+} & TrpcPanelExtraOptions;
 
-const defaultParseRouterOptions: ParseRouterOptions = {
+const defaultParseRouterOptions: Partial<TrpcPanelExtraOptions> = {
     logFailedProcedureParse: true,
+    transformer: "superjson",
 };
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

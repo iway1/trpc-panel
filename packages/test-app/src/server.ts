@@ -11,6 +11,7 @@ import * as trpcExpress from "@trpc/server/adapters/express";
 import { TRPCError } from "@trpc/server";
 import { inferAsyncReturnType } from "@trpc/server";
 import cors from "cors";
+import superjson from "superjson";
 
 const serverUrl = process.env.SERVER_URL;
 const trpcPath = process.env.TRPC_PATH;
@@ -23,7 +24,7 @@ if (!serverUrl) throw new Error("No SERVER_URL passed.");
 if (!trpcPath) throw new Error("No TRPC_PATH passed.");
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const t = initTRPC.context<ContextType>().create();
+const t = initTRPC.context<ContextType>().create({ transformer: superjson });
 if (liveReload) {
     const liveReloadServer = livereload.createServer();
     liveReloadServer.server.once("connection", () => {
@@ -291,6 +292,7 @@ expressApp.get("/", (_req, res) => {
     res.send(
         renderTrpcPanel(router, {
             url: `${serverUrl}${port ? `:${port}` : ""}/${trpcPath}`,
+            transformer: "superjson",
         })
     );
 });

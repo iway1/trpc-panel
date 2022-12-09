@@ -92,7 +92,7 @@ function isQueryDef(_def: ProcedureDef): _def is QueryDef {
 export function parseNode(
     routerOrProcedure: RouterOrProcedure,
     currentNodePath: string[],
-    parseRouterOptions: ParseRouterOptions
+    parseRouterOptions: TrpcPanelExtraOptions
 ): ParsedRouter | ParsedProcedure | null {
     if (isRouter(routerOrProcedure)) {
         const children: ParsedRouterChildren = {};
@@ -150,13 +150,14 @@ export function parseNode(
     }
 }
 
-export type ParseRouterOptions = {
-    logFailedProcedureParse: boolean;
+export type TrpcPanelExtraOptions = {
+    logFailedProcedureParse?: boolean;
+    transformer?: "superjson";
 };
 
 export function parseRouter(
     router: TRPCRouter<any>,
-    parseRouterOptions: ParseRouterOptions
+    parseRouterOptions: TrpcPanelExtraOptions
 ) {
     return parseNode(router, [], parseRouterOptions) as ParsedRouter;
 }

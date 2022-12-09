@@ -36,6 +36,7 @@ export default [
             file: "lib/react-app/bundle.js",
             format: "umd",
             sourcemap: true,
+            name: "trpc-panel",
         },
         plugins: [
             postcss({

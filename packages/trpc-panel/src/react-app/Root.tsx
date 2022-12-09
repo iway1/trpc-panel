@@ -3,8 +3,7 @@ import { RouterContainer } from "./components/RouterContainer";
 import type { ParsedRouter } from "../parse/parse-router";
 import { RenderOptions } from "src/render";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { httpBatchLink } from "@trpc/react-query";
-import { trpc } from "src/react-app/trpc";
+import { createTRPCReact, httpBatchLink } from "@trpc/react-query";
 import {
     HeadersContext,
     useHeaders,
@@ -14,13 +13,16 @@ import { Toaster } from "react-hot-toast";
 import { CollapsableContextProvider } from "src/react-app/components/CollapsableContext";
 import { SideNav } from "./SideNav";
 import { TopBar } from "./TopBar";
+import superjson from "superjson";
 
 export function RootComponent({
     rootRouter,
     options,
+    trpc,
 }: {
     rootRouter: ParsedRouter;
     options: RenderOptions;
+    trpc: ReturnType<typeof createTRPCReact>;
 }) {
     const [queryClient] = useState(() => new QueryClient());
     const headers = useHeaders();
@@ -32,6 +34,10 @@ export function RootComponent({
                     headers: headers.getHeaders,
                 }),
             ],
+            transformer: (() => {
+                if (options.transformer === "superjson") return superjson;
+                return undefined;
+            })(),
         })
     );
     return (

@@ -13,11 +13,14 @@ module.exports = {
     projectName: "trpc-panel", // Usually your repo name.
     themeConfig: {
         disableSwitch: false,
-        respectPrefersColorScheme: true,
+        respectPrefersColorScheme: false,
         prism: {
             theme: require("prism-react-renderer/themes/vsDark"),
         },
-
+        colorMode: {
+            defaultMode: "dark",
+            respectPrefersColorScheme: false,
+        },
         navbar: {
             title: "tRPC.panel()",
             logo: {
@@ -48,24 +51,6 @@ module.exports = {
             // copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
         },
     },
-    // plugins: [
-    //     async function myPlugin() {
-    //         return {
-    //             name: "docusaurus-tailwindcss",
-    //             configurePostCss(postcssOptions) {
-    //                 // Appends TailwindCSS, AutoPrefixer & CSSNano.
-    //                 /* eslint-disable @typescript-eslint/no-var-requires */
-    //                 postcssOptions.plugins.push(require("tailwindcss"));
-    //                 postcssOptions.plugins.push(require("autoprefixer"));
-    //                 if (process.env.NODE_ENV === "production") {
-    //                     postcssOptions.plugins.push(require("cssnano"));
-    //                 }
-    //                 /* eslint-enable @typescript-eslint/no-var-requires */
-    //                 return postcssOptions;
-    //             },
-    //         };
-    //     },
-    // ],
     presets: [
         [
             "@docusaurus/preset-classic",

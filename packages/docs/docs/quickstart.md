@@ -11,7 +11,7 @@ import { renderTrpcPanel } from "trpc-panel";
 // ...
 app.use("/panel", (_, res) => {
     return res.send(
-        renderTrpcPanel(myTrpcRouter, { trpcUrl: "http://localhost:4000/trpc" })
+        renderTrpcPanel(myTrpcRouter, { url: "http://localhost:4000/trpc" })
     );
 });
 ```
@@ -20,4 +20,17 @@ Then you're ready to test:
 
 ![Screenshot Of Panel](./assets/screenshot.png)
 
-`trpc-panel` is just a big string containing a prebuilt React app, so it will work with any backend framework.
+## Data Transformers
+
+Trpc panel supports `superjson`, just pass it into the transformer option:
+
+```js
+app.use("/panel", (_, res) => {
+    return res.send(
+        renderTrpcPanel(myTrpcRouter, {
+            url: "http://localhost:4000/trpc",
+            transformer: "superjson",
+        })
+    );
+});
+```
