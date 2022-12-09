@@ -1,6 +1,6 @@
 # tRPC.panel()
 
-Probably the easiest and cheapest way to build a testing UI for your tRPC endpoints for developement, QA or any other manual testing. tRPC panel automatically generates a UI for manually testing your tRPC backend with 0 overhead:
+Probably the easiest and cheapest way to build a testing UI for your tRPC endpoints for development, QA or any other manual testing. tRPC panel automatically generates a UI for manually testing your tRPC backend with 0 overhead:
 
 ![Screenshot 2022-12-08 at 7 24 02 PM](https://user-images.githubusercontent.com/12774588/206602120-017a2b3a-66c3-4bf0-bd93-90fb4bddf0cc.png)
 
