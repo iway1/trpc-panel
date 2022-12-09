@@ -6,6 +6,8 @@ Probably the easiest and cheapest way to build a testing UI for your tRPC endpoi
 
 trpc panel moves as fast as your trpc backend with no extra effort.
 
+Check out our test app [here](https://app.trpcpanel.io)
+
 ## Features
 
 -   Automatically inspect your tRPC router and recursively generate a typesafe UI
@@ -51,3 +53,8 @@ The following are supported
 -   ZodDiscriminatedUnion
 -   ZodArray
 -   ZodLiteral (These don't show up in the UI but will be send on form submission)
+
+## Contributing / Learn More
+If there's a feature you'd like from `trpc-panel`, please open an issue! Trpc panel is looking for guidance from the community on which features it should prioritize adding.
+
+If you'd like to contribute check out our [contribution guide](https://trpcpanel.io/contributing). 
