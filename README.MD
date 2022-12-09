@@ -1,10 +1,12 @@
 # tRPC.panel()
 
-Probably the easiest and cheapest way to build a testing UI for your tRPC endpoints for developement, QA or any other manual testing. tRPC panel automatically generates a UI for manually testing your tRPC backend with 0 overhead:
+Probably the easiest and cheapest way to build a testing UI for your tRPC endpoints for development, QA or any other manual testing. tRPC panel automatically generates a UI for manually testing your tRPC backend with 0 overhead:
 
 ![Screenshot 2022-12-08 at 7 24 02 PM](https://user-images.githubusercontent.com/12774588/206602120-017a2b3a-66c3-4bf0-bd93-90fb4bddf0cc.png)
 
 trpc panel moves as fast as your trpc backend with no extra effort.
+
+Check out our test app [here](https://app.trpcpanel.io)
 
 ## Features
 
@@ -67,3 +69,10 @@ The following are supported
 -   ZodDiscriminatedUnion
 -   ZodArray
 -   ZodLiteral (These don't show up in the UI but will be send on form submission)
+
+## Contributing / Learn More
+If there's a feature you'd like from `trpc-panel`, please open an issue! Trpc panel is looking for guidance from the community on which features it should prioritize adding.
+
+If you'd like to contribute check out our [contribution guide](https://trpcpanel.io/docs/contributing). 
+
+If you just want to learn more about trpc panel, checkout the main [docs site](https://trpcpanel.io)
