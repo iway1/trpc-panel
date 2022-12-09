@@ -57,4 +57,6 @@ The following are supported
 ## Contributing / Learn More
 If there's a feature you'd like from `trpc-panel`, please open an issue! Trpc panel is looking for guidance from the community on which features it should prioritize adding.
 
-If you'd like to contribute check out our [contribution guide](https://trpcpanel.io/contributing). 
+If you'd like to contribute check out our [contribution guide](https://trpcpanel.io/docs/contributing). 
+
+If you just want to learn more about trpc panel, checkout the main [docs site](https://trpcpanel.io)
