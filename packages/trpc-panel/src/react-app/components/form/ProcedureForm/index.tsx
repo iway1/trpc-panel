@@ -17,6 +17,7 @@ import { RequestResult } from "./RequestResult";
 import { CollapsableSection } from "src/react-app/components/CollapsableSection";
 import { CloseIcon } from "src/react-app/components/icons/CloseIcon";
 import { ObjectField } from "src/react-app/components/form/fields/ObjectField";
+import { fullFormats } from "ajv-formats/dist/formats";
 
 const TRPCErrorSchema = z.object({
     shape: z.object({
@@ -90,7 +91,9 @@ export function ProcedureForm({
         reset: resetForm,
         handleSubmit,
     } = useForm({
-        resolver: ajvResolver(procedure.inputSchema as any),
+        resolver: ajvResolver(procedure.inputSchema as any, {
+            formats: fullFormats,
+        }),
         defaultValues: defaultFormValuesForNode(procedure.node),
     });
 
