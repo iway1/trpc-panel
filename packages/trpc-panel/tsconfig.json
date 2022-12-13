@@ -12,7 +12,6 @@
     "module": "ES2022",
 
     "rootDir": "./",
-    "baseUrl": "./", 
     "esModuleInterop": true, 
     "moduleResolution": "node", 
     "paths": {}, 

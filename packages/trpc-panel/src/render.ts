@@ -2,7 +2,10 @@ import { Router } from "@trpc/server";
 import fs from "fs";
 import { fileURLToPath } from "node:url";
 import { dirname } from "node:path";
-import { parseRouter, TrpcPanelExtraOptions } from "./parse/parse-router";
+import {
+    parseRouterWithOptions,
+    TrpcPanelExtraOptions,
+} from "./parse/parse-router";
 
 export type RenderOptions = {
     url: string;
@@ -64,7 +67,7 @@ export function renderTrpcPanel(router: Router<any>, options: RenderOptions) {
         {
             searchFor: routerReplaceSymbol,
             injectString: JSON.stringify(
-                parseRouter(router, {
+                parseRouterWithOptions(router, {
                     ...defaultParseRouterOptions,
                     ...options,
                 })
