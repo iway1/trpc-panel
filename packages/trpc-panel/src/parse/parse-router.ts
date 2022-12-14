@@ -5,6 +5,7 @@ import {
     isProcedure,
     isQueryDef,
     isMutationDef,
+    isSubscriptionDef,
 } from "./router-type";
 import { AnyZodObject, z } from "zod";
 import { zodSelectorFunction } from "./input-mappers/zod/selector";
@@ -15,7 +16,7 @@ import { ParsedInputNode, ParseReferences } from "./parsed-node-types";
 
 export type JSON7SchemaType = ReturnType<typeof zodToJsonSchema>;
 
-export type ProcedureType = "query" | "mutation";
+export type ProcedureType = "query" | "mutation" | "subscription";
 
 export type ParsedProcedure = {
     inputSchema: JSON7SchemaType;
@@ -156,6 +157,7 @@ function parseProcedure(
     const t = (() => {
         if (isQueryDef(_def)) return "query";
         if (isMutationDef(_def)) return "mutation";
+        if (isSubscriptionDef(_def)) return "subscription";
         return null;
     })();
 
