@@ -1,14 +1,14 @@
 import React from "react";
 import { Control } from "react-hook-form";
-import { ParsedInputNode } from "src/parse/parse-router";
-import { ArrayField } from "src/react-app/components/form/fields/ArrayField";
-import { BooleanField } from "src/react-app/components/form/fields/BooleanField";
-import { DiscriminatedUnionField } from "src/react-app/components/form/fields/DiscriminatedUnionField";
-import { EnumField } from "src/react-app/components/form/fields/EnumField";
-import { LiteralField } from "src/react-app/components/form/fields/LiteralField";
-import { NumberField } from "src/react-app/components/form/fields/NumberField";
-import { ObjectField } from "src/react-app/components/form/fields/ObjectField";
-import { TextField } from "src/react-app/components/form/fields/TextField";
+import { ParsedInputNode } from "../../../parse/parsed-node-types";
+import { ArrayField } from "./fields/ArrayField";
+import { BooleanField } from "./fields/BooleanField";
+import { DiscriminatedUnionField } from "./fields/DiscriminatedUnionField";
+import { EnumField } from "./fields/EnumField";
+import { LiteralField } from "./fields/LiteralField";
+import { NumberField } from "./fields/NumberField";
+import { ObjectField } from "./fields/ObjectField";
+import { TextField } from "./fields/TextField";
 
 export function Field({
     inputNode,
@@ -55,5 +55,7 @@ export function Field({
             );
         case "literal":
             return <LiteralField />;
+        case "unsupported":
+            return null;
     }
 }

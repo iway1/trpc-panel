@@ -48,9 +48,17 @@ export default [
             typescript(),
             replace({
                 "process.env.NODE_ENV": JSON.stringify("production"),
+                preventAssignment: false,
             }),
             babel({
-                presets: ["@babel/preset-react"],
+                presets: [
+                    [
+                        "@babel/preset-react",
+                        {
+                            development: isWatching,
+                        },
+                    ],
+                ],
             }),
             commonjs(),
             copy({
@@ -62,7 +70,6 @@ export default [
                 ],
             }),
             !isWatching && terser(),
-            visualizer(),
         ],
     },
 ];

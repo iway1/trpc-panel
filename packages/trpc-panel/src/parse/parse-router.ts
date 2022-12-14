@@ -1,52 +1,19 @@
 import {
-    RouterOrProcedure,
     Router,
-    ProcedureDef,
-    QueryDef,
+    Procedure,
+    isRouter,
+    isProcedure,
+    isQueryDef,
+    isMutationDef,
 } from "./router-type";
-import { z } from "zod";
-import { mapZodObjectToNode } from "./input-mappers/zod";
+import { AnyZodObject, z } from "zod";
+import { zodSelectorFunction } from "./input-mappers/zod/selector";
 import { Router as TRPCRouter } from "@trpc/server";
 import { zodToJsonSchema } from "zod-to-json-schema";
-import { logParseError } from "src/parse/parse-error-log";
+import { logParseError } from "./parse-error-log";
+import { ParsedInputNode, ParseReferences } from "./parsed-node-types";
 
 export type JSON7SchemaType = ReturnType<typeof zodToJsonSchema>;
-
-export type CommonInputType = "string" | "number" | "boolean";
-
-type SharedInputNodeProperties = {
-    path: (string | number)[];
-    optional: boolean;
-};
-
-export type ParsedInputNode =
-    | (
-          | {
-                type: CommonInputType;
-            }
-          | {
-                type: "array";
-                childType: ParsedInputNode;
-            }
-          | {
-                type: "object";
-                children: { [name: string]: ParsedInputNode };
-            }
-          | {
-                type: "enum";
-                enumValues: string[];
-            }
-          | {
-                type: "discriminated-union";
-                discriminatedUnionValues: string[];
-                discriminatedUnionChildrenMap: {
-                    [value: string]: ParsedInputNode;
-                };
-                discriminatorName: string;
-            }
-          | { type: "literal"; value: string | boolean | number | bigint }
-      ) &
-          SharedInputNodeProperties;
 
 export type ProcedureType = "query" | "mutation";
 
@@ -68,86 +35,141 @@ export type ParsedRouter = {
     nodeType: "router";
 };
 
-function isRouter(
-    routerOrProcedure: RouterOrProcedure
-): routerOrProcedure is Router {
-    return "router" in routerOrProcedure._def;
+export type ParseRouterRefs = {
+    path: string[];
+};
+
+type SupportedInputType = "zod";
+
+const inputParserMap = {
+    zod: (zodObject: AnyZodObject, refs: ParseReferences) => {
+        return zodSelectorFunction(zodObject._def, refs);
+    },
+};
+
+const jsonSchemaParserMap = {
+    zod: zodToJsonSchema,
+};
+
+function inputType(_: unknown): SupportedInputType | "unsupported" {
+    return "zod";
 }
 
-function isZodObject(maybeZodObject: any): maybeZodObject is z.ZodObject<any> {
-    return (
-        typeof maybeZodObject === "object" &&
-        maybeZodObject &&
-        "_def" in maybeZodObject &&
-        maybeZodObject["_def"]?.typeName === "ZodObject"
-    );
-}
+// Some things in the router are not procedures, these are those things keys
+const skipSet = new Set(["createCaller", "_def", "getErrorShape"]);
 
-const ignoreRouterKeys = new Set(["_def", "createCaller", "getErrorShape"]);
-
-function isQueryDef(_def: ProcedureDef): _def is QueryDef {
-    return "query" in _def;
-}
-
-export function parseNode(
-    routerOrProcedure: RouterOrProcedure,
-    currentNodePath: string[],
-    parseRouterOptions: TrpcPanelExtraOptions
-): ParsedRouter | ParsedProcedure | null {
-    if (isRouter(routerOrProcedure)) {
-        const children: ParsedRouterChildren = {};
-        for (var path in routerOrProcedure) {
-            // Only process routes
-            if (ignoreRouterKeys.has(path)) continue;
-            const parsedNode = parseNode(
-                routerOrProcedure[path]!,
-                currentNodePath.concat([path]),
-                parseRouterOptions
-            );
-            if (!parsedNode) {
-                // Would've already logged the error so just skip
-
-                continue;
+function parseRouter(
+    router: Router,
+    routerPath: string[],
+    options: TrpcPanelExtraOptions
+): ParsedRouter {
+    const children: ParsedRouterChildren = {};
+    var hasChild = false;
+    // .procedures contains procedures and routers
+    for (var [procedureOrRouterPath, child] of Object.entries(router)) {
+        if (skipSet.has(procedureOrRouterPath)) continue;
+        const newPath = routerPath.concat([procedureOrRouterPath]);
+        const parsedNode = (() => {
+            if (isRouter(child)) {
+                return parseRouter(child, newPath, options);
             }
-            children[path] = parsedNode;
-        }
-        return { children, nodeType: "router", path: currentNodePath };
-    } else {
-        const { _def } = routerOrProcedure;
-        const { inputs } = _def;
-        const zodObjectInputs = inputs.filter((e) =>
-            isZodObject(e)
-        ) as z.ZodObject<any>[];
-        if (inputs.length && zodObjectInputs.length != inputs.length) {
-            logParseError(
-                currentNodePath.join("."),
-                "found non ZodObject input."
-            );
+            if (isProcedure(child)) {
+                return parseProcedure(child, newPath, options);
+            }
             return null;
+        })();
+        if (!parsedNode) {
+            logParseError(newPath.join("."), "Couldn't parse node.");
+            continue;
         }
-        const mergedZodObject = zodObjectInputs.reduce(
-            (a, b) => a.merge(b),
-            z.object({})
+        hasChild = true;
+        children[procedureOrRouterPath] = parsedNode;
+    }
+    if (!hasChild)
+        logParseError(
+            routerPath.join("."),
+            `Router doesn't have any successfully parsed children.`
         );
-        const node = mapZodObjectToNode(mergedZodObject);
+    return { children, nodeType: "router", path: routerPath };
+}
+type NodeAndInputSchemaFromInputs =
+    | {
+          node: ParsedInputNode;
+          schema: ReturnType<typeof zodToJsonSchema>;
+          parseInputResult: "success";
+      }
+    | {
+          parseInputResult: "failure";
+      };
 
-        if (!node) {
-            logParseError(
-                currentNodePath.join("."),
-                "contained unsupported zod type."
-            );
-            return null;
-        }
+const emptyZodObject = z.object({});
+function nodeAndInputSchemaFromInputs(
+    inputs: unknown[],
+    _routerPath: string[],
+    options: TrpcPanelExtraOptions
+): NodeAndInputSchemaFromInputs {
+    if (!inputs.length) {
         return {
-            // This is used to validate the form
-            inputSchema: zodToJsonSchema<undefined>(mergedZodObject),
-            // This is used to build the UI
-            node,
-            nodeType: "procedure",
-            procedureType: isQueryDef(_def) ? "query" : "mutation",
-            pathFromRootRouter: currentNodePath,
+            parseInputResult: "success",
+            schema: zodToJsonSchema<undefined>(emptyZodObject),
+            node: inputParserMap["zod"](emptyZodObject, {
+                path: [],
+                optional: false,
+                options,
+            }),
         };
     }
+    if (inputs.length !== 1) {
+        return { parseInputResult: "failure" };
+    }
+    const input = inputs[0];
+    const iType = inputType(input);
+    if (iType == "unsupported") {
+        return { parseInputResult: "failure" };
+    }
+    const jsonSchemaParser = jsonSchemaParserMap[iType];
+
+    return {
+        parseInputResult: "success",
+        schema: jsonSchemaParser(input as any), //
+        node: zodSelectorFunction((input as any)._def, {
+            path: [],
+            options,
+            optional: false,
+        }),
+    };
+}
+
+function parseProcedure(
+    procedure: Procedure,
+    path: string[],
+    options: TrpcPanelExtraOptions
+): ParsedProcedure | null {
+    const { _def } = procedure;
+    const { inputs } = _def;
+
+    const nodeAndInput = nodeAndInputSchemaFromInputs(inputs, path, options);
+    if (nodeAndInput.parseInputResult === "failure") {
+        return null;
+    }
+
+    const t = (() => {
+        if (isQueryDef(_def)) return "query";
+        if (isMutationDef(_def)) return "mutation";
+        return null;
+    })();
+
+    if (!t) {
+        return null;
+    }
+
+    return {
+        inputSchema: nodeAndInput.schema,
+        node: nodeAndInput.node,
+        nodeType: "procedure",
+        procedureType: t,
+        pathFromRootRouter: path,
+    };
 }
 
 export type TrpcPanelExtraOptions = {
@@ -155,9 +177,12 @@ export type TrpcPanelExtraOptions = {
     transformer?: "superjson";
 };
 
-export function parseRouter(
+export function parseRouterWithOptions(
     router: TRPCRouter<any>,
     parseRouterOptions: TrpcPanelExtraOptions
 ) {
-    return parseNode(router, [], parseRouterOptions) as ParsedRouter;
+    if (!isRouter(router)) {
+        throw new Error("Non trpc router passed to trpc panel.");
+    }
+    return parseRouter(router, [], parseRouterOptions);
 }

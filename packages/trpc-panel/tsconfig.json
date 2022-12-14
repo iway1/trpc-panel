@@ -10,9 +10,8 @@
     "target": "ES6", 
     "declaration": true,
     "module": "ES2022",
-
+    "baseUrl": "./",
     "rootDir": "./",
-    "baseUrl": "./", 
     "esModuleInterop": true, 
     "moduleResolution": "node", 
     "paths": {}, 

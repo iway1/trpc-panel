@@ -1,6 +1,6 @@
 import React from "react";
 import { Control, useController } from "react-hook-form";
-import { ParsedInputNode } from "src/parse/parse-router";
+import type { ParsedInputNode } from "src/parse/parsed-node-types";
 import { BaseCheckboxField } from "src/react-app/components/form/fields/base/BaseCheckboxField";
 
 export function BooleanField({

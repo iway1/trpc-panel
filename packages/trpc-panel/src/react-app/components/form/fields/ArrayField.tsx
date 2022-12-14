@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Control, useController, useWatch } from "react-hook-form";
-import { ParsedInputNode } from "src/parse/parse-router";
+import type { ParsedInputNode } from "src/parse/parsed-node-types";
 import { Field } from "../Field";
 import { defaultFormValuesForNode } from "src/react-app/components/form/utils";
 import XIcon from "@mui/icons-material/CloseOutlined";
@@ -58,7 +58,6 @@ export function ArrayField({
         field.onChange(newArr);
         setTextFieldKeys(newKeysArr);
     }
-
     return (
         <InputGroupContainer
             iconElement={<DataArray className="mr-1" />}

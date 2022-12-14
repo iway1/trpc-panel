@@ -14,6 +14,10 @@ const routerDefinition: ParsedRouter =
 export const options = "{{options}}" as unknown as RenderOptions;
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
+root;
+trpc;
+RootComponent;
+React;
 root.render(
     <RootComponent
         rootRouter={routerDefinition}

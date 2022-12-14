@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { Control } from "react-hook-form";
-import { ParsedInputNode } from "src/parse/parse-router";
+import type { ParsedInputNode } from "src/parse/parsed-node-types";
 import { Field } from "src/react-app/components/form/Field";
 import ObjectIcon from "@mui/icons-material/DataObjectOutlined";
 import { InputGroupContainer } from "../../InputGroupContainer";
@@ -27,7 +27,6 @@ export function ObjectField({
             </div>
         );
     }
-
     return (
         <InputGroupContainer
             title={name}

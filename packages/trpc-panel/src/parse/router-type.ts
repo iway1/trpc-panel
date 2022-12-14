@@ -1,31 +1,85 @@
-export type ProcedureSharedProperties = {
-    inputs: unknown[];
-    meta: unknown;
-};
+import { z } from "zod";
+
+const ZodObjectSchema = z.object({});
+
+export function isZodObject(
+    obj: unknown
+): obj is z.infer<typeof ZodObjectSchema> {
+    return ZodObjectSchema.safeParse(obj).success;
+}
+
+const SharedProcedureDefPropertiesSchema = z.object({
+    inputs: z.unknown().array(),
+    meta: z.unknown(),
+});
+
+const QueryDefSchema = SharedProcedureDefPropertiesSchema.merge(
+    z.object({
+        query: z.literal(true),
+    })
+);
+
+export function isQueryDef(obj: unknown): obj is QueryDef {
+    return QueryDefSchema.safeParse(obj).success;
+}
+
+type QueryDef = z.infer<typeof QueryDefSchema>;
+
+const MutationDefSchema = SharedProcedureDefPropertiesSchema.merge(
+    z.object({
+        mutation: z.literal(true),
+    })
+);
+
+export function isMutationDef(obj: unknown): obj is MutationDef {
+    return MutationDefSchema.safeParse(obj).success;
+}
+
+export type MutationDef = z.infer<typeof MutationDefSchema>;
+
+export const ProcedureDefSchema = QueryDefSchema.or(MutationDefSchema);
+
+export type ProcedureDefSharedProperties = z.infer<
+    typeof SharedProcedureDefPropertiesSchema
+>;
+
+// Don't export this b/c it's just used to type check, use the is functions
+const RouterDefSchema = z.object({
+    router: z.literal(true),
+});
 
 export type RouterDef = {
     router: true;
-    procedures: any;
-} & { [path: string]: RouterOrProcedure };
-
-export type QueryDef = {
-    query: true;
-} & ProcedureSharedProperties;
-
-export type MutationDef = {
-    mutation: true;
-} & ProcedureSharedProperties;
-
-export type RouterOrProducedureDef = RouterDef | QueryDef | MutationDef;
-
-export type ProcedureDef = QueryDef | MutationDef;
+    procedures: Record<string, RouterOrProcedure>;
+};
 
 export type Router = {
     _def: RouterDef;
-} & { [pathName: string]: RouterOrProcedure };
+} & { [key: string]: Router | Procedure };
 
-export type Procedure = {
-    _def: ProcedureDef;
-};
+const RouterSchema = z.object({
+    _def: RouterDefSchema,
+});
+
+export function isRouter(obj: unknown): obj is Router {
+    return RouterSchema.safeParse(obj).success;
+}
+
+const ProcedureSchema = z.object({
+    _def: ProcedureDefSchema,
+});
+
+export type Procedure = z.infer<typeof ProcedureSchema>;
+
+export function isProcedure(obj: unknown | Function): obj is Procedure {
+    if (typeof obj !== "function" || !("_def" in obj)) return false;
+    return ProcedureDefSchema.safeParse((obj as any)._def).success;
+}
+
+const QuerySchema = z.object({
+    _def: QueryDefSchema,
+});
+
+export type Query = z.infer<typeof QuerySchema>;
 
 export type RouterOrProcedure = Router | Procedure;
