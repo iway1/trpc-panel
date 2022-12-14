@@ -12,7 +12,6 @@ import postcss from "rollup-plugin-postcss";
 import path from "path";
 const isWatching =
     process.argv.includes("-w") || process.argv.includes("--watch");
-console.log("Is watching is " + isWatching);
 export default [
     {
         input: "src/index.ts",
@@ -56,7 +55,7 @@ export default [
                     [
                         "@babel/preset-react",
                         {
-                            development: true,
+                            development: isWatching,
                         },
                     ],
                 ],
