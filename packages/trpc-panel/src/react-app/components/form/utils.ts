@@ -1,8 +1,7 @@
-import { ParsedInputNode } from "src/parse/parse-router";
+import type { ParsedInputNode } from "src/parse/parsed-node-types";
 
 // TODO - Use an actual type instead of any? Not sure if it's really worth it or not.
 export function defaultFormValuesForNode(node: ParsedInputNode): any {
-    if (node.optional) return; // Default optionals to undefined
     switch (node.type) {
         case "array":
             return [];

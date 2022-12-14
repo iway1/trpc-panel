@@ -3,12 +3,12 @@ import {
     z,
     ZodArrayDef,
     ZodBooleanDef,
-    ZodDiscriminatedUnionDef,
     ZodEnumDef,
     ZodFirstPartyTypeKind,
     ZodLiteralDef,
     ZodNumberDef,
     ZodObjectDef,
+    ZodOptionalDef,
     ZodStringDef,
 } from "zod";
 import { parseZodStringDef } from "./parsers/parseZodStringDef";
@@ -16,11 +16,15 @@ import { ParserSelectorFunction } from "../../parsed-node-types";
 import { ZodDefWithType } from "./zod-types";
 import { parseZodArrayDef } from "./parsers/parseZodArrayDef";
 import { parseZodBooleanFieldDef } from "./parsers/parseZodBooleanFieldDef";
-import { parseZodDiscriminatedUnionDef } from "./parsers/parseZodDiscriminatedUnionDef";
+import {
+    parseZodDiscriminatedUnionDef,
+    ZodDiscriminatedUnionDefUnversioned,
+} from "./parsers/parseZodDiscriminatedUnionDef";
 import { parseZodEnumDef } from "./parsers/parseZodEnumDef";
 import { parseZodLiteralDef } from "./parsers/parseZodLiteralDef";
 import { parseZodNumberDef } from "./parsers/parseZodNumberDef";
 import { parseZodObjectDef } from "./parsers/parseZodObjectDef";
+import { parseZodOptionalDef } from "src/parse/input-mappers/zod/parsers/parseZodOptionalDef";
 
 export const zodSelectorFunction: ParserSelectorFunction<ZodDefWithType> = (
     def,
@@ -36,7 +40,9 @@ export const zodSelectorFunction: ParserSelectorFunction<ZodDefWithType> = (
             return parseZodBooleanFieldDef(def as ZodBooleanDef, references);
         case ZodFirstPartyTypeKind.ZodDiscriminatedUnion:
             return parseZodDiscriminatedUnionDef(
-                def as ZodDiscriminatedUnionDef<any, any, any>,
+                // Zod had some type changes between 3.19 -> 3.20 and we want to support both, not sure there's a way
+                // to avoid this.
+                def as unknown as ZodDiscriminatedUnionDefUnversioned,
                 references
             );
         case ZodFirstPartyTypeKind.ZodEnum:
@@ -48,12 +54,11 @@ export const zodSelectorFunction: ParserSelectorFunction<ZodDefWithType> = (
         case ZodFirstPartyTypeKind.ZodObject:
             return parseZodObjectDef(def as ZodObjectDef, references);
         case ZodFirstPartyTypeKind.ZodOptional:
-            return parseZodObjectDef(def as ZodObjectDef, references);
+            return parseZodOptionalDef(def as ZodOptionalDef, references);
         case ZodFirstPartyTypeKind.ZodString:
             return parseZodStringDef(def as ZodStringDef, references);
     }
-
-    return { type: "unsupported", path: references.path };
+    return { type: "unsupported", path: references.path, optional: false };
 };
 
 export function mapZodObjectToNode(

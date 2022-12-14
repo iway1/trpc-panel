@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Control, useForm, useFormState } from "react-hook-form";
-import {
-    ParsedInputNode,
-    ParsedProcedure,
-} from "../../../../parse/parse-router";
+import { ParsedProcedure } from "../../../../parse/parse-router";
 import { ajvResolver } from "@hookform/resolvers/ajv";
 import { defaultFormValuesForNode } from "src/react-app/components/form/utils";
 import { trpc } from "src/react-app/trpc";
@@ -18,6 +15,7 @@ import { CollapsableSection } from "src/react-app/components/CollapsableSection"
 import { CloseIcon } from "src/react-app/components/icons/CloseIcon";
 import { ObjectField } from "src/react-app/components/form/fields/ObjectField";
 import { fullFormats } from "ajv-formats/dist/formats";
+import type { ParsedInputNode } from "src/parse/parsed-node-types";
 
 const TRPCErrorSchema = z.object({
     shape: z.object({
@@ -127,7 +125,6 @@ export function ProcedureForm({
         procedure.procedureType === "query" ? query.data : mutationResponse;
     const error =
         procedure.procedureType == "query" ? query.error : mutation.error;
-
     return (
         <CollapsableSection
             titleElement={

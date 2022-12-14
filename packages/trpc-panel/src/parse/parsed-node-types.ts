@@ -1,11 +1,13 @@
 import { ZodTypeDef } from "zod";
+import { ZodDiscriminatedUnionDefUnversioned } from "./input-mappers/zod/parsers/parseZodDiscriminatedUnionDef";
 import { TrpcPanelExtraOptions } from "./parse-router";
 
 type SharedInputNodeProperties = {
     path: (string | number)[];
+    optional: boolean;
 };
 
-type InputNodeTypes = ZodTypeDef;
+type InputNodeTypes = ZodTypeDef | ZodDiscriminatedUnionDefUnversioned;
 
 export type ArrayNode = {
     type: "array";

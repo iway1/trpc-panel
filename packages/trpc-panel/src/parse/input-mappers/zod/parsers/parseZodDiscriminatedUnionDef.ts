@@ -1,22 +1,53 @@
-import {
-    ZodDiscriminatedUnionDef,
-    ZodDiscriminatedUnionOption,
-} from "zod";
+import { AnyZodObject, ZodFirstPartyTypeKind } from "zod";
 import {
     DiscriminatedUnionNode,
     ParseFunction,
 } from "../../../parsed-node-types";
 import { zodSelectorFunction } from "../selector";
 
+type OptionsMap = Map<string, AnyZodObject>;
+
+type ZodDiscriminatedUnionThreePointTwenty = {
+    optionsMap: OptionsMap;
+    discriminator: string;
+};
+
+type ZodDiscriminatedUnionPreThreePointTwenty = {
+    options: OptionsMap;
+    discriminator: string;
+};
+
+export type ZodDiscriminatedUnionDefUnversioned =
+    | ZodDiscriminatedUnionPreThreePointTwenty
+    | ZodDiscriminatedUnionThreePointTwenty;
+
+function isZodThreePointTwenty(
+    def: ZodDiscriminatedUnionDefUnversioned
+): def is ZodDiscriminatedUnionThreePointTwenty {
+    return "optionsMap" in def;
+}
+
+function makeDefConsistent(def: ZodDiscriminatedUnionDefUnversioned): {
+    typeName: ZodFirstPartyTypeKind.ZodDiscriminatedUnion;
+    discriminator: string;
+    options: Map<string, AnyZodObject>;
+} {
+    const optionsMap = isZodThreePointTwenty(def)
+        ? def.optionsMap
+        : def.options;
+    return {
+        typeName: ZodFirstPartyTypeKind.ZodDiscriminatedUnion,
+        discriminator: def.discriminator,
+        options: optionsMap,
+    };
+}
+
 export const parseZodDiscriminatedUnionDef: ParseFunction<
-    ZodDiscriminatedUnionDef<
-        string,
-        string,
-        ZodDiscriminatedUnionOption<string, string>
-    >,
+    ZodDiscriminatedUnionDefUnversioned,
     DiscriminatedUnionNode
 > = (def, refs) => {
-    const entries = Array.from(def.options.entries());
+    const defConsistent = makeDefConsistent(def);
+    const entries = Array.from(defConsistent.options.entries());
     const nodeEntries = entries.map(([discriminatorValue, zodObj]) => [
         discriminatorValue,
         zodSelectorFunction(zodObj._def, refs),

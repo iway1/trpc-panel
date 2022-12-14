@@ -12,6 +12,7 @@ import postcss from "rollup-plugin-postcss";
 import path from "path";
 const isWatching =
     process.argv.includes("-w") || process.argv.includes("--watch");
+console.log("Is watching is " + isWatching);
 export default [
     {
         input: "src/index.ts",
@@ -48,9 +49,17 @@ export default [
             typescript(),
             replace({
                 "process.env.NODE_ENV": JSON.stringify("production"),
+                preventAssignment: false,
             }),
             babel({
-                presets: ["@babel/preset-react"],
+                presets: [
+                    [
+                        "@babel/preset-react",
+                        {
+                            development: true,
+                        },
+                    ],
+                ],
             }),
             commonjs(),
             copy({
@@ -62,7 +71,6 @@ export default [
                 ],
             }),
             !isWatching && terser(),
-            visualizer(),
         ],
     },
 ];

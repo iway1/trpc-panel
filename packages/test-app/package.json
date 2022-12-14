@@ -26,10 +26,10 @@
     "trpc-panel": "^1.0.0",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.0",
-    "zod": "^3.19.1"
+    "zod": "3.20.2"
   },
   "scripts": {
-    "dev": "SERVER_URL=\"http://localhost\" TRPC_PATH=\"trpc\" DEV_PORT=\"4000\" SIMULATE_DELAY=\"true\" nodemon ./src/server.ts",
+    "dev": "LIVE_RELOAD=\"true\" SERVER_URL=\"http://localhost\" TRPC_PATH=\"trpc\" DEV_PORT=\"4000\" SIMULATE_DELAY=\"true\" nodemon ./src/server.ts",
     "build": "npx tsc --project tsconfig.json",
     "start": "node ./lib/server"
   },
