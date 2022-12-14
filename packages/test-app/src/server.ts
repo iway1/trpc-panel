@@ -8,10 +8,17 @@ import morgan from "morgan";
 import { fileURLToPath } from "node:url";
 import { dirname } from "node:path";
 import * as trpcExpress from "@trpc/server/adapters/express";
-import { TRPCError } from "@trpc/server";
-import { inferAsyncReturnType } from "@trpc/server";
+import { TRPCError, inferAsyncReturnType } from "@trpc/server";
+import { observable } from "@trpc/server/observable";
 import cors from "cors";
+import { EventEmitter } from "events";
 import superjson from "superjson";
+
+const PostSchema = z.object({
+    id: z.string().uuid(),
+    text: z.string().min(1),
+});
+type Post = z.infer<typeof PostSchema>;
 
 const serverUrl = process.env.SERVER_URL;
 const trpcPath = process.env.TRPC_PATH;
@@ -145,6 +152,31 @@ const multiRouter = {
     utilityRouter,
 };
 
+const ee = new EventEmitter();
+const subscriptionRouter = t.router({
+    onAdd: t.procedure.subscription(() => {
+        // `resolve()` is triggered for each client when they start subscribing `onAdd`
+        // return an `observable` with a callback which is triggered immediately
+        return observable<Post>((emit) => {
+            const onAdd = (data: Post) => {
+                // emit data to client
+                emit.next(data);
+            };
+            // trigger `onAdd()` when `add` is triggered in our event emitter
+            ee.on("add", onAdd);
+            // unsubscribe function when client disconnects or stops subscribing
+            return () => {
+                ee.off("add", onAdd);
+            };
+        });
+    }),
+    add: t.procedure.input(PostSchema).mutation(async ({ input }) => {
+        const post = { ...input }; /* [..] add to db */
+        ee.emit("add", post);
+        return post;
+    }),
+});
+
 const router = t.router({
     userRouter: userRouter,
     postsRouter: postsRouter,
@@ -265,6 +297,7 @@ const router = t.router({
             is: "good",
         };
     }),
+    subscriptionRouter,
 });
 
 const expressApp = express();
