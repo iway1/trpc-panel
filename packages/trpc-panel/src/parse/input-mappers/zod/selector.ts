@@ -6,6 +6,7 @@ import {
     ZodEnumDef,
     ZodFirstPartyTypeKind,
     ZodLiteralDef,
+    ZodNullableDef,
     ZodNumberDef,
     ZodObjectDef,
     ZodOptionalDef,
@@ -25,6 +26,7 @@ import { parseZodLiteralDef } from "./parsers/parseZodLiteralDef";
 import { parseZodNumberDef } from "./parsers/parseZodNumberDef";
 import { parseZodObjectDef } from "./parsers/parseZodObjectDef";
 import { parseZodOptionalDef } from "src/parse/input-mappers/zod/parsers/parseZodOptionalDef";
+import { parseZodNullableDef } from "src/parse/input-mappers/zod/parsers/parseZodNullableDef";
 
 export const zodSelectorFunction: ParserSelectorFunction<ZodDefWithType> = (
     def,
@@ -57,6 +59,8 @@ export const zodSelectorFunction: ParserSelectorFunction<ZodDefWithType> = (
             return parseZodOptionalDef(def as ZodOptionalDef, references);
         case ZodFirstPartyTypeKind.ZodString:
             return parseZodStringDef(def as ZodStringDef, references);
+        case ZodFirstPartyTypeKind.ZodNullable:
+            return parseZodNullableDef(def as ZodNullableDef, references);
     }
     return { type: "unsupported", path: references.path, optional: false };
 };
