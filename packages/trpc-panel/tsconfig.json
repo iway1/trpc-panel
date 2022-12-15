@@ -14,10 +14,14 @@
     "rootDir": "./",
     "esModuleInterop": true, 
     "moduleResolution": "node", 
-    "paths": {}, 
+    "paths": {
+      "src": ["src/*"]
+    }, 
 
     "sourceMap": true,
     "sourceRoot": "/",
+    
+
 
     "alwaysStrict": true,
     "allowUnreachableCode": false,

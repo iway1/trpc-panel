@@ -4,7 +4,6 @@ import { TrpcPanelExtraOptions } from "./parse-router";
 
 type SharedInputNodeProperties = {
     path: (string | number)[];
-    optional: boolean;
 };
 
 type InputNodeTypes = ZodTypeDef | ZodDiscriminatedUnionDefUnversioned;
@@ -66,7 +65,6 @@ export type ParsedInputNode =
 
 export type ParseReferences = {
     path: string[];
-    optional: boolean;
     // Doesn't do anything yet but maybe down the road we can extend with this
     options: TrpcPanelExtraOptions;
 };

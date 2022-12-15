@@ -114,7 +114,7 @@ function nodeAndInputSchemaFromInputs(
             schema: zodToJsonSchema<undefined>(emptyZodObject),
             node: inputParserMap["zod"](emptyZodObject, {
                 path: [],
-                optional: false,
+
                 options,
             }),
         };
@@ -135,7 +135,6 @@ function nodeAndInputSchemaFromInputs(
         node: zodSelectorFunction((input as any)._def, {
             path: [],
             options,
-            optional: false,
         }),
     };
 }

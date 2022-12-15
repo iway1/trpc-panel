@@ -98,7 +98,6 @@ export function mapZodObjectToNode(
 ): ParsedInputNode | null {
     const parsed = zodSelectorFunction(object._def, {
         path: [],
-        optional: false,
         options: {},
     });
     return parsed;

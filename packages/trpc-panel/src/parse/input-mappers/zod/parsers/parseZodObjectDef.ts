@@ -24,6 +24,5 @@ export const parseZodObjectDef: ParseFunction<
         type: "object",
         children,
         path: refs.path,
-        optional: refs.optional,
     };
 };

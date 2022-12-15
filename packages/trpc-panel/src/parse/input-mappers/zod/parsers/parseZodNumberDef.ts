@@ -8,6 +8,5 @@ export const parseZodNumberDef: ParseFunction<ZodNumberDef, NumberNode> = (
     return {
         type: "number",
         path: references.path,
-        optional: references.optional,
     };
 };
