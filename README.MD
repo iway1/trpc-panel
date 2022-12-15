@@ -76,3 +76,7 @@ If there's a feature you'd like from `trpc-panel`, please open an issue! Trpc pa
 If you'd like to contribute check out our [contribution guide](https://trpcpanel.io/docs/contributing). 
 
 If you just want to learn more about trpc panel, checkout the main [docs site](https://trpcpanel.io)
+
+### Feature Roadmap
+
+You can view planned features roadmap here: https://trello.com/b/nflGRDxe/trpc-panel-featues-road-map
