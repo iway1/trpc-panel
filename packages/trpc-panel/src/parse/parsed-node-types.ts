@@ -33,9 +33,12 @@ export type DiscriminatedUnionNode = {
     discriminatorName: string;
 } & SharedInputNodeProperties;
 
+/**
+ * Any time you just want the front end to send back a value use this
+ */
 export type LiteralNode = {
     type: "literal";
-    value: string | boolean | number | bigint;
+    value: string | boolean | number | bigint | null | undefined;
 } & SharedInputNodeProperties;
 
 export type StringNode = {

@@ -2,15 +2,22 @@ import { ParsedInputNode } from "../../parsed-node-types";
 import {
     z,
     ZodArrayDef,
+    ZodBigIntDef,
     ZodBooleanDef,
+    ZodBrandedDef,
+    ZodDefaultDef,
+    ZodEffectsDef,
     ZodEnumDef,
     ZodFirstPartyTypeKind,
     ZodLiteralDef,
     ZodNullableDef,
+    ZodNullDef,
     ZodNumberDef,
     ZodObjectDef,
     ZodOptionalDef,
+    ZodPromiseDef,
     ZodStringDef,
+    ZodUndefinedDef,
 } from "zod";
 import { parseZodStringDef } from "./parsers/parseZodStringDef";
 import { ParserSelectorFunction } from "../../parsed-node-types";
@@ -27,6 +34,13 @@ import { parseZodNumberDef } from "./parsers/parseZodNumberDef";
 import { parseZodObjectDef } from "./parsers/parseZodObjectDef";
 import { parseZodOptionalDef } from "src/parse/input-mappers/zod/parsers/parseZodOptionalDef";
 import { parseZodNullableDef } from "src/parse/input-mappers/zod/parsers/parseZodNullableDef";
+import { parseZodBigIntDef } from "src/parse/input-mappers/zod/parsers/parseZodBigIntDef";
+import { parseZodBrandedDef } from "src/parse/input-mappers/zod/parsers/parseZodBrandedDef";
+import { parseZodDefaultDef } from "src/parse/input-mappers/zod/parsers/parseZodDefaultDef";
+import { parseZodEffectsDef } from "src/parse/input-mappers/zod/parsers/parseZodEffectsDef";
+import { parseZodNullDef } from "src/parse/input-mappers/zod/parsers/parseZodNullDef";
+import { parseZodPromiseDef } from "src/parse/input-mappers/zod/parsers/parseZodPromiseDef";
+import { parseZodUndefinedDef } from "src/parse/input-mappers/zod/parsers/parseZodUndefinedDef";
 
 export const zodSelectorFunction: ParserSelectorFunction<ZodDefWithType> = (
     def,
@@ -61,6 +75,20 @@ export const zodSelectorFunction: ParserSelectorFunction<ZodDefWithType> = (
             return parseZodStringDef(def as ZodStringDef, references);
         case ZodFirstPartyTypeKind.ZodNullable:
             return parseZodNullableDef(def as ZodNullableDef, references);
+        case ZodFirstPartyTypeKind.ZodBigInt:
+            return parseZodBigIntDef(def as ZodBigIntDef, references);
+        case ZodFirstPartyTypeKind.ZodBranded:
+            return parseZodBrandedDef(def as ZodBrandedDef<any>, references);
+        case ZodFirstPartyTypeKind.ZodDefault:
+            return parseZodDefaultDef(def as ZodDefaultDef, references);
+        case ZodFirstPartyTypeKind.ZodEffects:
+            return parseZodEffectsDef(def as ZodEffectsDef, references);
+        case ZodFirstPartyTypeKind.ZodNull:
+            return parseZodNullDef(def as ZodNullDef, references);
+        case ZodFirstPartyTypeKind.ZodPromise:
+            return parseZodPromiseDef(def as ZodPromiseDef, references);
+        case ZodFirstPartyTypeKind.ZodUndefined:
+            return parseZodUndefinedDef(def as ZodUndefinedDef, references);
     }
     return { type: "unsupported", path: references.path, optional: false };
 };

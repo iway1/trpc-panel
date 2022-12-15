@@ -7,7 +7,6 @@ import commonjs from "@rollup/plugin-commonjs";
 import copy from "rollup-plugin-copy";
 import replace from "@rollup/plugin-replace";
 import { terser } from "rollup-plugin-terser";
-import { visualizer } from "rollup-plugin-visualizer";
 import postcss from "rollup-plugin-postcss";
 import path from "path";
 const isWatching =
