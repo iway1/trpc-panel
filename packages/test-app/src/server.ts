@@ -216,7 +216,13 @@ const router = t.router({
                 return "It's an input";
             }),
         emailTextInput: t.procedure
-            .input(z.object({ email: z.string().email("Bad email") }))
+            .input(
+                z.object({
+                    email: z
+                        .string()
+                        .email("That's an invalid email (custom message)"),
+                })
+            )
             .query(({ input }) => {
                 return "It's good";
             }),
