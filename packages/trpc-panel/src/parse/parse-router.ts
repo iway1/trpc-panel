@@ -47,10 +47,6 @@ const inputParserMap = {
     },
 };
 
-const jsonSchemaParserMap = {
-    zod: zodToJsonSchema,
-};
-
 function inputType(_: unknown): SupportedInputType | "unsupported" {
     return "zod";
 }
@@ -111,7 +107,7 @@ function nodeAndInputSchemaFromInputs(
     if (!inputs.length) {
         return {
             parseInputResult: "success",
-            schema: zodToJsonSchema<undefined>(emptyZodObject),
+            schema: zodToJsonSchema(emptyZodObject, { errorMessages: true }),
             node: inputParserMap["zod"](emptyZodObject, {
                 path: [],
                 optional: false,
@@ -127,11 +123,10 @@ function nodeAndInputSchemaFromInputs(
     if (iType == "unsupported") {
         return { parseInputResult: "failure" };
     }
-    const jsonSchemaParser = jsonSchemaParserMap[iType];
 
     return {
         parseInputResult: "success",
-        schema: jsonSchemaParser(input as any), //
+        schema: zodToJsonSchema(input as any, { errorMessages: true }), //
         node: zodSelectorFunction((input as any)._def, {
             path: [],
             options,
