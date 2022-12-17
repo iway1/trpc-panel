@@ -10,16 +10,16 @@ Check out our test app [here](https://app.trpcpanel.io)
 
 ## Features
 
--   Automatically inspect your tRPC router and recursively generate a typesafe UI
--   Zero overhead
-    -   No output schemas (procedure return types can be inferred as nature intended)
-    -   New procedures will be added to your UI as you create them in your backend.
--   Supports nested routers, and nested input objects. The structure of the UI maps one-to-one to your API's routers and procedures.
--   Field and validation specific error messages
--   Compile-step free (simply injects an object representing your router into a pre-bundled application)
--   SideNav to quickly find procedures of interest
+- Automatically inspect your tRPC router and recursively generate a typesafe UI
+- Zero overhead
+  - No output schemas (procedure return types can be inferred as nature intended)
+  - New procedures will be added to your UI as you create them in your backend.
+- Supports nested routers, and nested input objects. The structure of the UI maps one-to-one to your API's routers and procedures.
+- Field and validation specific error messages
+- Compile-step free (simply injects an object representing your router into a pre-bundled application)
+- SideNav to quickly find procedures of interest
 
-## Quick Start
+## Quick Starts
 
 Install with your preferred package manager:
 
@@ -31,9 +31,9 @@ render your panel and return it from your backend (express example):
 import { renderTrpcPanel } from "trpc-panel";
 // ...
 app.use("/panel", (_, res) => {
-    return res.send(
-        renderTrpcPanel(myTrpcRouter, { url: "http://localhost:4000/trpc" })
-    );
+  return res.send(
+    renderTrpcPanel(myTrpcRouter, { url: "http://localhost:4000/trpc" })
+  );
 });
 ```
 
@@ -43,12 +43,12 @@ Trpc panel supports `superjson`, just pass it into the transformer option:
 
 ```js
 app.use("/panel", (_, res) => {
-    return res.send(
-        renderTrpcPanel(myTrpcRouter, {
-            url: "http://localhost:4000/trpc",
-            transformer: "superjson",
-        })
-    );
+  return res.send(
+    renderTrpcPanel(myTrpcRouter, {
+      url: "http://localhost:4000/trpc",
+      transformer: "superjson",
+    })
+  );
 });
 ```
 
@@ -62,36 +62,35 @@ There are no plans to support v9 or other previous tRPC versions.
 
 The following are supported
 
--   Array
--   BigInt
--   Boolean
--   Branded
--   Default
--   DiscriminatedUnion
--   Effects
--   Enum
--   Literal
--   Nullable
--   Null
--   Nullish
--   Number
--   Object
--   Optional
--   Promise
--   String
--   Undefined
+- Array
+- BigInt
+- Boolean
+- Branded
+- Default
+- DiscriminatedUnion
+- Effects
+- Enum
+- Literal
+- Nullable
+- Null
+- Nullish
+- Number
+- Object
+- Optional
+- Promise
+- String
+- Undefined
 
 Planning on adding additional support shortly for the following types:
 
--   Union
--   Tuple
--   Record
--   Never
--   Map (superjson only)
--   Set (superjson only)
--   Date (superjson only)
--   Any
-
+- Union
+- Tuple
+- Record
+- Never
+- Map (superjson only)
+- Set (superjson only)
+- Date (superjson only)
+- Any
 
 ## Learn More
 
