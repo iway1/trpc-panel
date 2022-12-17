@@ -3,13 +3,13 @@ import { ParsedInputNode, ParseFunction } from "../../../parsed-node-types";
 import { zodSelectorFunction } from "../selector";
 
 export const parseZodOptionalDef: ParseFunction<
-    ZodOptionalDef,
-    ParsedInputNode
+  ZodOptionalDef,
+  ParsedInputNode
 > = (def, refs) => {
-    const parsedInner = zodSelectorFunction(def.innerType._def, refs);
-    return {
-        ...parsedInner,
+  const parsedInner = zodSelectorFunction(def.innerType._def, refs);
+  return {
+    ...parsedInner,
 
-        optional: true,
-    };
+    optional: true,
+  };
 };

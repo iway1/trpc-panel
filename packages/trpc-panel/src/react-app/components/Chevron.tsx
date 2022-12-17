@@ -1,29 +1,29 @@
 import React from "react";
-import { ChevronIcon } from "src/react-app/components/icons/ChevronIcon";
+import { ChevronIcon } from "@src/react-app/components/icons/ChevronIcon";
 
 export function Chevron({
-    className,
-    direction,
+  className,
+  direction,
 }: {
-    className?: string;
-    direction: "up" | "down" | "right";
+  className?: string;
+  direction: "up" | "down" | "right";
 }) {
-    return (
-        <ChevronIcon
-            className={
-                className +
-                " " +
-                `${(() => {
-                    switch (direction) {
-                        case "up":
-                            return " rotate-90";
-                        case "down":
-                            return "-rotate-90";
-                        case "right":
-                            return "rotate-180";
-                    }
-                })()}`
-            }
-        />
-    );
+  return (
+    <ChevronIcon
+      className={
+        className +
+        " " +
+        `${(() => {
+          switch (direction) {
+            case "up":
+              return " rotate-90";
+            case "down":
+              return "-rotate-90";
+            case "right":
+              return "rotate-180";
+          }
+        })()}`
+      }
+    />
+  );
 }
