@@ -14,10 +14,11 @@
     "rootDir": "./",
     "esModuleInterop": true, 
     "moduleResolution": "node", 
-    "paths": {}, 
 
     "sourceMap": true,
     "sourceRoot": "/",
+    
+
 
     "alwaysStrict": true,
     "allowUnreachableCode": false,
@@ -29,11 +30,14 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true, 
     "resolveJsonModule": true,
-    "jsx": "react"
+    "jsx": "react",
+    "paths": {
+      "@src/*": ["./src/*"] 
+    }
   },
-  "include": ["./src/**/*", "src/react-app"],
+  "include": ["./src/**/*"],
   "exclude": [
     "node_modules/**/*",
-    "lib/**/*"
-  ]
+    "lib/**/*",
+  ],
 }

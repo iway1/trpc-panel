@@ -1,3 +1,3 @@
 import { ZodFirstPartyTypeKind, ZodTypeDef } from "zod";
 
-export type ZodDefWithType = ZodTypeDef & {typeName: ZodFirstPartyTypeKind}
+export type ZodDefWithType = ZodTypeDef & { typeName: ZodFirstPartyTypeKind };
