@@ -1,4 +1,5 @@
 import { ParsedInputNode, ParseReferences } from "src/parse/parsed-node-types";
+import { nodePropertiesFromRef } from "src/parse/utils";
 import { ZodNullDef } from "zod";
 
 export function parseZodNullDef(
@@ -8,6 +9,6 @@ export function parseZodNullDef(
     return {
         type: "literal",
         value: null,
-        ...refs,
+        ...nodePropertiesFromRef(refs),
     };
 }

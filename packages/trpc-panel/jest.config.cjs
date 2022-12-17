@@ -4,29 +4,11 @@ module.exports = {
     testEnvironment: "node",
     moduleDirectories: ["node_modules", __dirname],
     rootDir: "./",
-    moduleNameMapper: {
-        "src/(.*)": "src",
-    },
     transform: {
-        "^.+\\.tsx?$": [
-            "ts-jest",
-            {
-                diagnostics: {
-                    ignoreCodes: [1343],
-                },
-                astTransformers: {
-                    before: [
-                        {
-                            path: "../../node_modules/ts-jest-mock-import-meta", // or, alternatively, 'ts-jest-mock-import-meta' directly, without node_modules.
-                            options: {
-                                metaObjectReplacement: {
-                                    url: "https://www.url.com",
-                                },
-                            },
-                        },
-                    ],
-                },
-            },
-        ],
+        "^.+\\.tsx?$": "ts-jest",
     },
+    moduleNameMapper: {
+        "src/(.*)": "<rootDir>/src/$1",
+    },
+    modulePathIgnorePatterns: ["src/render.ts", "src/index.ts"],
 };

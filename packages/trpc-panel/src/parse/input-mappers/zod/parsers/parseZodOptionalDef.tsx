@@ -9,5 +9,7 @@ export const parseZodOptionalDef: ParseFunction<
     const parsedInner = zodSelectorFunction(def.innerType._def, refs);
     return {
         ...parsedInner,
+
+        optional: true,
     };
 };

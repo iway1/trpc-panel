@@ -1,4 +1,5 @@
 import { ParsedInputNode, ParseReferences } from "src/parse/parsed-node-types";
+import { nodePropertiesFromRef } from "src/parse/utils";
 import { ZodBigIntDef } from "zod";
 
 export function parseZodBigIntDef(
@@ -7,6 +8,6 @@ export function parseZodBigIntDef(
 ): ParsedInputNode {
     return {
         type: "number",
-        ...refs,
+        ...nodePropertiesFromRef(refs),
     };
 }

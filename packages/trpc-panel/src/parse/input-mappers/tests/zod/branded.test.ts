@@ -1,8 +1,7 @@
 import { defaultReferences } from "../../defaultReferences";
-import { zodSelectorFunction } from "../../zod/selector";
-import { ZodDefWithType } from "../../zod/zod-types";
 import { ParsedInputNode } from "../../../parsed-node-types";
-import { z, ZodType } from "zod";
+import { z, ZodBrandedDef, ZodType } from "zod";
+import { parseZodBrandedDef } from "../../zod/parsers/parseZodBrandedDef";
 
 describe("Parsed ZodBranded", () => {
     it("should parse branded nodes as their base zod type", () => {
@@ -26,11 +25,11 @@ describe("Parsed ZodBranded", () => {
             },
         ];
         for (var testCase of testCases) {
-            const parsed = zodSelectorFunction(
-                testCase.zodType._def as unknown as ZodDefWithType,
+            const parsed = parseZodBrandedDef(
+                testCase.zodType._def as unknown as ZodBrandedDef<any>,
                 defaultReferences()
             );
-            expect(parsed).toStrictEqual("");
+            expect(parsed).toStrictEqual(testCase.node);
         }
     });
 });

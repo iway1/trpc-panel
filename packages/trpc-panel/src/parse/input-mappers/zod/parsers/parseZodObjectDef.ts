@@ -1,3 +1,4 @@
+import { nodePropertiesFromRef } from "src/parse/utils";
 import { ZodObjectDef } from "zod";
 import {
     ObjectNode,
@@ -23,6 +24,6 @@ export const parseZodObjectDef: ParseFunction<
     return {
         type: "object",
         children,
-        path: refs.path,
+        ...nodePropertiesFromRef(refs),
     };
 };

@@ -14,9 +14,6 @@
     "rootDir": "./",
     "esModuleInterop": true, 
     "moduleResolution": "node", 
-    "paths": {
-      "src": ["src/*"]
-    }, 
 
     "sourceMap": true,
     "sourceRoot": "/",

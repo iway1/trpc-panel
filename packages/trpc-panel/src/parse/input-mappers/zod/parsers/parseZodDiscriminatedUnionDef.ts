@@ -1,3 +1,4 @@
+import { nodePropertiesFromRef } from "src/parse/utils";
 import { AnyZodObject, ZodFirstPartyTypeKind } from "zod";
 import {
     DiscriminatedUnionNode,
@@ -53,7 +54,6 @@ export const parseZodDiscriminatedUnionDef: ParseFunction<
         zodSelectorFunction(zodObj._def, refs),
     ]);
     // Not sure why this is here but seems important
-    // if (nodeEntries.some((e) => e[1] === null)) return null;
 
     const nodesMap = Object.fromEntries(nodeEntries);
 
@@ -62,6 +62,6 @@ export const parseZodDiscriminatedUnionDef: ParseFunction<
         discriminatedUnionValues: entries.map(([n]) => n),
         discriminatedUnionChildrenMap: nodesMap,
         discriminatorName: def.discriminator,
-        ...refs,
+        ...nodePropertiesFromRef(refs),
     };
 };

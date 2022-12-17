@@ -1,5 +1,6 @@
 import { NumberNode, ParseFunction } from "../../../parsed-node-types";
 import { ZodNumberDef } from "zod";
+import { nodePropertiesFromRef } from "src/parse/utils";
 
 export const parseZodNumberDef: ParseFunction<ZodNumberDef, NumberNode> = (
     _,
@@ -7,6 +8,6 @@ export const parseZodNumberDef: ParseFunction<ZodNumberDef, NumberNode> = (
 ) => {
     return {
         type: "number",
-        path: references.path,
+        ...nodePropertiesFromRef(references),
     };
 };

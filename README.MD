@@ -62,17 +62,41 @@ There are no plans to support v9 or other previous tRPC versions.
 
 The following are supported
 
--   ZodObject
--   ZodString
--   ZodNumber
--   ZodEnum
--   ZodDiscriminatedUnion
--   ZodArray
--   ZodLiteral (These don't show up in the UI but will be send on form submission)
+-   Array
+-   BigInt
+-   Boolean
+-   Branded
+-   Default
+-   DiscriminatedUnion
+-   Effects
+-   Enum
+-   Literal
+-   Nullable
+-   Null
+-   Nullish
+-   Number
+-   Object
+-   Optional
+-   Promise
+-   String
+-   Undefined
 
-## Contributing / Learn More
-If there's a feature you'd like from `trpc-panel`, please open an issue! Trpc panel is looking for guidance from the community on which features it should prioritize adding.
+Planning on adding additional support shortly for the following types:
 
-If you'd like to contribute check out our [contribution guide](https://trpcpanel.io/docs/contributing). 
+-   Union
+-   Tuple
+-   Record
+-   Never
+-   Map (superjson only)
+-   Set (superjson only)
+-   Date (superjson only)
+-   Any
+
+
+## Learn More
 
 If you just want to learn more about trpc panel, checkout the main [docs site](https://trpcpanel.io)
+
+### Feature Roadmap
+
+You can view planned features roadmap here: https://trello.com/b/nflGRDxe/trpc-panel-featues-road-map

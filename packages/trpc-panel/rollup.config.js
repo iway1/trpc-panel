@@ -1,4 +1,3 @@
-import pkg from "./package.json" assert { type: "json" };
 import typescript from "@rollup/plugin-typescript";
 import json from "@rollup/plugin-json";
 import babel from "@rollup/plugin-babel";
@@ -6,11 +5,11 @@ import { nodeResolve } from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import copy from "rollup-plugin-copy";
 import replace from "@rollup/plugin-replace";
-import { terser } from "rollup-plugin-terser";
+import terser from "@rollup/plugin-terser";
 import postcss from "rollup-plugin-postcss";
 import path from "path";
-const isWatching =
-    process.argv.includes("-w") || process.argv.includes("--watch");
+const isWatching = process.env.ROLLUP_WATCH;
+
 export default [
     {
         input: "src/index.ts",
@@ -25,8 +24,8 @@ export default [
             // commonjs(),
         ],
         output: [
-            { file: pkg.main, format: "cjs", sourcemap: true },
-            { file: pkg.module, format: "es" },
+            { file: "lib/index.js", format: "cjs", sourcemap: true },
+            { file: "lib/index.mjs", format: "es" },
         ],
     },
     {

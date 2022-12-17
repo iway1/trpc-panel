@@ -4,5 +4,6 @@ export function defaultReferences(): ParseReferences {
     return {
         path: [],
         options: {},
+        optional: false,
     };
 }
