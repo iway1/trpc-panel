@@ -19,7 +19,7 @@ Check out our test app [here](https://app.trpcpanel.io)
 - Compile-step free (simply injects an object representing your router into a pre-bundled application)
 - SideNav to quickly find procedures of interest
 
-## Quick Start
+## Quick Starts
 
 Install with your preferred package manager:
 
