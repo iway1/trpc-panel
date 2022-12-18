@@ -243,7 +243,31 @@ export const testRouter = t.router({
     .meta({
       description: "This is a description",
     })
+    .input(
+      z.object({
+        id: z.string().describe("The id of the thing."),
+        searchTerm: z
+          .string()
+          .optional()
+          .describe("The name of the thing to search for."),
+      })
+    )
     .query(() => {
       return "Was that described well enough?";
+    }),
+  sayHello: t.procedure
+    .input(
+      z.object({
+        name: z.string().describe("The name to say hello too."),
+      })
+    )
+    .query(({ input }) => {
+      return { greeting: `Hello ${input.name}!` };
+    }),
+  sayHello2: t.procedure
+    .meta({ /* 👉 */ description: "This shows in the panel." })
+    .input(z.object({ name: z.string() }))
+    .query(({ input }) => {
+      return { greeting: `Hello ${input.name}!` };
     }),
 });

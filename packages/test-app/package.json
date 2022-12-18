@@ -28,7 +28,7 @@
     "zod-to-json-schema": "^3.20.1"
   },
   "scripts": {
-    "dev": "LIVE_RELOAD=\"true\" SERVER_URL=\"http://localhost\" TRPC_PATH=\"trpc\" DEV_PORT=\"4000\" SIMULATE_DELAY=\"true\" nodemon ./src/server.ts",
+    "dev": "SERVER_URL=\"http://localhost\" TRPC_PATH=\"trpc\" DEV_PORT=\"4000\" SIMULATE_DELAY=\"true\" ts-node --project tsconfig.json ./src/server.ts",
     "build": "npx tsc --project tsconfig.json",
     "start": "node ./lib/server"
   },

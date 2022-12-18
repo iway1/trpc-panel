@@ -16,7 +16,7 @@ import { CloseIcon } from "@src/react-app/components/icons/CloseIcon";
 import { ObjectField } from "@src/react-app/components/form/fields/ObjectField";
 import { fullFormats } from "ajv-formats/dist/formats";
 import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
-import { DescriptionSection } from "@src/react-app/components/form/ProcedureForm/DescriptionSection";
+import { DocumentationSection } from "@src/react-app/components/form/ProcedureForm/DescriptionSection";
 
 const TRPCErrorSchema = z.object({
   shape: z.object({
@@ -140,39 +140,34 @@ export function ProcedureForm({
         className="flex flex-col space-y-4"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div
-          className="flex flex-col"
-        >
-        <DescriptionSection
-          extraData={procedure.extraData}
-        />
-        {procedure.node.type == "object" && (
-          <FormSection
-            title="Input"
-            topRightElement={<XButton control={control} reset={reset} />}
-          >
-            {Object.keys(procedure.node.children).length > 0 && (
-              <ObjectField
-                node={
-                  procedure.node as ParsedInputNode & {
-                    type: "object";
+        <div className="flex flex-col">
+          <DocumentationSection extraData={procedure.extraData} />
+          {procedure.node.type == "object" && (
+            <FormSection
+              title="Input"
+              topRightElement={<XButton control={control} reset={reset} />}
+            >
+              {Object.keys(procedure.node.children).length > 0 && (
+                <ObjectField
+                  node={
+                    procedure.node as ParsedInputNode & {
+                      type: "object";
+                    }
                   }
-                }
-                control={control}
-                name={procedure.node.path.join(".")}
-                topLevel
-              />
-            )}
+                  control={control}
+                  name={procedure.node.path.join(".")}
+                  topLevel
+                />
+              )}
 
-            <ProcedureFormButton
-              text={`Execute ${name}`}
-              colorScheme={"neutral"}
-              loading={query.fetchStatus === "fetching" || mutation.isLoading}
-            />
-          </FormSection>
-        )}
+              <ProcedureFormButton
+                text={`Execute ${name}`}
+                colorScheme={"neutral"}
+                loading={query.fetchStatus === "fetching" || mutation.isLoading}
+              />
+            </FormSection>
+          )}
         </div>
-        
       </form>
       <div className="flex flex-col space-y-4">
         {data && <RequestResult result={data} />}

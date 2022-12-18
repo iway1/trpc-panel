@@ -8,11 +8,10 @@ import morgan from "morgan";
 import { fileURLToPath } from "node:url";
 import { dirname } from "node:path";
 import * as trpcExpress from "@trpc/server/adapters/express";
-import { TRPCError } from "@trpc/server";
 import { inferAsyncReturnType } from "@trpc/server";
 import cors from "cors";
 import superjson from "superjson";
-import { testRouter } from "./router";
+import { testRouter } from "./router.js";
 
 const serverUrl = process.env.SERVER_URL;
 const trpcPath = process.env.TRPC_PATH;
@@ -31,18 +30,6 @@ const t = initTRPC
   .context<ContextType>()
   .meta<TRPCPanelMeta>()
   .create({ transformer: superjson });
-
-if (liveReload) {
-  const liveReloadServer = livereload.createServer();
-  liveReloadServer.server.once("connection", () => {
-    console.log("Connection");
-    setTimeout(() => {
-      liveReloadServer.refresh("/test-router");
-      console.log("Reloaded");
-    }, 100);
-  });
-  liveReloadServer.watch("./");
-}
 
 async function createContext(opts: trpcExpress.CreateExpressContextOptions) {
   const authHeader = opts.req.headers["authorization"];
