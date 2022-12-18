@@ -1,3 +1,4 @@
+import { TRPCPanelMetaSchema } from "@src/meta";
 import { z } from "zod";
 
 const ZodObjectSchema = z.object({});
@@ -10,7 +11,7 @@ export function isZodObject(
 
 const SharedProcedureDefPropertiesSchema = z.object({
   inputs: z.unknown().array(),
-  meta: z.unknown(),
+  meta: TRPCPanelMetaSchema.optional(),
 });
 
 const QueryDefSchema = SharedProcedureDefPropertiesSchema.merge(

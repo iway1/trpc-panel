@@ -1,7 +1,7 @@
 import React from "react";
 import { CollapsableSection } from "@src/react-app/components/CollapsableSection";
 import { ProcedureForm } from "@src/react-app/components/form/ProcedureForm";
-import { ParsedRouter } from "../../parse/parse-router";
+import { ParsedRouter } from "../../parse/parseRouter";
 
 export function RouterContainer({
   router,
@@ -32,7 +32,7 @@ export function RouterContainer({
         {Object.entries(router.children).map(
           ([childName, routerOrProcedure]) => {
             return (
-              <div>
+              <div key={childName}>
                 {routerOrProcedure.nodeType == "router" ? (
                   <RouterContainer
                     name={childName}

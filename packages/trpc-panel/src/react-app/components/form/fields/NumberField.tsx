@@ -1,7 +1,7 @@
 import { Control, useController } from "react-hook-form";
 import React, { useEffect, useState } from "react";
 import { BaseTextField } from "./base/BaseTextField";
-import type { ParsedInputNode } from "@src/parse/parsed-node-types";
+import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
 
 export function NumberField({
   name,

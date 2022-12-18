@@ -1,6 +1,6 @@
 import { defaultReferences } from "@src/parse/input-mappers/defaultReferences";
 import { parseZodUndefinedDef } from "@src/parse/input-mappers/zod/parsers/parseZodUndefinedDef";
-import { LiteralNode } from "@src/parse/parsed-node-types";
+import { LiteralNode } from "@src/parse/parseNodeTypes";
 import { z } from "zod";
 
 describe("Parse ZodUndefined", () => {

@@ -1,8 +1,11 @@
 import { initTRPC } from "@trpc/server";
-import { ObjectNode } from "@src/parse/parsed-node-types";
+import { ObjectNode } from "@src/parse/parseNodeTypes";
 import { z } from "zod";
+import { TRPCPanelMeta } from "@src/meta";
+import { zodToJsonSchema } from "zod-to-json-schema";
+import { ParsedProcedure } from "@src/parse/parseProcedure";
 
-export const testTrpcInstance = initTRPC.create({});
+export const testTrpcInstance = initTRPC.meta<TRPCPanelMeta>().create({});
 
 export const parseTestRouterInputSchema = z.object({
   id: z.string(),
@@ -86,11 +89,37 @@ export const expectedTestRouterInputParsedNode: ObjectNode = {
   },
 };
 
+export const testQueryExpectedParseResult: ParsedProcedure = {
+  nodeType: "procedure",
+  node: expectedTestRouterInputParsedNode,
+  inputSchema: zodToJsonSchema(parseTestRouterInputSchema),
+  procedureType: "query",
+  pathFromRootRouter: ["testQuery"],
+  extraData: {
+    parameterDescriptions: {}
+  },
+};
+
+export const testMutationExpectedParseResult: ParsedProcedure = {
+  nodeType: "procedure",
+  node: expectedTestRouterInputParsedNode,
+  inputSchema: zodToJsonSchema(parseTestRouterInputSchema),
+  procedureType: "mutation",
+  pathFromRootRouter: ["testMutation"],
+  extraData: {
+    parameterDescriptions: {}
+  },
+};
+
+export const testQuery = testTrpcInstance.procedure
+  .input(parseTestRouterInputSchema)
+  .query(() => "Nada");
+
+export const testMutation = testTrpcInstance.procedure
+  .input(parseTestRouterInputSchema)
+  .mutation(() => "Nope");
+
 export const parseTestRouter = testTrpcInstance.router({
-  testQuery: testTrpcInstance.procedure
-    .input(parseTestRouterInputSchema)
-    .query(() => "Nada"),
-  testMutation: testTrpcInstance.procedure
-    .input(parseTestRouterInputSchema)
-    .mutation(() => "Nope"),
+  testQuery,
+  testMutation,
 });

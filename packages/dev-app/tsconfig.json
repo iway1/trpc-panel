@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "baseUrl": "./",
+    "jsx": "react-jsx",
+    "paths": {
+      "test-app": ["../test-app"],
+      "trpc-panel": ["../trpc-panel"],
+      "react": ["../trpc-panel/node_modules/react"],
+      "react-dom": ["../trpc-panel/node_modules/react-dom"],
+      "@tanstack/react-query": ["../trpc-panel/node_modules/@tanstack/react-query"],
+      "@trpc/react-query": ["../trpc-panel/node_modules/@trpc/react-query"],
+      "@src": ["../trpc-panel/src"]
+    }
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

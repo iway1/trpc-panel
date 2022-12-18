@@ -1,4 +1,4 @@
-import type { ParsedInputNode } from "@src/parse/parsed-node-types";
+import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
 
 // TODO - Use an actual type instead of any? Not sure if it's really worth it or not.
 export function defaultFormValuesForNode(node: ParsedInputNode): any {

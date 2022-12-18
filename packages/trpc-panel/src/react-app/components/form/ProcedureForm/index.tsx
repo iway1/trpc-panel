@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Control, useForm, useFormState } from "react-hook-form";
-import { ParsedProcedure } from "../../../../parse/parse-router";
+import type { ParsedProcedure } from "@src/parse/parseProcedure";
 import { ajvResolver } from "@hookform/resolvers/ajv";
 import { defaultFormValuesForNode } from "@src/react-app/components/form/utils";
 import { trpc } from "@src/react-app/trpc";
@@ -15,7 +15,8 @@ import { CollapsableSection } from "@src/react-app/components/CollapsableSection
 import { CloseIcon } from "@src/react-app/components/icons/CloseIcon";
 import { ObjectField } from "@src/react-app/components/form/fields/ObjectField";
 import { fullFormats } from "ajv-formats/dist/formats";
-import type { ParsedInputNode } from "@src/parse/parsed-node-types";
+import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
+import { DescriptionSection } from "@src/react-app/components/form/ProcedureForm/DescriptionSection";
 
 const TRPCErrorSchema = z.object({
   shape: z.object({
@@ -139,6 +140,12 @@ export function ProcedureForm({
         className="flex flex-col space-y-4"
         onSubmit={handleSubmit(onSubmit)}
       >
+        <div
+          className="flex flex-col"
+        >
+        <DescriptionSection
+          extraData={procedure.extraData}
+        />
         {procedure.node.type == "object" && (
           <FormSection
             title="Input"
@@ -164,6 +171,8 @@ export function ProcedureForm({
             />
           </FormSection>
         )}
+        </div>
+        
       </form>
       <div className="flex flex-col space-y-4">
         {data && <RequestResult result={data} />}

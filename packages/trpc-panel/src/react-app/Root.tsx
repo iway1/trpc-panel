@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { RouterContainer } from "./components/RouterContainer";
-import type { ParsedRouter } from "../parse/parse-router";
+import type { ParsedRouter } from "../parse/parseRouter";
 import { RenderOptions } from "@src/render";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createTRPCReact, httpBatchLink } from "@trpc/react-query";
 import {
   HeadersContext,
   useHeaders,
-} from "@src/react-app/components/HeadersContext";
+} from "@src/react-app/components/contexts/HeadersContext";
 import { HeadersPopup } from "@src/react-app/components/HeadersPopup";
 import { Toaster } from "react-hot-toast";
 import { CollapsableContextProvider } from "@src/react-app/components/CollapsableContext";
@@ -24,7 +24,29 @@ export function RootComponent({
   options: RenderOptions;
   trpc: ReturnType<typeof createTRPCReact>;
 }) {
-  const [queryClient] = useState(() => new QueryClient());
+  const headers = useHeaders();
+  return (
+    <CollapsableContextProvider>
+      <HeadersContext.Provider value={headers}>
+        <ClientProviders trpc={trpc} options={options}>
+          <div className="flex flex-col w-full h-full flex-1 relative">
+            <AppInnards rootRouter={rootRouter} />
+          </div>
+        </ClientProviders>
+      </HeadersContext.Provider>
+    </CollapsableContextProvider>
+  );
+}
+
+function ClientProviders({
+  trpc,
+  children,
+  options,
+}: {
+  trpc: ReturnType<typeof createTRPCReact>;
+  children: ReactNode;
+  options: RenderOptions;
+}) {
   const headers = useHeaders();
   const [trpcClient] = useState(() =>
     trpc.createClient({
@@ -40,18 +62,12 @@ export function RootComponent({
       })(),
     })
   );
+  const [queryClient] = useState(() => new QueryClient());
+
   return (
-    <CollapsableContextProvider>
-      <HeadersContext.Provider value={headers}>
-        <trpc.Provider queryClient={queryClient} client={trpcClient}>
-          <QueryClientProvider client={queryClient}>
-            <div className="flex flex-col w-full h-full flex-1 relative">
-              <AppInnards rootRouter={rootRouter} />
-            </div>
-          </QueryClientProvider>
-        </trpc.Provider>
-      </HeadersContext.Provider>
-    </CollapsableContextProvider>
+    <trpc.Provider queryClient={queryClient} client={trpcClient}>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </trpc.Provider>
   );
 }
 

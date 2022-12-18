@@ -1,9 +1,6 @@
 import { nodePropertiesFromRef } from "@src/parse/utils";
 import { AnyZodObject, ZodFirstPartyTypeKind } from "zod";
-import {
-  DiscriminatedUnionNode,
-  ParseFunction,
-} from "../../../parsed-node-types";
+import { DiscriminatedUnionNode, ParseFunction } from "../../../parseNodeTypes";
 import { zodSelectorFunction } from "../selector";
 
 type OptionsMap = Map<string, AnyZodObject>;
@@ -11,11 +8,13 @@ type OptionsMap = Map<string, AnyZodObject>;
 type ZodDiscriminatedUnionThreePointTwenty = {
   optionsMap: OptionsMap;
   discriminator: string;
+  description?: string,
 };
 
 type ZodDiscriminatedUnionPreThreePointTwenty = {
   options: OptionsMap;
   discriminator: string;
+  description?: string,
 };
 
 export type ZodDiscriminatedUnionDefUnversioned =
@@ -53,7 +52,7 @@ export const parseZodDiscriminatedUnionDef: ParseFunction<
   ]);
 
   const nodesMap = Object.fromEntries(nodeEntries);
-
+  refs.addDataFunctions.addDescriptionIfExists(def, refs);
   return {
     type: "discriminated-union",
     discriminatedUnionValues: entries.map(([n]) => n),

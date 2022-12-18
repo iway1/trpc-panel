@@ -1,5 +1,5 @@
 import { defaultReferences } from "../../defaultReferences";
-import { ParsedInputNode } from "../../../parsed-node-types";
+import { ParsedInputNode } from "../../../parseNodeTypes";
 import { z, ZodBrandedDef, ZodType } from "zod";
 import { parseZodBrandedDef } from "../../zod/parsers/parseZodBrandedDef";
 

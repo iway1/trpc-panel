@@ -5,7 +5,7 @@ import {
   ParsedInputNode,
   ParseFunction,
   UnsupportedNode,
-} from "../../../parsed-node-types";
+} from "../../../parseNodeTypes";
 import { zodSelectorFunction } from "../selector";
 
 export const parseZodObjectDef: ParseFunction<
@@ -21,6 +21,7 @@ export const parseZodObjectDef: ParseFunction<
     });
     children[propertyName] = node;
   }
+  refs.addDataFunctions.addDescriptionIfExists(def, refs);
   return {
     type: "object",
     children,

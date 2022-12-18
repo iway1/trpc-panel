@@ -1,6 +1,6 @@
 import { defaultReferences } from "../../defaultReferences";
 import { parseZodBigIntDef } from "../../zod/parsers/parseZodBigIntDef";
-import { NumberNode } from "../../../parsed-node-types";
+import { NumberNode } from "../../../parseNodeTypes";
 import { z } from "zod";
 
 describe("Zod BigInt", () => {

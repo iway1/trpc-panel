@@ -1,6 +1,6 @@
 import { defaultReferences } from "../../defaultReferences";
 import { parseZodBooleanFieldDef } from "../../zod/parsers/parseZodBooleanFieldDef";
-import { BooleanNode } from "../../../parsed-node-types";
+import { BooleanNode } from "../../../parseNodeTypes";
 import { z } from "zod";
 
 describe("Parse Zod Boolean", () => {

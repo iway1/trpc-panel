@@ -1,10 +1,11 @@
 import { nodePropertiesFromRef } from "@src/parse/utils";
 import { ZodBooleanDef } from "zod";
-import { BooleanNode, ParseFunction } from "../../../parsed-node-types";
+import { BooleanNode, ParseFunction } from "../../../parseNodeTypes";
 
 export const parseZodBooleanFieldDef: ParseFunction<
   ZodBooleanDef,
   BooleanNode
-> = (_, ref) => {
-  return { type: "boolean", ...nodePropertiesFromRef(ref) };
+> = (def, refs) => {
+  refs.addDataFunctions.addDescriptionIfExists(def, refs);
+  return { type: "boolean", ...nodePropertiesFromRef(refs) };
 };
