@@ -5,7 +5,7 @@ import { dirname } from "node:path";
 import {
   parseRouterWithOptions,
   TrpcPanelExtraOptions,
-} from "./parse/parse-router";
+} from "./parse/parseRouter";
 
 export type RenderOptions = {
   url: string;

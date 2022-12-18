@@ -1,4 +1,5 @@
-import { ParsedProcedure, ParsedRouter } from "@src/parse/parse-router";
+import { ParsedRouter } from "@src/parse/parseRouter";
+import { ParsedProcedure } from "@src/parse/parseProcedure";
 import { ColorSchemeType } from "@src/react-app/components/CollapsableSection";
 
 export function solidColorBg(type: ColorSchemeType) {

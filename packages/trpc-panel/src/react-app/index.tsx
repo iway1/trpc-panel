@@ -1,4 +1,4 @@
-import type { ParsedRouter } from "../parse/parse-router";
+import type { ParsedRouter } from "../parse/parseRouter";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RootComponent } from "./Root";
@@ -12,7 +12,6 @@ const routerDefinition: ParsedRouter =
 
 // Here are other options
 export const options = "{{options}}" as unknown as RenderOptions;
-
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root;
 trpc;

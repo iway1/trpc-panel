@@ -1,6 +1,6 @@
 import React from "react";
 import { Control, useController } from "react-hook-form";
-import type { ParsedInputNode } from "@src/parse/parsed-node-types";
+import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
 import { BaseSelectField } from "@src/react-app/components/form/fields/base/BaseSelectField";
 import { ObjectField } from "@src/react-app/components/form/fields/ObjectField";
 import { defaultFormValuesForNode } from "@src/react-app/components/form/utils";

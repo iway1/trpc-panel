@@ -1,6 +1,6 @@
 import { defaultReferences } from "@src/parse/input-mappers/defaultReferences";
 import { parseZodEffectsDef } from "@src/parse/input-mappers/zod/parsers/parseZodEffectsDef";
-import { StringNode } from "@src/parse/parsed-node-types";
+import { StringNode } from "@src/parse/parseNodeTypes";
 import { z } from "zod";
 
 describe("Parse ZodEffects", () => {

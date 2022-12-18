@@ -1,0 +1,41 @@
+{
+  "name": "dev-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+
+    "@trpc/client": "^10.5.0",
+
+    "@trpc/server": "^10.5.0",
+    "fs": "^0.0.1-security",
+
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "superjson": "^1.12.0",
+    "zod": "^3.20.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.9",
+    "@vitejs/plugin-react": "^3.0.0",
+    "autoprefixer": "^10.4.13",
+    "css": "^3.0.0",
+    "postcss": "^8.4.20",
+    "react": "18.2.0",
+    "tailwind": "^4.0.0",
+    "tailwindcss": "^3.2.4",
+    "typescript": "^4.9.3",
+    "vite": "^4.0.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@trpc/react-query": "^10.5.0",
+    "@tanstack/react-query": "^4.20.4"
+  }
+}

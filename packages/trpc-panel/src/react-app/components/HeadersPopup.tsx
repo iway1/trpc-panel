@@ -1,4 +1,4 @@
-import { useHeadersContext } from "@src/react-app/components/HeadersContext";
+import { useHeadersContext } from "@src/react-app/components/contexts/HeadersContext";
 import React, { useEffect, useState } from "react";
 import { BaseTextField } from "@src/react-app/components/form/fields/base/BaseTextField";
 import { FieldError } from "@src/react-app/components/form/fields/FieldError";

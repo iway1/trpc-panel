@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Control, useController, useWatch } from "react-hook-form";
-import type { ParsedInputNode } from "@src/parse/parsed-node-types";
+import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
 import { Field } from "../Field";
 import { defaultFormValuesForNode } from "@src/react-app/components/form/utils";
 import XIcon from "@mui/icons-material/CloseOutlined";

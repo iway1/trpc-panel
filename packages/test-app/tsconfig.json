@@ -12,13 +12,12 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true
-  
+    "skipLibCheck": true,
   },
   "ts-node": {
     "esm": true
   },
   "include": [
-    "src"
-  ]
+    "./src/**/*"
+  ],
 }

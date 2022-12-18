@@ -1,6 +1,6 @@
 import { defaultReferences } from "@src/parse/input-mappers/defaultReferences";
 import { parseZodNullableDef } from "@src/parse/input-mappers/zod/parsers/parseZodNullableDef";
-import { NumberNode } from "@src/parse/parsed-node-types";
+import { NumberNode } from "@src/parse/parseNodeTypes";
 import { z } from "zod";
 
 describe("Parse ZodNullable", () => {

@@ -1,6 +1,4 @@
-import { ParsedInputNode } from "../../parsed-node-types";
 import {
-  z,
   ZodArrayDef,
   ZodBigIntDef,
   ZodBooleanDef,
@@ -20,7 +18,7 @@ import {
   ZodUndefinedDef,
 } from "zod";
 import { parseZodStringDef } from "./parsers/parseZodStringDef";
-import { ParserSelectorFunction } from "../../parsed-node-types";
+import { ParserSelectorFunction } from "../../parseNodeTypes";
 import { ZodDefWithType } from "./zod-types";
 import { parseZodArrayDef } from "./parsers/parseZodArrayDef";
 import { parseZodBooleanFieldDef } from "./parsers/parseZodBooleanFieldDef";
@@ -92,13 +90,3 @@ export const zodSelectorFunction: ParserSelectorFunction<ZodDefWithType> = (
   }
   return { type: "unsupported", path: references.path };
 };
-
-export function mapZodObjectToNode(
-  object: z.AnyZodObject
-): ParsedInputNode | null {
-  const parsed = zodSelectorFunction(object._def, {
-    path: [],
-    options: {},
-  });
-  return parsed;
-}

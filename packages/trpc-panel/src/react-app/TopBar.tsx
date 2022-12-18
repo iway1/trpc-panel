@@ -1,5 +1,5 @@
 import React from "react";
-import { useHeadersContext } from "@src/react-app/components/HeadersContext";
+import { useHeadersContext } from "@src/react-app/components/contexts/HeadersContext";
 import MailLockIcon from "@mui/icons-material/MailLockOutlined";
 import { LogoSvg } from "@src/react-app/components/LogoSvg";
 

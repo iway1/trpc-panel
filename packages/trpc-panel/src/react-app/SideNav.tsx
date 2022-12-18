@@ -1,5 +1,6 @@
 import React from "react";
-import { ParsedProcedure, ParsedRouter } from "../parse/parse-router";
+import type { ParsedRouter } from "../parse/parseRouter";
+import type { ParsedProcedure } from "@src/parse/parseProcedure";
 import { useCollapsableContext } from "@src/react-app/components/CollapsableContext";
 import { Chevron } from "@src/react-app/components/Chevron";
 import {

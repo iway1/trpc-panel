@@ -1,6 +1,6 @@
 import { defaultReferences } from "@src/parse/input-mappers/defaultReferences";
 import { parseZodPromiseDef } from "@src/parse/input-mappers/zod/parsers/parseZodPromiseDef";
-import { NumberNode } from "@src/parse/parsed-node-types";
+import { NumberNode } from "@src/parse/parseNodeTypes";
 import { z } from "zod";
 
 describe("Parse ZodPromise", () => {

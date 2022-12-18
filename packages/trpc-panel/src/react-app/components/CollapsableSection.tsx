@@ -56,7 +56,7 @@ export function CollapsableSection({
           </span>
 
           <Chevron
-            className={"w-4 h-4 mr-2 "}
+            className={"w-4 h-4 mr-2 animate-transform transition-transform"}
             direction={shown ? "up" : "down"}
           />
         </button>

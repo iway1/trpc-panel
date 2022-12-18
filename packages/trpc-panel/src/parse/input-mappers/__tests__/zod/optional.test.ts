@@ -1,6 +1,6 @@
 import { defaultReferences } from "@src/parse/input-mappers/defaultReferences";
 import { parseZodOptionalDef } from "@src/parse/input-mappers/zod/parsers/parseZodOptionalDef";
-import { NumberNode, ObjectNode } from "@src/parse/parsed-node-types";
+import { NumberNode, ObjectNode } from "@src/parse/parseNodeTypes";
 import { z } from "zod";
 
 describe("Parse ZodOptional", () => {

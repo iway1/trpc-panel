@@ -16,7 +16,7 @@ export function Chevron({
         `${(() => {
           switch (direction) {
             case "up":
-              return " rotate-90";
+              return " -rotate-[270deg]";
             case "down":
               return "-rotate-90";
             case "right":

@@ -1,6 +1,6 @@
 import { defaultReferences } from "@src/parse/input-mappers/defaultReferences";
 import { parseZodEnumDef } from "@src/parse/input-mappers/zod/parsers/parseZodEnumDef";
-import { EnumNode } from "@src/parse/parsed-node-types";
+import { EnumNode } from "@src/parse/parseNodeTypes";
 import { z } from "zod";
 
 describe("Parse ZodEnum", () => {
