@@ -4,7 +4,7 @@ import MailLockIcon from "@mui/icons-material/MailLockOutlined";
 import { LogoSvg } from "@src/react-app/components/LogoSvg";
 import { useIsMac } from "@src/react-app/components/hooks/useIsMac";
 import Search from "@mui/icons-material/Search";
-import { useSearchContext } from "@src/react-app/components/contexts/SearchContext";
+import { useSearch } from "@src/react-app/components/contexts/SearchStore";
 
 export function TopBar() {
   const { setHeadersPopupShown } = useHeadersContext();
@@ -28,7 +28,8 @@ export function TopBar() {
 
 // import Search from '@mui/icons-material/Search'
 export function RouterSearchTooltip() {
-  const { searchOpen, setSearchOpen } = useSearchContext();
+  const searchOpen = useSearch((s) => s.searchOpen);
+  const setSearchOpen = useSearch((s) => s.setSearchOpen);
 
   const isMac = useIsMac();
   const helperText = isMac ? "⌘ + P" : "Ctrl + P";

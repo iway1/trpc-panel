@@ -1,6 +1,6 @@
 import { useAllPaths } from "@src/react-app/components/contexts/AllPathsContext";
 import { useEnableInputGlobalHotkeys } from "@src/react-app/components/contexts/HotKeysContext";
-import { useSearchContext } from "@src/react-app/components/contexts/SearchContext";
+import { useSearch } from "@src/react-app/components/contexts/SearchStore";
 import { useSiteNavigationContext } from "@src/react-app/components/contexts/SiteNavigationContext";
 import { ItemTypeIcon } from "@src/react-app/components/ItemTypeIcon";
 import fuzzysort from "fuzzysort";
@@ -31,7 +31,7 @@ export function useFuzzySort({
 }
 
 export function SearchOverlay({ children }: { children: ReactNode }) {
-  const { searchOpen } = useSearchContext();
+  const searchOpen = useSearch((s) => s.searchOpen);
   return (
     <>
       {children}
@@ -45,7 +45,9 @@ export function SearchOverlay({ children }: { children: ReactNode }) {
 }
 
 function SearchInput() {
-  const { searchText, setSearchText, finish } = useSearchContext();
+  const searchText = useSearch((s) => s.searchText);
+  const setSearchText = useSearch((s) => s.setSearchText);
+  const finish = useSearch((s) => s.finish);
   const { openAndNavigateTo } = useSiteNavigationContext();
   const paths = useAllPaths();
   const results = useFuzzySort({

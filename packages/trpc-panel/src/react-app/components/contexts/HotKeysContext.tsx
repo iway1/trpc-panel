@@ -1,4 +1,4 @@
-import { useSearchContext } from "@src/react-app/components/contexts/SearchContext";
+import { useSearch } from "@src/react-app/components/contexts/SearchStore";
 import React, {
   createContext,
   MutableRefObject,
@@ -17,7 +17,8 @@ interface HotKeysContext {
 const HotKeysContext = createContext<HotKeysContext | null>(null);
 
 export function HotKeysContextProvider({ children }: { children: ReactNode }) {
-  const { searchOpen, setSearchOpen } = useSearchContext();
+  const searchOpen = useSearch((s) => s.searchOpen);
+  const setSearchOpen = useSearch((s) => s.setSearchOpen);
 
   const toggleSearch = useCallback(
     () => setSearchOpen(!searchOpen),
