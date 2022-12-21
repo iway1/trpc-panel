@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Control, useForm, useFormState } from "react-hook-form";
 import type { ParsedProcedure } from "@src/parse/parseProcedure";
 import { ajvResolver } from "@hookform/resolvers/ajv";
@@ -47,6 +47,7 @@ export function ProcedureForm({
   // undefined => request successful but nothing returned from procedure
   const [mutationResponse, setMutationResponse] = useState<any>(null);
   const [queryInput, setQueryInput] = useState<any>(null);
+  const formRef = useRef<HTMLFormElement | null>(null);
   const context = trpc.useContext();
 
   function getProcedure() {
@@ -135,10 +136,12 @@ export function ProcedureForm({
       }
       fullPath={procedure.pathFromRootRouter}
       sectionType={procedure.procedureType}
+      focusOnScrollRef={formRef}
     >
       <form
         className="flex flex-col space-y-4"
         onSubmit={handleSubmit(onSubmit)}
+        ref={formRef}
       >
         <div className="flex flex-col">
           <DocumentationSection extraData={procedure.extraData} />

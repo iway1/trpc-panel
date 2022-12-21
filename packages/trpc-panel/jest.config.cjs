@@ -11,5 +11,5 @@ module.exports = {
   moduleNameMapper: {
     "@src/(.*)": "<rootDir>/src/$1",
   },
-  modulePathIgnorePatterns: ["src/render.ts", "src/index.ts", "utils"],
+  modulePathIgnorePatterns: ["src/render.ts", "src/index.ts", "utils", "lib"],
 };

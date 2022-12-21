@@ -1,6 +1,6 @@
-import React, { ReactNode, useEffect, useRef } from "react";
+import React, { MutableRefObject, ReactNode, useEffect, useRef } from "react";
 import { Chevron } from "@src/react-app/components/Chevron";
-import { useCollapsableContext } from "@src/react-app/components/CollapsableContext";
+import { useSiteNavigationContext } from "@src/react-app/components/contexts/SiteNavigationContext";
 import {
   backgroundColor,
   solidColorBg,
@@ -15,20 +15,32 @@ export function CollapsableSection({
   children,
   sectionType,
   isRoot,
+  focusOnScrollRef,
 }: {
   titleElement: ReactNode;
   fullPath: string[];
   children: ReactNode;
   sectionType: ColorSchemeType;
   isRoot?: boolean;
+  focusOnScrollRef?: MutableRefObject<HTMLFormElement | null>;
 }) {
-  const { has, togglePath, scrollToPathIfMatches } = useCollapsableContext();
+  const { has, togglePath, scrollToPathIfMatches } = useSiteNavigationContext();
   const shown = has(fullPath);
   const containerRef = useRef<HTMLDivElement | null>(null);
-
   useEffect(() => {
     if (shown && containerRef.current) {
-      scrollToPathIfMatches(fullPath, containerRef.current);
+      if (scrollToPathIfMatches(fullPath, containerRef.current)) {
+        // timeout or it'll immediately submit the form (which shows error messages)
+        const firstChild =
+          focusOnScrollRef &&
+          focusOnScrollRef.current &&
+          findFirstFormChildInput(focusOnScrollRef.current);
+        if (firstChild) {
+          setTimeout(() => {
+            firstChild.focus({ preventScroll: true });
+          }, 0);
+        }
+      }
     }
   }, [shown]);
 
@@ -95,4 +107,14 @@ export function SectionTypeLabel({
       {sectionType.toUpperCase()}
     </span>
   );
+}
+
+function findFirstFormChildInput(formElement: HTMLFormElement) {
+  for (let i = 0; i < formElement.elements.length; i++) {
+    const child = formElement.elements[i];
+    if (child?.tagName === "input" || child?.tagName === "INPUT") {
+      return child as HTMLInputElement;
+    }
+  }
+  return;
 }

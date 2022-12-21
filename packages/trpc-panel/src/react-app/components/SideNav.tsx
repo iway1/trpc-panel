@@ -1,12 +1,10 @@
 import React from "react";
-import type { ParsedRouter } from "../parse/parseRouter";
+import type { ParsedRouter } from "../../parse/parseRouter";
 import type { ParsedProcedure } from "@src/parse/parseProcedure";
-import { useCollapsableContext } from "@src/react-app/components/CollapsableContext";
+import { useSiteNavigationContext } from "@src/react-app/components/contexts/SiteNavigationContext";
 import { Chevron } from "@src/react-app/components/Chevron";
-import {
-  colorSchemeForNode,
-  textColor,
-} from "@src/react-app/components/style-utils";
+import { colorSchemeForNode } from "@src/react-app/components/style-utils";
+import { ItemTypeIcon } from "@src/react-app/components/ItemTypeIcon";
 export function SideNav({
   rootRouter,
 }: // setOpen,
@@ -32,7 +30,7 @@ function SideNavItem({
   node: ParsedRouter | ParsedProcedure;
   path: string[];
 }) {
-  const { togglePath, has, markForScrollTo } = useCollapsableContext();
+  const { togglePath, has, markForScrollTo } = useSiteNavigationContext();
   const shown = has(path) || path.length == 0;
 
   function onClick() {
@@ -50,7 +48,7 @@ function SideNavItem({
           onClick={onClick}
         >
           <span className="flex flex-row items-start">
-            <ItemTypeIcon node={node} />
+            <ItemTypeIcon colorScheme={colorSchemeForNode(node)} />
             {path[path.length - 1]}
           </span>
 
@@ -74,15 +72,5 @@ function SideNavItem({
         </div>
       )}
     </>
-  );
-}
-
-function ItemTypeIcon({ node }: { node: ParsedRouter | ParsedProcedure }) {
-  const scheme = colorSchemeForNode(node);
-  const letter = scheme[0]!.toUpperCase();
-  return (
-    <span className={"font-bold text-white mr-1 " + textColor(scheme)}>
-      {letter}
-    </span>
   );
 }

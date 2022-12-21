@@ -220,6 +220,7 @@ export const testRouter = t.router({
         enum: z.enum(["One", "Two"]),
         optionalEnum: z.enum(["Three", "Four"]).optional(),
         stringArray: z.string().array(),
+        boolean: z.boolean(),
         union: z.discriminatedUnion("disc", [
           z.object({
             disc: z.literal("one"),
