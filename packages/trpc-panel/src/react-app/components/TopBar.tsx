@@ -28,15 +28,19 @@ export function TopBar() {
 
 // import Search from '@mui/icons-material/Search'
 export function RouterSearchTooltip() {
-  const { searchOpen } = useSearchContext();
+  const { searchOpen, setSearchOpen } = useSearchContext();
 
   const isMac = useIsMac();
   const helperText = isMac ? "⌘ + P" : "Ctrl + P";
   if (searchOpen) return null;
   return (
-    <div className="flex flex-row items-center text-neutralSolidTransparent">
+    <button
+      onClick={() => setSearchOpen(true)}
+      type="button"
+      className="flex flex-row items-center text-neutralSolidTransparent"
+    >
       <Search fontSize="small" className="mr-2 color-neutralSolidTransparent" />
       {helperText}
-    </div>
+    </button>
   );
 }
