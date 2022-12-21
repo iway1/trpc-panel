@@ -69,6 +69,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.39.5",
     "react-hot-toast": "^2.4.0",
+    "react-hotkeys-hook": "^4.0.6",
     "rollup": "^3.7.4",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-livereload": "^2.0.5",
@@ -85,6 +86,7 @@
   },
   "dependencies": {
     "fs": "^0.0.1-security",
+    "fuzzysort": "^2.0.4",
     "path": "^0.12.7",
     "url": "^0.11.0",
     "zod-to-json-schema": "^3.20.0"

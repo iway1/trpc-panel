@@ -10,10 +10,14 @@ import {
 } from "@src/react-app/components/contexts/HeadersContext";
 import { HeadersPopup } from "@src/react-app/components/HeadersPopup";
 import { Toaster } from "react-hot-toast";
-import { CollapsableContextProvider } from "@src/react-app/components/CollapsableContext";
-import { SideNav } from "./SideNav";
-import { TopBar } from "./TopBar";
+import { SiteNavigationContextProvider } from "@src/react-app/components/contexts/SiteNavigationContext";
+import { SideNav } from "./components/SideNav";
+import { TopBar } from "./components/TopBar";
 import superjson from "superjson";
+import { SearchContextProvider } from "@src/react-app/components/contexts/SearchContext";
+import { AllPathsContextProvider } from "@src/react-app/components/contexts/AllPathsContext";
+import { HotKeysContextProvider } from "@src/react-app/components/contexts/HotKeysContext";
+import { SearchOverlay } from "@src/react-app/components/SearchInputOverlay";
 
 export function RootComponent({
   rootRouter,
@@ -26,15 +30,23 @@ export function RootComponent({
 }) {
   const headers = useHeaders();
   return (
-    <CollapsableContextProvider>
-      <HeadersContext.Provider value={headers}>
-        <ClientProviders trpc={trpc} options={options}>
-          <div className="flex flex-col w-full h-full flex-1 relative">
-            <AppInnards rootRouter={rootRouter} />
-          </div>
-        </ClientProviders>
-      </HeadersContext.Provider>
-    </CollapsableContextProvider>
+    <SiteNavigationContextProvider>
+      <AllPathsContextProvider rootRouter={rootRouter}>
+        <SearchContextProvider>
+          <HeadersContext.Provider value={headers}>
+            <ClientProviders trpc={trpc} options={options}>
+              <HotKeysContextProvider>
+                <SearchOverlay>
+                  <div className="flex flex-col w-full h-full flex-1 relative">
+                    <AppInnards rootRouter={rootRouter} />
+                  </div>
+                </SearchOverlay>
+              </HotKeysContextProvider>
+            </ClientProviders>
+          </HeadersContext.Provider>
+        </SearchContextProvider>
+      </AllPathsContextProvider>
+    </SiteNavigationContextProvider>
   );
 }
 

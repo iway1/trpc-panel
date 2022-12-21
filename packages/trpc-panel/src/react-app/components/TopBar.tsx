@@ -2,6 +2,9 @@ import React from "react";
 import { useHeadersContext } from "@src/react-app/components/contexts/HeadersContext";
 import MailLockIcon from "@mui/icons-material/MailLockOutlined";
 import { LogoSvg } from "@src/react-app/components/LogoSvg";
+import { useIsMac } from "@src/react-app/components/hooks/useIsMac";
+import Search from "@mui/icons-material/Search";
+import { useSearchContext } from "@src/react-app/components/contexts/SearchContext";
 
 export function TopBar() {
   const { setHeadersPopupShown } = useHeadersContext();
@@ -11,6 +14,7 @@ export function TopBar() {
         <LogoSvg className="rounded-lg w-10 h-10 mr-2" />
         tRPC.panel()
       </span>
+      <RouterSearchTooltip />
       <button
         onClick={() => setHeadersPopupShown(true)}
         className="border border-neutralSolidTransparent py-2 px-4 text-neutralText font-bold rounded-sm shadow-sm"
@@ -18,6 +22,21 @@ export function TopBar() {
         Headers
         <MailLockIcon className="w-6 h-6 ml-1" />
       </button>
+    </div>
+  );
+}
+
+// import Search from '@mui/icons-material/Search'
+export function RouterSearchTooltip() {
+  const { searchOpen } = useSearchContext();
+
+  const isMac = useIsMac();
+  const helperText = isMac ? "⌘ + P" : "Ctrl + P";
+  if (searchOpen) return null;
+  return (
+    <div className="flex flex-row items-center text-neutralSolidTransparent">
+      <Search fontSize="small" className="mr-2 color-neutralSolidTransparent" />
+      {helperText}
     </div>
   );
 }

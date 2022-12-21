@@ -18,8 +18,10 @@ module.exports = {
       routerText: "#9333ea",
       neutralSolid: "#52525b",
       neutralSolidTransparent: "#64748b",
+      selectedListItem: "#063352",
       neutralBg: "#f1f5f922",
       neutralBgDark: "#e2e8f0",
+      neutralBgVeryDark: "#3f3f46",
       neutralText: "#0f172a",
       light: "#f8fafc",
       white: "#fcfcfc", // not actually white btw
