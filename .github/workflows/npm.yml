@@ -5,7 +5,7 @@ on:
     types: [published]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -15,6 +15,7 @@ jobs:
       - run: yarn test:panel
 
   publish-npm:
+    needs: test
     runs-on: ubuntu-latest
     concurrency: "run"
     steps:
