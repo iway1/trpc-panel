@@ -5,10 +5,12 @@ import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
 
 export function TextField({
   name,
+  label,
   control,
   node: inputNode,
 }: {
   name: string;
+  label: string;
   control: Control;
   node: ParsedInputNode;
 }) {
@@ -22,7 +24,7 @@ export function TextField({
       value={field.value ? field.value : ""}
       onChange={field.onChange}
       errorMessage={fieldState.error?.message}
-      label={`${name}${inputNode.optional ? "" : "*"}`}
+      label={`${label}${inputNode.optional ? "" : "*"}`}
       fieldId={inputNode.path.join(".")}
     />
   );

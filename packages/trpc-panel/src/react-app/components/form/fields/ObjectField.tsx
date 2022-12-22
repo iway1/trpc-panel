@@ -6,13 +6,13 @@ import ObjectIcon from "@mui/icons-material/DataObjectOutlined";
 import { InputGroupContainer } from "../../InputGroupContainer";
 
 export function ObjectField({
-  name,
+  label,
   control,
   node,
   topLevel,
   overrideIconElement,
 }: {
-  name: string;
+  label: string;
   control: Control<any>;
   node: ParsedInputNode & { type: "object" };
   topLevel?: boolean;
@@ -29,7 +29,7 @@ export function ObjectField({
   }
   return (
     <InputGroupContainer
-      title={name}
+      title={label}
       iconElement={overrideIconElement ?? <ObjectIcon className="mr-1" />}
     >
       {Object.entries(node.children).map(([childFieldName, e]) => (

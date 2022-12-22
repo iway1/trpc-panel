@@ -1,4 +1,10 @@
-import { createContext, useContext, useRef, useState } from "react";
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useRef,
+  useState,
+} from "react";
 type Headers = { [key: string]: string };
 
 type HeadersContextType = {
@@ -16,7 +22,7 @@ const headersLocalStorageKey = "headers";
 
 const storedHeaders = localStorage.getItem(headersLocalStorageKey);
 
-export function useHeaders(): HeadersContextType {
+export function HeadersContextProvider({ children }: { children: ReactNode }) {
   const [headersPopupShown, setHeadersPopupShown] = useState(false);
   const [saveHeadersToLocalStorage, setSaveHeadersToLocalStorage] = useState(
     !!storedHeaders
@@ -38,17 +44,29 @@ export function useHeaders(): HeadersContextType {
     };
   }
 
-  return {
-    setHeaders,
-    getHeaders,
-    headersPopupShown,
-    setHeadersPopupShown,
-    saveHeadersToLocalStorage,
-    setSaveHeadersToLocalStorage: (val) => {
-      if (!val) localStorage.removeItem(headersLocalStorageKey);
-      setSaveHeadersToLocalStorage(val);
-    },
-  };
+  return (
+    <HeadersContext.Provider
+      value={{
+        setHeaders,
+        getHeaders,
+        headersPopupShown,
+        setHeadersPopupShown,
+        saveHeadersToLocalStorage,
+        setSaveHeadersToLocalStorage: (val) => {
+          if (!val) localStorage.removeItem(headersLocalStorageKey);
+          setSaveHeadersToLocalStorage(val);
+        },
+      }}
+    >
+      {children}
+    </HeadersContext.Provider>
+  );
+}
+
+export function useHeaders(): HeadersContextType {
+  const ctx = useContext(HeadersContext);
+  if (!ctx) throw new Error("No headers context.");
+  return ctx;
 }
 
 export function useHeadersContext() {
