@@ -5,7 +5,6 @@ import { RenderOptions } from "@src/render";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createTRPCReact, httpBatchLink } from "@trpc/react-query";
 import {
-  HeadersContext,
   HeadersContextProvider,
   useHeaders,
 } from "@src/react-app/components/contexts/HeadersContext";
