@@ -17,6 +17,8 @@ const t = initTRPC
 
 async function createContext(opts: trpcExpress.CreateExpressContextOptions) {
   const authHeader = opts.req.headers["authorization"];
+  console.log("Request headers: ");
+  console.log(authHeader);
   return {
     authorized: !!authHeader,
   };
@@ -265,10 +267,7 @@ export const testRouter = t.router({
     .query(({ input }) => {
       return { greeting: `Hello ${input.name}!` };
     }),
-  sayHello2: t.procedure
-    .meta({ /* 👉 */ description: "This shows in the panel." })
-    .input(z.object({ name: z.string() }))
-    .query(({ input }) => {
-      return { greeting: `Hello ${input.name}!` };
-    }),
+  nonObjectInput: t.procedure.input(z.string()).query(({ input }) => {
+    return `Your input was ${input}`;
+  }),
 });
