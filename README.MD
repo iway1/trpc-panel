@@ -17,7 +17,7 @@ Check out our [test app](https://app.trpcpanel.io)
   - No compilation required, works with any backend
 - 📄 [Document](#documenting-procedures) your procedures and input parameters with minimal effort
 - 🐦 Supports nested routers, and nested input objects. The structure of the UI maps one-to-one to your API's routers and procedures.
-- 🧭 SideNav to quickly find procedures of interest (more navigation features coming soon)
+- 🧭 SideNav and VSCode-like procedure / router search to quickly find what you're looking for
 - ✨ [Transform](#data-transformers) data with built in `superjson` support.
 
 ## Quick Start
