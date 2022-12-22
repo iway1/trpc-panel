@@ -120,11 +120,14 @@ export function ProcedureForm({
   const [shouldReset, setShouldReset] = useState(false);
   useEffect(() => {
     if (shouldReset) {
-      resetForm(defaultFormValuesForNode(procedure.node), {
-        keepValues: false,
-        keepDirtyValues: false,
-        keepDefaultValues: false,
-      });
+      resetForm(
+        { [ROOT_VALS_PROPERTY_NAME]: defaultFormValuesForNode(procedure.node) },
+        {
+          keepValues: false,
+          keepDirtyValues: false,
+          keepDefaultValues: false,
+        }
+      );
       setShouldReset(false);
     }
   }, [shouldReset]);
