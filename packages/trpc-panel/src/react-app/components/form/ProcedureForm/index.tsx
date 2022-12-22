@@ -17,6 +17,7 @@ import { ObjectField } from "@src/react-app/components/form/fields/ObjectField";
 import { fullFormats } from "ajv-formats/dist/formats";
 import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
 import { DocumentationSection } from "@src/react-app/components/form/ProcedureForm/DescriptionSection";
+import { Field } from "@src/react-app/components/form/Field";
 
 const TRPCErrorSchema = z.object({
   shape: z.object({
@@ -35,6 +36,8 @@ function isTrpcError(error: unknown): error is TRPCErrorType {
   const parse = TRPCErrorSchema.safeParse(error);
   return parse.success;
 }
+
+export const ROOT_VALS_PROPERTY_NAME = "vals";
 
 export function ProcedureForm({
   procedure,
@@ -91,18 +94,24 @@ export function ProcedureForm({
     reset: resetForm,
     handleSubmit,
   } = useForm({
-    resolver: ajvResolver(procedure.inputSchema as any, {
+    resolver: ajvResolver(wrapJsonSchema(procedure.inputSchema as any), {
       formats: fullFormats,
     }),
-    defaultValues: defaultFormValuesForNode(procedure.node),
+    defaultValues: {
+      [ROOT_VALS_PROPERTY_NAME]: defaultFormValuesForNode(procedure.node),
+    },
   });
 
-  function onSubmit(data: any) {
+  function onSubmit(data: { [ROOT_VALS_PROPERTY_NAME]: any }) {
     if (procedure.procedureType === "query") {
-      setQueryInput({ ...data });
-      invalidateQuery(data);
+      const newData = { ...data };
+      setQueryInput(newData[ROOT_VALS_PROPERTY_NAME]);
+      invalidateQuery(data.vals);
     } else {
-      mutation.mutateAsync(data).then(setMutationResponse).catch();
+      mutation
+        .mutateAsync(data[ROOT_VALS_PROPERTY_NAME])
+        .then(setMutationResponse)
+        .catch();
     }
   }
 
@@ -127,6 +136,9 @@ export function ProcedureForm({
     procedure.procedureType === "query" ? query.data : mutationResponse;
   const error =
     procedure.procedureType == "query" ? query.error : mutation.error;
+
+  const fieldName = procedure.node.path.join(".");
+
   return (
     <CollapsableSection
       titleElement={
@@ -145,31 +157,34 @@ export function ProcedureForm({
       >
         <div className="flex flex-col">
           <DocumentationSection extraData={procedure.extraData} />
-          {procedure.node.type == "object" && (
-            <FormSection
-              title="Input"
-              topRightElement={<XButton control={control} reset={reset} />}
-            >
-              {Object.keys(procedure.node.children).length > 0 && (
+
+          <FormSection
+            title="Input"
+            topRightElement={<XButton control={control} reset={reset} />}
+          >
+            {procedure.node.type === "object" ? (
+              Object.keys(procedure.node.children).length > 0 && (
                 <ObjectField
                   node={
                     procedure.node as ParsedInputNode & {
                       type: "object";
                     }
                   }
+                  label={fieldName}
                   control={control}
-                  name={procedure.node.path.join(".")}
                   topLevel
                 />
-              )}
+              )
+            ) : (
+              <Field inputNode={procedure.node} control={control} />
+            )}
 
-              <ProcedureFormButton
-                text={`Execute ${name}`}
-                colorScheme={"neutral"}
-                loading={query.fetchStatus === "fetching" || mutation.isLoading}
-              />
-            </FormSection>
-          )}
+            <ProcedureFormButton
+              text={`Execute ${name}`}
+              colorScheme={"neutral"}
+              loading={query.fetchStatus === "fetching" || mutation.isLoading}
+            />
+          </FormSection>
         </div>
       </form>
       <div className="flex flex-col space-y-4">
@@ -210,4 +225,18 @@ function XButton({
       )}
     </div>
   );
+}
+
+function wrapJsonSchema(jsonSchema: any) {
+  delete jsonSchema["$schema"];
+
+  return {
+    type: "object",
+    properties: {
+      [ROOT_VALS_PROPERTY_NAME]: jsonSchema,
+    },
+    required: [ROOT_VALS_PROPERTY_NAME],
+    additionalProperties: false,
+    $schema: "http://json-schema.org/draft-07/schema#",
+  };
 }

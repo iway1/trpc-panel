@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createTRPCReact, httpBatchLink } from "@trpc/react-query";
 import {
   HeadersContext,
+  HeadersContextProvider,
   useHeaders,
 } from "@src/react-app/components/contexts/HeadersContext";
 import { HeadersPopup } from "@src/react-app/components/HeadersPopup";
@@ -27,11 +28,10 @@ export function RootComponent({
   options: RenderOptions;
   trpc: ReturnType<typeof createTRPCReact>;
 }) {
-  const headers = useHeaders();
   return (
-    <SiteNavigationContextProvider>
-      <AllPathsContextProvider rootRouter={rootRouter}>
-        <HeadersContext.Provider value={headers}>
+    <HeadersContextProvider>
+      <SiteNavigationContextProvider>
+        <AllPathsContextProvider rootRouter={rootRouter}>
           <ClientProviders trpc={trpc} options={options}>
             <HotKeysContextProvider>
               <SearchOverlay>
@@ -41,9 +41,9 @@ export function RootComponent({
               </SearchOverlay>
             </HotKeysContextProvider>
           </ClientProviders>
-        </HeadersContext.Provider>
-      </AllPathsContextProvider>
-    </SiteNavigationContextProvider>
+        </AllPathsContextProvider>
+      </SiteNavigationContextProvider>
+    </HeadersContextProvider>
   );
 }
 

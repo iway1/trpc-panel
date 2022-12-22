@@ -5,10 +5,12 @@ import { BaseCheckboxField } from "@src/react-app/components/form/fields/base/Ba
 
 export function BooleanField({
   name,
+  label,
   control,
   node,
 }: {
   name: string;
+  label: string;
   control: Control<any>;
   node: ParsedInputNode;
 }) {
@@ -17,7 +19,7 @@ export function BooleanField({
   return (
     <BaseCheckboxField
       fieldId={path}
-      label={name}
+      label={label}
       onChange={field.onChange}
       value={field.value}
       errorMessage={fieldState.error?.message}

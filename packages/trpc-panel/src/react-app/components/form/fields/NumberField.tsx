@@ -6,9 +6,11 @@ import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
 export function NumberField({
   name,
   control,
+  label,
   node: inputNode,
 }: {
   name: string;
+  label: string;
   control: Control<any>;
   node: ParsedInputNode;
 }) {
@@ -44,7 +46,7 @@ export function NumberField({
       onChange={onChange}
       value={stringValue}
       errorMessage={fieldState.error?.message}
-      label={name}
+      label={label}
       fieldId={inputNode.path.join(".")}
       inputProps={{ inputMode: "decimal" }}
     />

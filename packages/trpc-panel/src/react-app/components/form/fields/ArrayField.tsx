@@ -8,15 +8,18 @@ import { InputGroupContainer } from "@src/react-app/components/InputGroupContain
 import DataArray from "@mui/icons-material/DataArray";
 import { AddItemButton } from "@src/react-app/components/AddItemButton";
 import { FieldError } from "@src/react-app/components/form/fields/FieldError";
+import { ROOT_VALS_PROPERTY_NAME } from "@src/react-app/components/form/ProcedureForm";
 
 var currentKeyCount = 0;
 
 export function ArrayField({
   name,
+  label,
   control,
   node,
 }: {
   name: string;
+  label: string;
   control: Control<any>;
   node: ParsedInputNode & { type: "array" };
 }) {
@@ -35,7 +38,9 @@ export function ArrayField({
 
   function getValueFromWatch() {
     var r = watch;
-    for (var p of node.path) {
+    for (var p of [ROOT_VALS_PROPERTY_NAME].concat(
+      node.path.map((e) => e + "")
+    )) {
       r = r[p];
     }
     return r;
@@ -59,10 +64,10 @@ export function ArrayField({
   return (
     <InputGroupContainer
       iconElement={<DataArray className="mr-1" />}
-      title={name}
+      title={label}
     >
       {field.value.map((_: ParsedInputNode, i: number) => (
-        <span className="flex flex-row items-start">
+        <span key={i + ""} className="flex flex-row items-start">
           <span className="flex flex-1 flex-col">
             <Field
               key={textFieldKeys[i]}

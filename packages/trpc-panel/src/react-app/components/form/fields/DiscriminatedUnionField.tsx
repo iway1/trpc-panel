@@ -11,10 +11,12 @@ import { FieldError } from "@src/react-app/components/form/fields/FieldError";
 
 export function DiscriminatedUnionField({
   name,
+  label,
   control,
   node,
 }: {
   name: string;
+  label: string;
   control: Control<any>;
   node: ParsedInputNode;
 }) {
@@ -39,7 +41,7 @@ export function DiscriminatedUnionField({
   ]! as ParsedInputNode & { type: "object" };
   return (
     <InputGroupContainer
-      title={node.path.join(".")}
+      title={label}
       iconElement={<CirclesIcon className="mr-1" />}
     >
       <BaseSelectField
@@ -52,8 +54,7 @@ export function DiscriminatedUnionField({
         control={control}
         node={children}
         overrideIconElement={<MoonIcon className="mr-1" />}
-        // IDK if this needs a name
-        name={``}
+        label={``}
       />
       {fieldState.error?.message && (
         <FieldError
