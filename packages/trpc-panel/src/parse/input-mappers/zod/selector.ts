@@ -16,6 +16,7 @@ import {
   ZodPromiseDef,
   ZodStringDef,
   ZodUndefinedDef,
+  ZodVoidDef,
 } from "zod";
 import { parseZodStringDef } from "./parsers/parseZodStringDef";
 import { ParserSelectorFunction } from "../../parseNodeTypes";
@@ -39,6 +40,7 @@ import { parseZodEffectsDef } from "@src/parse/input-mappers/zod/parsers/parseZo
 import { parseZodNullDef } from "@src/parse/input-mappers/zod/parsers/parseZodNullDef";
 import { parseZodPromiseDef } from "@src/parse/input-mappers/zod/parsers/parseZodPromiseDef";
 import { parseZodUndefinedDef } from "@src/parse/input-mappers/zod/parsers/parseZodUndefinedDef";
+import { parseZodVoidDef } from "./parsers/parseZodVoidDef";
 
 export const zodSelectorFunction: ParserSelectorFunction<ZodDefWithType> = (
   def,
@@ -87,6 +89,8 @@ export const zodSelectorFunction: ParserSelectorFunction<ZodDefWithType> = (
       return parseZodPromiseDef(def as ZodPromiseDef, references);
     case ZodFirstPartyTypeKind.ZodUndefined:
       return parseZodUndefinedDef(def as ZodUndefinedDef, references);
+    case ZodFirstPartyTypeKind.ZodVoid:
+      return parseZodVoidDef(def as ZodVoidDef, references);
   }
   return { type: "unsupported", path: references.path };
 };

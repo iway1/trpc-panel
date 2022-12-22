@@ -49,6 +49,7 @@ export function ProcedureForm({
   // null => request was never sent
   // undefined => request successful but nothing returned from procedure
   const [mutationResponse, setMutationResponse] = useState<any>(null);
+  const [queryEnabled, setQueryEnabled] = useState<boolean>(false);
   const [queryInput, setQueryInput] = useState<any>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
   const context = trpc.useContext();
@@ -67,9 +68,10 @@ export function ProcedureForm({
     const router = getProcedure();
     //@ts-ignore
     return router.useQuery(queryInput, {
-      enabled: !!queryInput,
+      enabled: queryEnabled,
       initialData: null,
       retry: false,
+      refetchOnWindowFocus: false,
     });
   })() as UseQueryResult<any>;
 
@@ -106,6 +108,7 @@ export function ProcedureForm({
     if (procedure.procedureType === "query") {
       const newData = { ...data };
       setQueryInput(newData[ROOT_VALS_PROPERTY_NAME]);
+      setQueryEnabled(true);
       invalidateQuery(data.vals);
     } else {
       mutation
@@ -133,6 +136,7 @@ export function ProcedureForm({
   }, [shouldReset]);
   function reset() {
     setShouldReset(true);
+    setQueryEnabled(false);
   }
 
   const data =
@@ -238,7 +242,7 @@ function wrapJsonSchema(jsonSchema: any) {
     properties: {
       [ROOT_VALS_PROPERTY_NAME]: jsonSchema,
     },
-    required: [ROOT_VALS_PROPERTY_NAME],
+    required: [],
     additionalProperties: false,
     $schema: "http://json-schema.org/draft-07/schema#",
   };

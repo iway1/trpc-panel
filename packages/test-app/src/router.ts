@@ -184,7 +184,7 @@ export const testRouter = t.router({
           ]),
         })
       )
-      .query(() => {
+      .query(({ input }) => {
         return "It's an input";
       }),
     emailTextInput: t.procedure
@@ -196,6 +196,9 @@ export const testRouter = t.router({
       .query(({ input }) => {
         return "It's good";
       }),
+    voidInput: t.procedure.input(z.void()).query(() => {
+      return "yep";
+    }),
   }),
 
   anErrorThrowingRoute: t.procedure
