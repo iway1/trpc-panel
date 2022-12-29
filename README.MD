@@ -1,29 +1,32 @@
 # tRPC.panel()
 
-Probably the easiest and cheapest way to build a testing UI for your tRPC endpoints for development, QA or any other manual testing. tRPC panel automatically generates a UI for manually testing your tRPC backend with 0 overhead:
+Probably the easiest and cheapest way to build a testing UI and documentation for your tRPC endpoints. tRPC panel automatically generates a UI for manually testing your tRPC backend with 0 overhead:
 
 ![Screenshot 2022-12-08 at 7 24 02 PM](https://user-images.githubusercontent.com/12774588/206602120-017a2b3a-66c3-4bf0-bd93-90fb4bddf0cc.png)
 
-trpc panel moves as fast as your trpc backend with no extra effort.
+trpc panel moves as fast as your trpc backend with minimal effort.
 
-Check out our test app [here](https://app.trpcpanel.io)
+Check out our [test app](https://app.trpcpanel.io)
 
 ## Features
 
--   Automatically inspect your tRPC router and recursively generate a typesafe UI
--   Zero overhead
-    -   No output schemas (procedure return types can be inferred as nature intended)
-    -   New procedures will be added to your UI as you create them in your backend.
--   Supports nested routers, and nested input objects. The structure of the UI maps one-to-one to your API's routers and procedures.
--   Field and validation specific error messages
--   Compile-step free (simply injects an object representing your router into a pre-bundled application)
--   SideNav to quickly find procedures of interest
+- 🚀 Automatically inspect your tRPC router and recursively generate a typesafe UI
+- 🕒 Zero overhead
+  - No output schemas (procedure return types can be inferred as nature intended)
+  - New procedures will be added to your UI as you create them in your backend
+  - No compilation required, works with any backend
+- 📄 [Document](#documenting-procedures) your procedures and input parameters with minimal effort
+- 🐦 Supports nested routers, and nested input objects. The structure of the UI maps one-to-one to your API's routers and procedures.
+- 🧭 SideNav and VSCode-like procedure / router search to quickly find what you're looking for
+- ✨ [Transform](#data-transformers) data with built in `superjson` support.
 
 ## Quick Start
 
 Install with your preferred package manager:
 
-`yarn add trpc-panel`
+```sh
+yarn add trpc-panel
+```
 
 render your panel and return it from your backend (express example):
 
@@ -31,11 +34,63 @@ render your panel and return it from your backend (express example):
 import { renderTrpcPanel } from "trpc-panel";
 // ...
 app.use("/panel", (_, res) => {
-    return res.send(
-        renderTrpcPanel(myTrpcRouter, { url: "http://localhost:4000/trpc" })
-    );
+  return res.send(
+    renderTrpcPanel(myTrpcRouter, { url: "http://localhost:4000/trpc" })
+  );
 });
 ```
+
+`trpc-panel` just renders as a string, so it can be used with any backend.
+
+## Documenting Procedures
+
+As of v1.1.0, `trpc-panel` supports documenting procedures.
+
+Documentation is opt-in, meaning you only need to set it up if you want to use it. When docs are included for your trpc procedure, a "Docs" section will appear in your procedure:
+
+![Documentation Example](https://user-images.githubusercontent.com/12774588/208321430-6fea4c92-b0a9-4d9c-a95e-6bf5af04823b.png)
+
+### Procedure Descriptions
+
+`trpc-panel` supports documenting procedures via trpc meta. First setup your trpc instance to be typed with `TRPCPanelMeta`:
+
+```ts
+import { initTRPC } from "@trpc/server";
+import { TRPCPanelMeta } from "trpc-panel";
+
+const t = initTRPC.meta<TRPCPanelMeta>().create();
+```
+
+Then in your routers you can provide a description to the meta:
+
+```ts
+export const appRouter = t.router({
+  sayHello: t.procedure
+    .meta({ /* 👉 */ description: "This shows in the panel." })
+    .input(z.object({ name: z.string() }))
+    .query(({ input }) => {
+      return { greeting: `Hello ${input.name}!` };
+    });
+});
+```
+
+### Input Parameter Descriptions
+
+`trpc-panel` supports documenting parameters via zod's `.describe()` method. This allows developers to quickly write documentation as they're writing schemas:
+
+```ts
+export const appRouter = t.router({
+  sayHello: t.procedure
+    .input(z.object({
+        name: z.string().describe("The name to say hello too.")
+    }))
+    .query(({ input }) => {
+      return { greeting: `Hello ${input.name}!` };
+    });
+});
+```
+
+Whatever you pass to `describe()` will appear in the docs section. Any input fields without a description will not appear in the docs section.
 
 ## Data Transformers
 
@@ -43,12 +98,12 @@ Trpc panel supports `superjson`, just pass it into the transformer option:
 
 ```js
 app.use("/panel", (_, res) => {
-    return res.send(
-        renderTrpcPanel(myTrpcRouter, {
-            url: "http://localhost:4000/trpc",
-            transformer: "superjson",
-        })
-    );
+  return res.send(
+    renderTrpcPanel(myTrpcRouter, {
+      url: "http://localhost:4000/trpc",
+      transformer: "superjson",
+    })
+  );
 });
 ```
 
@@ -62,17 +117,37 @@ There are no plans to support v9 or other previous tRPC versions.
 
 The following are supported
 
--   ZodObject
--   ZodString
--   ZodNumber
--   ZodEnum
--   ZodDiscriminatedUnion
--   ZodArray
--   ZodLiteral (These don't show up in the UI but will be send on form submission)
+- Array
+- BigInt
+- Boolean
+- Branded
+- Default
+- DiscriminatedUnion
+- Effects
+- Enum
+- Literal
+- Nullable
+- Null
+- Nullish
+- Number
+- Object
+- Optional
+- Promise
+- String
+- Undefined
 
-## Contributing / Learn More
-If there's a feature you'd like from `trpc-panel`, please open an issue! Trpc panel is looking for guidance from the community on which features it should prioritize adding.
+Planning on adding additional support shortly for the following types:
 
-If you'd like to contribute check out our [contribution guide](https://trpcpanel.io/docs/contributing). 
+- Union
+- Tuple
+- Record
+- Never
+- Map (superjson only)
+- Set (superjson only)
+- Date (superjson only)
+- Any
 
-If you just want to learn more about trpc panel, checkout the main [docs site](https://trpcpanel.io)
+### Feature Roadmap
+
+You can view planned features roadmap here: https://trello.com/b/nflGRDxe/trpc-panel-featues-road-map
+

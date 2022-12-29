@@ -5,9 +5,7 @@
   "main": "lib/server.js",
   "license": "MIT",
   "dependencies": {
-    "@tanstack/react-query": "^4.16.1",
     "@trpc/client": "^10.0.0",
-    "@trpc/react-query": "^10.0.0",
     "@trpc/server": "^10.0.0",
     "@types/connect-livereload": "^0.6.0",
     "@types/express": "^4.17.14",
@@ -27,10 +25,11 @@
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.0",
     "ws": "^8.11.0",
-    "zod": "3.20.2"
+    "zod": "3.20.2",
+    "zod-to-json-schema": "^3.20.1"
   },
   "scripts": {
-    "dev": "LIVE_RELOAD=\"true\" SERVER_URL=\"http://localhost\" TRPC_PATH=\"trpc\" DEV_PORT=\"4000\" SIMULATE_DELAY=\"true\" nodemon ./src/server.ts",
+    "dev": "SERVER_URL=\"http://localhost\" TRPC_PATH=\"trpc\" DEV_PORT=\"4000\" SIMULATE_DELAY=\"true\" ts-node --project tsconfig.json ./src/server.ts",
     "build": "npx tsc --project tsconfig.json",
     "start": "node ./lib/server"
   },

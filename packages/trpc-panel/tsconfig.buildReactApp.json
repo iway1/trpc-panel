@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.build.json",
+  "compilerOptions": {
+    "declaration": false
+  },
+  "include": [
+    "src/react-app"
+  ]
+}
