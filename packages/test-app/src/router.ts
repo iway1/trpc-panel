@@ -2,8 +2,9 @@ import { initTRPC } from "@trpc/server";
 import { z } from "zod";
 
 import * as trpcExpress from "@trpc/server/adapters/express";
-import { TRPCError } from "@trpc/server";
-import { inferAsyncReturnType } from "@trpc/server";
+import { TRPCError, inferAsyncReturnType } from "@trpc/server";
+import { observable } from "@trpc/server/observable";
+import { EventEmitter } from "events";
 import superjson from "superjson";
 
 type TRPCMeta = Record<string, unknown>;
@@ -25,6 +26,13 @@ async function createContext(opts: trpcExpress.CreateExpressContextOptions) {
 }
 
 type ContextType = inferAsyncReturnType<typeof createContext>;
+
+const PostSchema = z.object({
+  id: z.string().uuid(),
+  text: z.string().min(1),
+});
+
+type Post = z.infer<typeof PostSchema>;
 
 const UserSchema = z.object({
   id: z.string(),
@@ -119,6 +127,31 @@ const multiRouter = {
   postsRouter,
   utilityRouter,
 };
+
+const ee = new EventEmitter();
+const subscriptionRouter = t.router({
+  onAdd: t.procedure.subscription(() => {
+    // `resolve()` is triggered for each client when they start subscribing `onAdd`
+    // return an `observable` with a callback which is triggered immediately
+    return observable<Post>((emit) => {
+      const onAdd = (data: Post) => {
+        // emit data to client
+        emit.next(data);
+      };
+      // trigger `onAdd()` when `add` is triggered in our event emitter
+      ee.on("add", onAdd);
+      // unsubscribe function when client disconnects or stops subscribing
+      return () => {
+        ee.off("add", onAdd);
+      };
+    });
+  }),
+  add: t.procedure.input(PostSchema).mutation(async ({ input }) => {
+    const post = { ...input }; /* [..] add to db */
+    ee.emit("add", post);
+    return post;
+  }),
+});
 
 export const testRouter = t.router({
   userRouter: userRouter,
@@ -273,4 +306,5 @@ export const testRouter = t.router({
   nonObjectInput: t.procedure.input(z.string()).query(({ input }) => {
     return `Your input was ${input}`;
   }),
+  subscriptionRouter,
 });

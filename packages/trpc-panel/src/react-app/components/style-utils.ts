@@ -12,6 +12,8 @@ export function solidColorBg(type: ColorSchemeType) {
       return "bg-routerSolid";
     case "neutral":
       return "bg-neutralSolid";
+    case "subscription":
+      return "bg-subscriptionSolid";
   }
 }
 
@@ -25,6 +27,8 @@ export function solidColorBorder(type: ColorSchemeType) {
       return "border-routerSolid";
     case "neutral":
       return "border-neutralSolid";
+    case "subscription":
+      return "border-subscriptionSolid";
   }
 }
 
@@ -38,6 +42,8 @@ export function backgroundColor(type: ColorSchemeType) {
       return "bg-queryBg";
     case "router":
       return "bg-routerBg";
+    case "subscription":
+      return "bg-subscriptionBg";
   }
 }
 
@@ -51,6 +57,8 @@ export function backgroundColorDark(type: ColorSchemeType) {
       return "bg-queryBgDark";
     case "router":
       return "bg-routerBgDark";
+    case "subscription":
+      return "bg-subscriptionBgDark";
   }
 }
 
@@ -64,6 +72,8 @@ export function textColor(type: ColorSchemeType) {
       return "text-queryText";
     case "router":
       return "text-routerText";
+    case "subscription":
+      return "text-subscriptionText";
   }
 }
 

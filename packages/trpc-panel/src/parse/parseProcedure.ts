@@ -1,4 +1,9 @@
-import { Procedure, isQueryDef, isMutationDef } from "./routerType";
+import {
+  Procedure,
+  isQueryDef,
+  isMutationDef,
+  isSubscriptionDef,
+} from "./routerType";
 import {
   JSON7SchemaType,
   ProcedureType,
@@ -7,14 +12,17 @@ import {
 
 import { AnyZodObject, z } from "zod";
 import { zodSelectorFunction } from "./input-mappers/zod/selector";
-import { ParseReferences, ParsedInputNode, AddDataFunctions,} from "@src/parse/parseNodeTypes";
+import {
+  ParseReferences,
+  ParsedInputNode,
+  AddDataFunctions,
+} from "@src/parse/parseNodeTypes";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
 export type ProcedureExtraData = {
-  parameterDescriptions: {[path: string]: string},
-  description?: string,
-}
-
+  parameterDescriptions: { [path: string]: string };
+  description?: string;
+};
 
 export type ParsedProcedure = {
   inputSchema: JSON7SchemaType;
@@ -22,9 +30,8 @@ export type ParsedProcedure = {
   nodeType: "procedure";
   procedureType: ProcedureType;
   pathFromRootRouter: string[];
-  extraData: ProcedureExtraData
+  extraData: ProcedureExtraData;
 };
-
 
 type SupportedInputType = "zod";
 
@@ -54,7 +61,6 @@ function nodeAndInputSchemaFromInputs(
   _routerPath: string[],
   options: TrpcPanelExtraOptions,
   addDataFunctions: AddDataFunctions
-
 ): NodeAndInputSchemaFromInputs {
   if (!inputs.length) {
     return {
@@ -82,7 +88,7 @@ function nodeAndInputSchemaFromInputs(
     node: zodSelectorFunction((input as any)._def, {
       path: [],
       options,
-      addDataFunctions
+      addDataFunctions,
     }),
   };
 }
@@ -96,14 +102,14 @@ export function parseProcedure(
   const { inputs } = _def;
   const parseExtraData: ProcedureExtraData = {
     parameterDescriptions: {},
-  }
+  };
   const nodeAndInput = nodeAndInputSchemaFromInputs(inputs, path, options, {
     addDescriptionIfExists: (def, refs) => {
       if (def.description) {
         parseExtraData.parameterDescriptions[refs.path.join(".")] =
           def.description;
       }
-    }
+    },
   });
   if (nodeAndInput.parseInputResult === "failure") {
     return null;
@@ -112,6 +118,7 @@ export function parseProcedure(
   const t = (() => {
     if (isQueryDef(_def)) return "query";
     if (isMutationDef(_def)) return "mutation";
+    if (isSubscriptionDef(_def)) return "subscription";
     return null;
   })();
 
@@ -130,6 +137,6 @@ export function parseProcedure(
       ...(procedure._def.meta?.description && {
         description: procedure._def.meta.description,
       }),
-    }
+    },
   };
 }

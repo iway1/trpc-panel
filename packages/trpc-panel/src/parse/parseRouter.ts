@@ -7,7 +7,7 @@ import { ParsedProcedure, parseProcedure } from "./parseProcedure";
 
 export type JSON7SchemaType = ReturnType<typeof zodToJsonSchema>;
 
-export type ProcedureType = "query" | "mutation";
+export type ProcedureType = "query" | "mutation" | "subscription";
 
 export type ParsedRouterChildren = {
   [key: string]: ParsedRouter | ParsedProcedure;

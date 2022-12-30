@@ -7,7 +7,7 @@ import {
   solidColorBorder,
 } from "@src/react-app/components/style-utils";
 
-export type ColorSchemeType = "query" | "mutation" | "router" | "neutral";
+export type ColorSchemeType = "query" | "mutation" | "router" | "neutral" | "subscription";
 
 export function CollapsableSection({
   titleElement,
@@ -99,7 +99,7 @@ export function SectionTypeLabel({
   return (
     <span
       className={
-        "p-1 font-bold rounded-md text-base flex flex-row justify-center w-28 text-light " +
+        "p-1 font-bold rounded-md text-base flex flex-row justify-center w-32 text-light " +
         solidColorBg(sectionType) +
         (className ? ` ${className}` : "")
       }

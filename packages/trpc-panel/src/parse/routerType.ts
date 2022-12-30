@@ -38,7 +38,21 @@ export function isMutationDef(obj: unknown): obj is MutationDef {
 
 export type MutationDef = z.infer<typeof MutationDefSchema>;
 
-export const ProcedureDefSchema = QueryDefSchema.or(MutationDefSchema);
+const SubscriptionDefSchema = SharedProcedureDefPropertiesSchema.merge(
+    z.object({
+        subscription: z.literal(true),
+    })
+);
+
+type SubscriptionDef = z.infer<typeof SubscriptionDefSchema>;
+
+export function isSubscriptionDef(obj: unknown): obj is SubscriptionDef {
+    return SubscriptionDefSchema.safeParse(obj).success;
+}
+
+export const ProcedureDefSchema = QueryDefSchema.or(MutationDefSchema).or(
+    SubscriptionDefSchema
+);
 
 export type ProcedureDefSharedProperties = z.infer<
   typeof SharedProcedureDefPropertiesSchema
