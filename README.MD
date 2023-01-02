@@ -60,6 +60,8 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
 }
 ```
 
+Then we can visit the url `http://localhost:3000/api/panel` to use the panel. Here we do `transformer: "superjson"` assuming we have `superjson` set as the transformer in tRPC (which create-t3-app does by default).
+
 ## Documenting Procedures
 
 As of v1.1.0, `trpc-panel` supports documenting procedures.
