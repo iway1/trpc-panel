@@ -42,6 +42,24 @@ app.use("/panel", (_, res) => {
 
 `trpc-panel` just renders as a string, so it can be used with any backend.
 
+## NextJS / create-t3-app example
+In Nextjs you'd want to create an api route somewhere like `src/pages/api/panel.ts` and send a text response:
+
+```ts
+import type { NextApiRequest, NextApiResponse } from "next";
+import { renderTrpcPanel } from "trpc-panel";
+import { appRouter } from "../../server/api/root";
+
+export default async function handler(_: NextApiRequest, res: NextApiResponse) {
+  res.status(200).send(
+    renderTrpcPanel(appRouter, {
+      url: "http://localhost:3000/api/trpc",
+      transformer: "superjson",
+    })
+  );
+}
+```
+
 ## Documenting Procedures
 
 As of v1.1.0, `trpc-panel` supports documenting procedures.
