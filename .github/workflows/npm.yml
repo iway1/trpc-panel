@@ -31,6 +31,9 @@ jobs:
       - name: Build App
         run: |
           yarn build:panel
+      - name: Copy Readme
+        run: |
+          yarn cpy:readme
       - name: Publish with yarn
         run: |
           cd packages/trpc-panel
