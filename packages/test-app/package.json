@@ -21,7 +21,7 @@
     "open": "^8.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "trpc-panel": "^1.0.0",
+    "trpc-panel": "*",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.0",
     "ws": "^8.11.0",
@@ -29,7 +29,7 @@
     "zod-to-json-schema": "^3.20.1"
   },
   "scripts": {
-    "dev": "SERVER_URL=\"http://localhost\" TRPC_PATH=\"trpc\" DEV_PORT=\"4000\" SIMULATE_DELAY=\"true\" ts-node --project tsconfig.json ./src/server.ts",
+    "dev": "nodemon --exec SERVER_URL=\"http://localhost\" TRPC_PATH=\"trpc\" DEV_PORT=\"4000\" SIMULATE_DELAY=\"true\" ts-node --project tsconfig.json ./src/server.ts",
     "build": "npx tsc --project tsconfig.json",
     "start": "node ./lib/server"
   },
