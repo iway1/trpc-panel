@@ -20,7 +20,7 @@ export function FormSection({
         </FormSectionHeader>
         {topRightElement}
       </div>
-      <div className="flex flex-col space-y-2 p-4"> {children}</div>
+      <div className="flex flex-col space-y-2 p-4 relative"> {children}</div>
     </div>
   );
 }
