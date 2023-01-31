@@ -22,24 +22,17 @@ export function NumberField({
   });
 
   function onChange(value: string) {
-    if (value == "") {
-      setStringValue("");
-      return;
-    }
-    const numberValue = parseFloat(value);
-    if (isNaN(numberValue)) return;
-    setStringValue(numberValue + (value[value.length - 1] == "." ? "." : ""));
+    setStringValue(value.replace(/[^\d.-]/g, ""));
   }
 
   useEffect(() => {
-    // Not sure how else to do this while still allowing users to input a decimal point
+    const parsed = parseFloat(stringValue);
+    if (isNaN(parsed)) {
+      field.onChange(undefined);
+      return;
+    }
     field.onChange(parseFloat(stringValue));
   }, [stringValue]);
-
-  // ¯\_(ツ)_/¯
-  useEffect(() => {
-    if (!field.value) setStringValue("");
-  }, [field.value]);
 
   return (
     <BaseTextField
