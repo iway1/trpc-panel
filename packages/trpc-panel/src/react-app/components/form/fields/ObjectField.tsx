@@ -22,7 +22,14 @@ export function ObjectField({
     return (
       <div className={"space-y-2 flex-col flex p-1 "}>
         {Object.entries(node.children).map(([name, e]) => (
-          <Field inputNode={e} control={control} key={name} />
+          <Field
+            inputNode={{
+              ...e,
+              path: node.path.concat([name]),
+            }}
+            control={control}
+            key={name}
+          />
         ))}
       </div>
     );
@@ -33,7 +40,14 @@ export function ObjectField({
       iconElement={overrideIconElement ?? <ObjectIcon className="mr-1" />}
     >
       {Object.entries(node.children).map(([childFieldName, e]) => (
-        <Field inputNode={e} control={control} key={childFieldName} />
+        <Field
+          inputNode={{
+            ...e,
+            path: node.path.concat([childFieldName]),
+          }}
+          control={control}
+          key={childFieldName}
+        />
       ))}
     </InputGroupContainer>
   );

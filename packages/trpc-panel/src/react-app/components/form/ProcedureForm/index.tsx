@@ -18,6 +18,7 @@ import { fullFormats } from "ajv-formats/dist/formats";
 import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
 import { DocumentationSection } from "@src/react-app/components/form/ProcedureForm/DescriptionSection";
 import { Field } from "@src/react-app/components/form/Field";
+import { ProcedureFormContextProvider } from "@src/react-app/components/form/ProcedureForm/ProcedureFormContext";
 
 const TRPCErrorSchema = z.object({
   shape: z.object({
@@ -147,66 +148,68 @@ export function ProcedureForm({
   const fieldName = procedure.node.path.join(".");
 
   return (
-    <CollapsableSection
-      titleElement={
-        <span className="font-bold text-lg flex flex-row items-center">
-          {name}
-        </span>
-      }
-      fullPath={procedure.pathFromRootRouter}
-      sectionType={procedure.procedureType}
-      focusOnScrollRef={formRef}
-    >
-      <form
-        className="flex flex-col space-y-4"
-        onSubmit={handleSubmit(onSubmit)}
-        ref={formRef}
+    <ProcedureFormContextProvider path={procedure.pathFromRootRouter.join(".")}>
+      <CollapsableSection
+        titleElement={
+          <span className="font-bold text-lg flex flex-row items-center">
+            {name}
+          </span>
+        }
+        fullPath={procedure.pathFromRootRouter}
+        sectionType={procedure.procedureType}
+        focusOnScrollRef={formRef}
       >
-        <div className="flex flex-col">
-          <DocumentationSection extraData={procedure.extraData} />
+        <form
+          className="flex flex-col space-y-4"
+          onSubmit={handleSubmit(onSubmit)}
+          ref={formRef}
+        >
+          <div className="flex flex-col">
+            <DocumentationSection extraData={procedure.extraData} />
 
-          <FormSection
-            title="Input"
-            topRightElement={<XButton control={control} reset={reset} />}
-          >
-            {procedure.node.type === "object" ? (
-              Object.keys(procedure.node.children).length > 0 && (
-                <ObjectField
-                  node={
-                    procedure.node as ParsedInputNode & {
-                      type: "object";
+            <FormSection
+              title="Input"
+              topRightElement={<XButton control={control} reset={reset} />}
+            >
+              {procedure.node.type === "object" ? (
+                Object.keys(procedure.node.children).length > 0 && (
+                  <ObjectField
+                    node={
+                      procedure.node as ParsedInputNode & {
+                        type: "object";
+                      }
                     }
-                  }
-                  label={fieldName}
-                  control={control}
-                  topLevel
-                />
-              )
-            ) : (
-              <Field inputNode={procedure.node} control={control} />
-            )}
+                    label={fieldName}
+                    control={control}
+                    topLevel
+                  />
+                )
+              ) : (
+                <Field inputNode={procedure.node} control={control} />
+              )}
 
-            <ProcedureFormButton
-              text={`Execute ${name}`}
-              colorScheme={"neutral"}
-              loading={query.fetchStatus === "fetching" || mutation.isLoading}
-            />
-          </FormSection>
+              <ProcedureFormButton
+                text={`Execute ${name}`}
+                colorScheme={"neutral"}
+                loading={query.fetchStatus === "fetching" || mutation.isLoading}
+              />
+            </FormSection>
+          </div>
+        </form>
+        <div className="flex flex-col space-y-4">
+          {data && <RequestResult result={data} />}
+          {!data && data !== null && (
+            <Response>Successful request but no data was returned</Response>
+          )}
+          {error &&
+            (isTrpcError(error) ? (
+              <Error error={error} />
+            ) : (
+              <Response>{JSON.stringify(error)}</Response>
+            ))}
         </div>
-      </form>
-      <div className="flex flex-col space-y-4">
-        {data && <RequestResult result={data} />}
-        {!data && data !== null && (
-          <Response>Successful request but no data was returned</Response>
-        )}
-        {error &&
-          (isTrpcError(error) ? (
-            <Error error={error} />
-          ) : (
-            <Response>{JSON.stringify(error)}</Response>
-          ))}
-      </div>
-    </CollapsableSection>
+      </CollapsableSection>
+    </ProcedureFormContextProvider>
   );
 }
 
