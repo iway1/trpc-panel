@@ -205,7 +205,7 @@ export function ProcedureForm({
             (isTrpcError(error) ? (
               <Error error={error} />
             ) : (
-              <Response>{JSON.stringify(error)}</Response>
+              <Response>{error}</Response>
             ))}
         </div>
       </CollapsableSection>

@@ -85,6 +85,7 @@
     "zustand": "^4.1.5"
   },
   "dependencies": {
+    "@textea/json-viewer": "^2.13.1",
     "fs": "^0.0.1-security",
     "fuzzysort": "^2.0.4",
     "path": "^0.12.7",
