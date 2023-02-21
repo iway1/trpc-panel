@@ -56,7 +56,7 @@ export function ProcedureForm({
   const context = trpc.useContext();
 
   function getProcedure() {
-    var cur: typeof trpc | typeof trpc[string] = trpc;
+    var cur: typeof trpc | (typeof trpc)[string] = trpc;
     for (var p of procedure.pathFromRootRouter) {
       // TODO - Maybe figure out these typings?
       //@ts-ignore
@@ -151,7 +151,7 @@ export function ProcedureForm({
     <ProcedureFormContextProvider path={procedure.pathFromRootRouter.join(".")}>
       <CollapsableSection
         titleElement={
-          <span className="font-bold text-lg flex flex-row items-center">
+          <span className="font-bold text-lg flex flex-row items-center dark:text-white">
             {name}
           </span>
         }
@@ -160,7 +160,7 @@ export function ProcedureForm({
         focusOnScrollRef={formRef}
       >
         <form
-          className="flex flex-col space-y-4"
+          className="flex flex-col space-y-4 dark:text-white"
           onSubmit={handleSubmit(onSubmit)}
           ref={formRef}
         >

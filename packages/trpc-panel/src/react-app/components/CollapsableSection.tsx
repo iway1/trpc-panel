@@ -7,7 +7,12 @@ import {
   solidColorBorder,
 } from "@src/react-app/components/style-utils";
 
-export type ColorSchemeType = "query" | "mutation" | "router" | "neutral" | "subscription";
+export type ColorSchemeType =
+  | "query"
+  | "mutation"
+  | "router"
+  | "neutral"
+  | "subscription";
 
 export function CollapsableSection({
   titleElement,

@@ -16,7 +16,7 @@ export function SideNav({
   return (
     <div
       style={{ maxHeight: "calc(100vh - 4rem)" }}
-      className="min-w-[16rem] overflow-scroll bg-cyan-50 shadow-sm flex-col flex items-start p-2 pr-4 space-y-2 bg-actuallyWhite border-r-2 border-r-panelBorder"
+      className="min-w-[16rem] overflow-scroll bg-cyan-50 shadow-sm flex-col flex items-start p-2 pr-4 space-y-2 bg-actuallyWhite border-r-2 border-r-panelBorder dark:bg-mainBackgroundDark"
     >
       <SideNavItem node={rootRouter} path={[]} />
     </div>
@@ -49,12 +49,12 @@ function SideNavItem({
         >
           <span className="flex flex-row items-start">
             <ItemTypeIcon colorScheme={colorSchemeForNode(node)} />
-            {path[path.length - 1]}
+            <span className="dark:text-white">{path[path.length - 1]}</span>
           </span>
 
           {node.nodeType === "router" ? (
             <Chevron
-              className={"ml-2 w-3 h-3 " + ``}
+              className={"ml-2 w-3 h-3" + ``}
               direction={shown ? "down" : "right"}
             />
           ) : (

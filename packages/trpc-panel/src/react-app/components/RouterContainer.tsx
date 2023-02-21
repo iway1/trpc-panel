@@ -17,7 +17,7 @@ export function RouterContainer({
       titleElement={
         name && (
           <div>
-            <h2 className="font-bold text-lg">{name}</h2>
+            <h2 className="font-bold text-lg dark:text-white">{name}</h2>
           </div>
         )
       }

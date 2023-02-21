@@ -35,30 +35,15 @@ export function solidColorBorder(type: ColorSchemeType) {
 export function backgroundColor(type: ColorSchemeType) {
   switch (type) {
     case "mutation":
-      return "bg-mutationBg";
+      return "bg-mutationBg dark:bg-neutralBg";
     case "neutral":
-      return "bg-neutralBg";
+      return "bg-neutralBg dark:bg-neutralBg";
     case "query":
-      return "bg-queryBg";
+      return "bg-queryBg dark:bg-neutralBg";
     case "router":
-      return "bg-routerBg";
+      return "bg-routerBg dark:bg-neutralBg";
     case "subscription":
-      return "bg-subscriptionBg";
-  }
-}
-
-export function backgroundColorDark(type: ColorSchemeType) {
-  switch (type) {
-    case "mutation":
-      return "bg-mutationBgDark";
-    case "neutral":
-      return "bg-neutralBgDark";
-    case "query":
-      return "bg-queryBgDark";
-    case "router":
-      return "bg-routerBgDark";
-    case "subscription":
-      return "bg-subscriptionBgDark";
+      return "bg-subscriptionBg dark:bg-neutralBg";
   }
 }
 
