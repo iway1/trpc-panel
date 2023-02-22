@@ -12,5 +12,28 @@
     </noscript>
     <div class="flex flex-1 w-full h-full" id="root"></div>
     {{js}}
+
+    <!-- Dark mode plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/darkreader@4.9.58/darkreader.min.js"></script>
+    <script>
+        DarkReader.setFetchMethod(window.fetch)
+        DarkReader.auto(false);
+
+        function enableDarkMode() {
+            DarkReader.enable({
+                brightness: 150,
+                contrast: 130,
+            });
+        }
+
+        function disableDarkMode() {
+            DarkReader.disable();
+        }
+
+        function isDarkModeEnabled() {
+            return DarkReader.isEnabled();
+        }
+    </script>
+    <!-- End of dark mode plugin -->
 </body>
 </html>
