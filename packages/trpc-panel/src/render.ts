@@ -9,6 +9,7 @@ import {
 
 export type RenderOptions = {
   url: string;
+  cache?: boolean;
 } & TrpcPanelExtraOptions;
 
 const defaultParseRouterOptions: Partial<TrpcPanelExtraOptions> = {
@@ -62,7 +63,8 @@ let cache: {
 };
 
 export function renderTrpcPanel(router: Router<any>, options: RenderOptions) {
-  if (cache.val) return cache.val;
+  if (options.cache !== false && cache.val) return cache.val;
+  
   const bundleInjectionParams: InjectionParam[] = [
     {
       searchFor: routerReplaceSymbol,
