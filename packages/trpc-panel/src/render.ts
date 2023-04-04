@@ -63,8 +63,8 @@ let cache: {
 };
 
 export function renderTrpcPanel(router: Router<any>, options: RenderOptions) {
-  if (options.cache !== false && cache.val) return cache.val;
-  
+  if (options.cache === true && cache.val) return cache.val;
+
   const bundleInjectionParams: InjectionParam[] = [
     {
       searchFor: routerReplaceSymbol,
