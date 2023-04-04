@@ -7,7 +7,7 @@
   "typings": "lib/src/index.d.ts",
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watch",
+    "test:watch": "jest --watchAll",
     "build": "npx rollup --bundleConfigAsCjs --config rollup.config.js",
     "dev": "rollup --config rollup.config.js --watch"
   },
