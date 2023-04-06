@@ -6,7 +6,7 @@ export function Response({ children }: { children: string | object }) {
   if (typeof children === "object") {
     return (
       <FormSection title="Response">
-        <JsonViewer rootName={false} value={children} />
+        <JsonViewer rootName={false} value={children} quotesOnKeys={false} />
       </FormSection>
     );
   }
