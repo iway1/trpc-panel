@@ -2,9 +2,7 @@ node_modules
 .vscode
 .env
 .DS_STORE
-yarn.lock
 yarn-error.log
-package-lock.json
 lib
 
 # See http://help.github.com/ignore-files/ for more about ignoring files.
