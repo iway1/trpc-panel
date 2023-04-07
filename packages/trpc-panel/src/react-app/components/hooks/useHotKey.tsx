@@ -122,16 +122,13 @@ export function useHotKey({
         e.preventDefault();
         callbackRef.current();
         hasFiredRef.current = true;
-        console.log("Called hotkey: " + key);
       }
     }
     function handleKeyUp(e: KeyboardEvent) {
-      console.log("Key up");
       if (e.key.toLowerCase() === key.toLowerCase()) {
         e.cancelBubble = true;
         e.preventDefault();
         hasFiredRef.current = false;
-        console.log("Reset has fired ref");
       }
       if (e.key === "Control" || e.key === "Meta") {
         controlOrMetaDown.current = false;

@@ -9,7 +9,7 @@ export function ItemTypeIcon({
 }) {
   const letter = colorScheme[0]!.toUpperCase();
   return (
-    <span className={"font-bold text-white mr-1 " + textColor(colorScheme)}>
+    <span className={"font-bold mr-1 " + textColor(colorScheme)}>
       {letter}
     </span>
   );
