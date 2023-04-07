@@ -81,6 +81,7 @@ function ClientProviders({
 
 function AppInnards({ rootRouter }: { rootRouter: ParsedRouter }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+
   return (
     <div className="flex flex-col flex-1 relative">
       <TopBar />

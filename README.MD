@@ -43,6 +43,7 @@ app.use("/panel", (_, res) => {
 `trpc-panel` just renders as a string, so it can be used with any backend.
 
 ## NextJS / create-t3-app example
+
 In Nextjs you'd want to create an api route somewhere like `src/pages/api/panel.ts` and send a text response:
 
 ```ts
@@ -127,6 +128,10 @@ app.use("/panel", (_, res) => {
 });
 ```
 
+## Contributing
+
+`trpc-panel` welcomes and encourages open source contributions. Please see our [contributing](./CONTRIBUTING.md) guide for information on how to develop locally.
+
 ## Limitations
 
 Currently, tRPC panel only supports tRPC v10 and only works with zod input schemas. With it's current design it would be feasible to easily add support for other input types as well
@@ -156,7 +161,7 @@ The following are supported
 - String
 - Undefined
 
-Planning on adding additional support shortly for the following types:
+We would like to add the following types:
 
 - Union
 - Tuple
@@ -166,8 +171,3 @@ Planning on adding additional support shortly for the following types:
 - Set (superjson only)
 - Date (superjson only)
 - Any
-
-### Feature Roadmap
-
-You can view planned features roadmap here: https://trello.com/b/nflGRDxe/trpc-panel-featues-road-map
-
