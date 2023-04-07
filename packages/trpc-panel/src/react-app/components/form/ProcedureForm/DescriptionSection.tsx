@@ -29,7 +29,7 @@ export function DocumentationSection({
                         key={key}
                         className="list-item border-b border-separatorLine flex-row space-x-2"
                       >
-                        <span className="text-sm text-gray-500 font-bold">
+                        <span className="text-sm text-neutralText font-bold">
                           {`${key}: `}
                         </span>
                       </li>
@@ -71,7 +71,7 @@ function DocumentationSubsection({
 }) {
   return (
     <div className="flex flex-col space-y-2">
-      <span className="text-md text-gray-500 font-bold">{title}</span>
+      <span className="text-md text-neutralText font-bold">{title}</span>
       <span className="text-sm text-gray-500">{children}</span>
     </div>
   );

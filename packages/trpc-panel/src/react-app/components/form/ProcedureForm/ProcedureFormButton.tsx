@@ -1,8 +1,8 @@
 import React from "react";
-import { SendIcon } from "@src/react-app/components/icons/SendIcon";
-import { Button } from "@src/react-app/components/Button";
+import { SendIcon } from "../../icons/SendIcon";
+import { Button } from "../../Button";
 import { LoadingSpinner } from "./LoadingSpinner";
-import { ColorSchemeType } from "@src/react-app/components/CollapsableSection";
+import { ColorSchemeType } from "../../CollapsableSection";
 
 export function ProcedureFormButton({
   text,
