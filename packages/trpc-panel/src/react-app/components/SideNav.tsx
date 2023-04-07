@@ -16,7 +16,7 @@ export function SideNav({
   return (
     <div
       style={{ maxHeight: "calc(100vh - 4rem)" }}
-      className="min-w-[16rem] overflow-scroll bg-cyan-50 shadow-sm flex-col flex items-start p-2 pr-4 space-y-2 bg-actuallyWhite border-r-2 border-r-panelBorder"
+      className="min-w-[16rem] overflow-scroll shadow-sm flex-col flex items-start p-2 pr-4 space-y-2 bg-actuallyWhite border-r-2 border-r-panelBorder"
     >
       <SideNavItem node={rootRouter} path={[]} />
     </div>

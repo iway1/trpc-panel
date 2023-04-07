@@ -20,7 +20,10 @@ export const HeadersContext = createContext<HeadersContextType | null>(null);
 
 const headersLocalStorageKey = "headers";
 
-const storedHeaders = localStorage.getItem(headersLocalStorageKey);
+// necessary for SSR in the dev app
+const storage = typeof window !== 'undefined'? localStorage: {getItem: (v: string)=>null, setItem: (s: string)=>{}, removeItem: (v: string)=>{}};
+
+const storedHeaders = storage.getItem(headersLocalStorageKey);
 
 export function HeadersContextProvider({ children }: { children: ReactNode }) {
   const [headersPopupShown, setHeadersPopupShown] = useState(false);
@@ -34,7 +37,7 @@ export function HeadersContextProvider({ children }: { children: ReactNode }) {
   function setHeaders(headers: Headers) {
     globalHeadersRef.current = headers;
     if (saveHeadersToLocalStorage) {
-      localStorage.setItem(headersLocalStorageKey, JSON.stringify(headers));
+      storage.setItem(headersLocalStorageKey, JSON.stringify(headers));
     }
   }
 
@@ -53,7 +56,7 @@ export function HeadersContextProvider({ children }: { children: ReactNode }) {
         setHeadersPopupShown,
         saveHeadersToLocalStorage,
         setSaveHeadersToLocalStorage: (val) => {
-          if (!val) localStorage.removeItem(headersLocalStorageKey);
+          if (!val) storage.removeItem(headersLocalStorageKey);
           setSaveHeadersToLocalStorage(val);
         },
       }}

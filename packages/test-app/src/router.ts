@@ -306,5 +306,4 @@ export const testRouter = t.router({
   nonObjectInput: t.procedure.input(z.string()).query(({ input }) => {
     return `Your input was ${input}`;
   }),
-  subscriptionRouter,
 });

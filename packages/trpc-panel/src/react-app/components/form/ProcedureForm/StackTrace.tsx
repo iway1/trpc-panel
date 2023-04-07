@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChevronIcon } from "@src/react-app/components/icons/ChevronIcon";
+import { ChevronIcon } from "../../icons/ChevronIcon";
 
 export function StackTrace({ text }: { text: string }) {
   const [open, setOpen] = useState(false);

@@ -21,7 +21,9 @@
   },
   "workspaces": {
     "packages": [
-      "packages/*"
+      "packages/trpc-panel",
+      "packages/test-app",
+      "packages/dev-app"
     ],
     "nohoist": [
       "**/zod-to-json-schema",

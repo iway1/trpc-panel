@@ -1,31 +1,45 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "allowJs": false,
+    "target": "es2017",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "checkJs": true,
     "skipLibCheck": true,
-    "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "baseUrl": "./",
-    "jsx": "react-jsx",
+    "jsx": "preserve",
+    "incremental": true,
+    "noUncheckedIndexedAccess": true,
+    "sourceMap": true,
+    "baseUrl": ".",
     "paths": {
-      "test-app": ["../test-app"],
-      "trpc-panel": ["../trpc-panel"],
-      "react": ["../trpc-panel/node_modules/react"],
-      "react-dom": ["../trpc-panel/node_modules/react-dom"],
-      "@tanstack/react-query": ["../trpc-panel/node_modules/@tanstack/react-query"],
-      "@trpc/react-query": ["../trpc-panel/node_modules/@trpc/react-query"],
-      "@src": ["../trpc-panel/src"]
+      "~/*": [
+        "./src/*",
+      ],
+      "trpc-panel/*": ["../trpc-panel/src/*"],
+      "@src/*": ["../trpc-panel/src/*"],
     }
   },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": [
+    ".eslintrc.cjs",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.cjs",
+    "**/*.mjs",
+    "../trpc-panel/src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
