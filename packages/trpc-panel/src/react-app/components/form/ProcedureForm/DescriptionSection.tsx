@@ -12,7 +12,7 @@ export function DocumentationSection({
 
   return (
     <FormSection title="Docs">
-      <div className="flex flex-col space-y-4">
+      <div className="space-y-4">
         {extraData.description && (
           <DocumentationSubsection title="Description">
             {extraData.description}
@@ -20,41 +20,23 @@ export function DocumentationSection({
         )}
         {hasParams && (
           <DocumentationSubsection title="Params">
-            <div className="pl-4 flex flex-row">
-              <div className="flex flex-col">
-                <ul className="space-y-2 list-disc">
-                  {Object.entries(extraData.parameterDescriptions).map(
-                    ([key]) => (
-                      <li
-                        key={key}
-                        className="list-item border-b border-separatorLine flex-row space-x-2"
-                      >
-                        <span className="text-sm text-neutralText font-bold">
-                          {`${key}: `}
-                        </span>
-                      </li>
-                    )
-                  )}
-                </ul>
-              </div>
-
-              <div className="flex flex-col">
-                <ul className="space-y-2">
-                  {Object.entries(extraData.parameterDescriptions).map(
-                    ([key, value]) => (
-                      <li
-                        key={key}
-                        className="list-item border-b border-separatorLine flex-row space-x-2"
-                      >
-                        <span className="pl-4 text-sm text-gray-500 ">
-                          {`${value}`}
-                        </span>
-                      </li>
-                    )
-                  )}
-                </ul>
-              </div>
-            </div>
+            <table>
+              {Object.entries(extraData.parameterDescriptions).map(
+                ([key, value]) => (
+                  <tr
+                    key={key}
+                    className="border-b border-separatorLine flex-row space-x-2"
+                  >
+                    <td className="text-sm text-neutralText font-bold align-top py-2">
+                      {`${key}: `}
+                    </td>
+                    <td className="pl-4 text-sm text-gray-500 py-2">
+                      {`${value}`}
+                    </td>
+                  </tr>
+                )
+              )}
+            </table>
           </DocumentationSubsection>
         )}
       </div>
