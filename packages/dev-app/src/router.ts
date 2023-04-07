@@ -126,7 +126,15 @@ export const appRouter = createTRPCRouter({
         searchTerm: z
           .string()
           .optional()
-          .describe("The name of the thing to search for."),
+          .describe(
+            "The name of the thing to search for. Really really long long long boi long boi long"
+          ),
+        searchTerm2: z
+          .string()
+          .optional()
+          .describe(
+            "The name of the thing to search for. Really really long long long boi long boi long Really really long long long boi long boi long Really really long long long boi long boi long Really really long long long boi long boi long"
+          ),
       })
     )
     .query(() => {
