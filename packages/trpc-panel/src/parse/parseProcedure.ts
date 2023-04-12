@@ -73,10 +73,11 @@ function nodeAndInputSchemaFromInputs(
       }),
     };
   }
+
+  let input = inputs[0];
   if (inputs.length !== 1) {
-    return { parseInputResult: "failure" };
+    input = inputs.reduce((acc, input) => (acc as any).merge(input), emptyZodObject);
   }
-  const input = inputs[0];
   const iType = inputType(input);
   if (iType == "unsupported") {
     return { parseInputResult: "failure" };
