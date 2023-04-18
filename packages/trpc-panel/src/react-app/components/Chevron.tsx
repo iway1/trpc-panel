@@ -6,7 +6,7 @@ export function Chevron({
   direction,
 }: {
   className?: string;
-  direction: "up" | "down" | "right";
+  direction: "up" | "down" | "right" | "left";
 }) {
   return (
     <ChevronIcon
@@ -21,6 +21,8 @@ export function Chevron({
               return "-rotate-90";
             case "right":
               return "rotate-180";
+            case "left":
+              return "";
           }
         })()}`
       }

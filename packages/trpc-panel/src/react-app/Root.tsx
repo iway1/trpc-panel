@@ -84,7 +84,7 @@ function AppInnards({ rootRouter }: { rootRouter: ParsedRouter }) {
 
   return (
     <div className="flex flex-col flex-1 relative">
-      <TopBar />
+      <TopBar open={sidebarOpen} setOpen={setSidebarOpen} />
       <div className="flex flex-row flex-1 bg-mainBackground">
         <SideNav
           rootRouter={rootRouter}

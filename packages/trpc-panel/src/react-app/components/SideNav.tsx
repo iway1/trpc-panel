@@ -7,20 +7,21 @@ import { colorSchemeForNode } from "@src/react-app/components/style-utils";
 import { ItemTypeIcon } from "@src/react-app/components/ItemTypeIcon";
 export function SideNav({
   rootRouter,
+  open,
 }: // setOpen,
 {
   open: boolean;
   rootRouter: ParsedRouter;
   setOpen: (value: boolean) => void;
 }) {
-  return (
+  return open ? (
     <div
       style={{ maxHeight: "calc(100vh - 4rem)" }}
       className="min-w-[16rem] overflow-scroll shadow-sm flex-col flex items-start p-2 pr-4 space-y-2 bg-actuallyWhite border-r-2 border-r-panelBorder"
     >
       <SideNavItem node={rootRouter} path={[]} />
     </div>
-  );
+  ) : null;
 }
 
 function SideNavItem({
