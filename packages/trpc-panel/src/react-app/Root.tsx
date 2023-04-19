@@ -8,6 +8,7 @@ import {
   HeadersContextProvider,
   useHeaders,
 } from "@src/react-app/components/contexts/HeadersContext";
+import { useLocalStorage } from "@src/react-app/components/hooks/useLocalStorage";
 import { HeadersPopup } from "@src/react-app/components/HeadersPopup";
 import { Toaster } from "react-hot-toast";
 import { SiteNavigationContextProvider } from "@src/react-app/components/contexts/SiteNavigationContext";
@@ -80,11 +81,14 @@ function ClientProviders({
 }
 
 function AppInnards({ rootRouter }: { rootRouter: ParsedRouter }) {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useLocalStorage(
+    "trpc-panel.show-minimap",
+    true
+  );
 
   return (
     <div className="flex flex-col flex-1 relative">
-      <TopBar />
+      <TopBar open={sidebarOpen} setOpen={setSidebarOpen} />
       <div className="flex flex-row flex-1 bg-mainBackground">
         <SideNav
           rootRouter={rootRouter}
