@@ -88,7 +88,6 @@
     "zustand": "^4.1.5"
   },
   "dependencies": {
-    "fs": "^0.0.1-security",
     "fuzzysort": "^2.0.4",
     "path": "^0.12.7",
     "url": "^0.11.0",
