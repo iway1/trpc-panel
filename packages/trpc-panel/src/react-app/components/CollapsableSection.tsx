@@ -1,14 +1,22 @@
 import React, { MutableRefObject, ReactNode, useEffect, useRef } from "react";
 import { Chevron } from "@src/react-app/components/Chevron";
-import { useSiteNavigationContext } from "@src/react-app/components/contexts/SiteNavigationContext";
+import {
+  collapsables,
+  useCollapsableIsShowing,
+  useSiteNavigationContext,
+} from "@src/react-app/components/contexts/SiteNavigationContext";
 import {
   backgroundColor,
   solidColorBg,
   solidColorBorder,
 } from "@src/react-app/components/style-utils";
 
-export type ColorSchemeType = "query" | "mutation" | "router" | "neutral" | "subscription";
-
+export type ColorSchemeType =
+  | "query"
+  | "mutation"
+  | "router"
+  | "neutral"
+  | "subscription";
 export function CollapsableSection({
   titleElement,
   fullPath,
@@ -24,8 +32,9 @@ export function CollapsableSection({
   isRoot?: boolean;
   focusOnScrollRef?: MutableRefObject<HTMLFormElement | null>;
 }) {
-  const { has, togglePath, scrollToPathIfMatches } = useSiteNavigationContext();
-  const shown = has(fullPath);
+  const { scrollToPathIfMatches } = useSiteNavigationContext();
+  const shown = useCollapsableIsShowing(fullPath);
+
   const containerRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (shown && containerRef.current) {
@@ -59,7 +68,7 @@ export function CollapsableSection({
     >
       {collapsable ? (
         <button
-          onClick={() => togglePath(fullPath)}
+          onClick={() => collapsables.toggle(fullPath)}
           className="flex flex-row justify-between items-center p-1 "
         >
           <span className="flex flex-row">
