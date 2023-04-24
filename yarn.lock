@@ -825,7 +825,7 @@
   dependencies:
     "@babel/runtime" "^7.21.0"
 
-"@mui/material@^5.10.16":
+"@mui/material@^5.10.16", "@mui/material@^5.11.14":
   version "5.12.1"
   resolved "https://registry.yarnpkg.com/@mui/material/-/material-5.12.1.tgz#3297ffc6836f426a26568332d68357c1398f0630"
   integrity sha512-m+G9J6+FzIMhRqKV2y30yONH97wX107z9EWgiNCeS1/+y1CnytFZNG1ENdOuaJo1NimCRnmB/iXPvoOaSo6dOg==
@@ -1188,7 +1188,7 @@
     copy-to-clipboard "^3.3.3"
     zustand "^4.3.6"
 
-"@trpc/client@^10.0.0", "@trpc/client@^10.18.0", "@trpc/client@^10.2.0":
+"@trpc/client@^10.0.0":
   version "10.21.1"
   resolved "https://registry.yarnpkg.com/@trpc/client/-/client-10.21.1.tgz#1cc86ffddaabd7368b43b50070f2ca98bbfc460d"
   integrity sha512-oZgPbghs9y2frTCA9mZPSAlVknV9stCTKYO5nsvRr0aX+oaA0URoXJTKZTSpLZxLfuwWgxBj4iTiCWWWmaVelw==
