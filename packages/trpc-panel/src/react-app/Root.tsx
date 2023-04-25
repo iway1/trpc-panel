@@ -30,8 +30,8 @@ export function RootComponent({
 }) {
   return (
     <HeadersContextProvider>
-      <SiteNavigationContextProvider>
-        <AllPathsContextProvider rootRouter={rootRouter}>
+      <AllPathsContextProvider rootRouter={rootRouter}>
+        <SiteNavigationContextProvider>
           <ClientProviders trpc={trpc} options={options}>
             <HotKeysContextProvider>
               <SearchOverlay>
@@ -41,8 +41,8 @@ export function RootComponent({
               </SearchOverlay>
             </HotKeysContextProvider>
           </ClientProviders>
-        </AllPathsContextProvider>
-      </SiteNavigationContextProvider>
+        </SiteNavigationContextProvider>
+      </AllPathsContextProvider>
     </HeadersContextProvider>
   );
 }
