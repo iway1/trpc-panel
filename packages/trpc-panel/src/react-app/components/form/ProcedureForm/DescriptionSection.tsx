@@ -1,4 +1,5 @@
 import type { ProcedureExtraData } from "@src/parse/parseProcedure";
+import { FormLabel } from "@src/react-app/components/form/FormLabel";
 import { FormSection } from "@src/react-app/components/form/ProcedureForm/FormSection";
 import React, { ReactNode } from "react";
 
@@ -55,7 +56,7 @@ function DocumentationSubsection({
 }) {
   return (
     <div className="flex flex-col space-y-2">
-      <span className="text-md text-neutralText font-bold">{title}</span>
+      <FormLabel>{title}</FormLabel>ƒ
       <span className="text-sm text-gray-500">{children}</span>
     </div>
   );

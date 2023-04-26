@@ -6,7 +6,7 @@ export function defaultFormValuesForNode(node: ParsedInputNode): any {
     case "array":
       return [];
     case "boolean":
-      return false;
+      return;
     case "discriminated-union":
       const firstValue = node.discriminatedUnionValues[0]!;
       return defaultFormValuesForNode(
