@@ -14,7 +14,7 @@ const App = dynamic(
       <RootComponent
         rootRouter={parse}
         options={{
-          url: "http://localhost:3000/api/trpc",
+          url: "http://localhost:3001/api/trpc",
           transformer: "superjson",
         }}
         trpc={trpc}
