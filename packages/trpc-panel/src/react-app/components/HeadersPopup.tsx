@@ -78,7 +78,7 @@ export function HeadersPopup() {
   }, [headersPopupShown]);
   if (!headersPopupShown) return null;
   return (
-    <div className="fixed flex left-0 right-0 top-0 bottom-0 items-center border border-panelBorder drop-shadow-lg justify-center bg-overlayBackground bg-opacity-70">
+    <div className="fixed flex left-0 right-0 top-0 bottom-0 items-center border border-panelBorder drop-shadow-lg justify-center bg-overlayBackground">
       <form
         onSubmit={(e) => {
           e.preventDefault();

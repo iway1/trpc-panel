@@ -2,6 +2,7 @@ import React from "react";
 import { useHeadersContext } from "@src/react-app/components/contexts/HeadersContext";
 import MailLockIcon from "@mui/icons-material/MailLockOutlined";
 import { LogoSvg } from "@src/react-app/components/LogoSvg";
+import { ThemeSwitch } from "@src/react-app/components/ThemeSwitch";
 import { useIsMac } from "@src/react-app/components/hooks/useIsMac";
 import { Chevron } from "@src/react-app/components/Chevron";
 import Search from "@mui/icons-material/Search";
@@ -37,13 +38,16 @@ export function TopBar({
         </span>
       </div>
       <RouterSearchTooltip />
-      <button
-        onClick={() => setHeadersPopupShown(true)}
-        className="border border-neutralSolidTransparent py-2 px-4 text-neutralText font-bold rounded-sm shadow-sm"
-      >
-        Headers
-        <MailLockIcon className="w-6 h-6 ml-1" />
-      </button>
+      <div className="flex justify-end items-stretch space-x-2">
+        <ThemeSwitch />
+        <button
+          onClick={() => setHeadersPopupShown(true)}
+          className="border border-neutralSolidTransparent py-2 px-4 text-neutralText font-bold rounded-sm shadow-sm"
+        >
+          Headers
+          <MailLockIcon className="w-6 h-6 ml-1" />
+        </button>
+      </div>
     </div>
   );
 }
