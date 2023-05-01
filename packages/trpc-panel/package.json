@@ -88,9 +88,12 @@
     "zustand": "^4.1.5"
   },
   "dependencies": {
-    "@textea/json-viewer": "^2.13.1",
+    "@textea/json-viewer": "^3.0.0",
     "fuzzysort": "^2.0.4",
     "path": "^0.12.7",
+    "pretty-bytes": "^6.1.0",
+    "pretty-ms": "^8.0.0",
+    "string-byte-length": "^1.6.0",
     "url": "^0.11.0",
     "zod-to-json-schema": "^3.20.0"
   }
