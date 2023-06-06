@@ -82,8 +82,6 @@ function nodeAndInputSchemaFromInputs(
     return { parseInputResult: "failure" };
   }
 
-  let input = inputs[0];
-
   if (inputs.length > 1) {
     const allInputsAreZodObjects = inputs.every(
       (input) => input instanceof z.ZodObject
@@ -97,6 +95,7 @@ function nodeAndInputSchemaFromInputs(
       emptyZodObject
     );
   }
+
   const iType = inputType(input);
   if (iType == "unsupported") {
     return { parseInputResult: "failure" };
