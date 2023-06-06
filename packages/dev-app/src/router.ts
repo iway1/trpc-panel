@@ -31,6 +31,23 @@ const postsRouter = createTRPCRouter({
         text: input.text,
       };
     }),
+  createNestedPost: procedure
+    .input(
+      z.object({
+        text: z.string(),
+      })
+    )
+    .input(
+      z.object({
+        title: z.string(),
+      })
+    )
+    .mutation(({ input }) => {
+      return {
+        id: "aoisdjfoasidjfasodf",
+        text: input.text,
+      };
+    }),
 });
 
 export const appRouter = createTRPCRouter({
