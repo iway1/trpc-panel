@@ -75,8 +75,24 @@ function nodeAndInputSchemaFromInputs(
   }
 
   let input = inputs[0];
-  if (inputs.length !== 1) {
-    input = inputs.reduce((acc, input) => (acc as any).merge(input), emptyZodObject);
+  if (inputs.length < 1) {
+    return { parseInputResult: "failure" };
+  }
+
+  let input = inputs[0];
+
+  if (inputs.length > 1) {
+    const allInputsAreZodObjects = inputs.every(
+      (input) => input instanceof z.ZodObject
+    );
+    if (!allInputsAreZodObjects) {
+      return { parseInputResult: "failure" };
+    }
+
+    input = inputs.reduce(
+      (acc, input: z.AnyZodObject) => (acc as z.AnyZodObject).merge(input),
+      emptyZodObject
+    );
   }
   const iType = inputType(input);
   if (iType == "unsupported") {
