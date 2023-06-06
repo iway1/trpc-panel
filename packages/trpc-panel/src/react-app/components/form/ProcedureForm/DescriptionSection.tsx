@@ -1,4 +1,5 @@
 import type { ProcedureExtraData } from "@src/parse/parseProcedure";
+import { FormLabel } from "@src/react-app/components/form/FormLabel";
 import { FormSection } from "@src/react-app/components/form/ProcedureForm/FormSection";
 import React, { ReactNode } from "react";
 
@@ -21,21 +22,23 @@ export function DocumentationSection({
         {hasParams && (
           <DocumentationSubsection title="Params">
             <table>
-              {Object.entries(extraData.parameterDescriptions).map(
-                ([key, value]) => (
-                  <tr
-                    key={key}
-                    className="border-b border-separatorLine flex-row space-x-2"
-                  >
-                    <td className="text-sm text-neutralText font-bold align-top py-2">
-                      {`${key}: `}
-                    </td>
-                    <td className="pl-4 text-sm text-gray-500 py-2">
-                      {`${value}`}
-                    </td>
-                  </tr>
-                )
-              )}
+              <tbody>
+                {Object.entries(extraData.parameterDescriptions).map(
+                  ([key, value]) => (
+                    <tr
+                      key={key}
+                      className="border-b border-separatorLine flex-row space-x-2"
+                    >
+                      <td className="text-sm text-neutralText font-bold align-top py-2">
+                        {`${key}: `}
+                      </td>
+                      <td className="pl-4 text-sm text-gray-500 py-2">
+                        {`${value}`}
+                      </td>
+                    </tr>
+                  )
+                )}
+              </tbody>
             </table>
           </DocumentationSubsection>
         )}
@@ -53,7 +56,7 @@ function DocumentationSubsection({
 }) {
   return (
     <div className="flex flex-col space-y-2">
-      <span className="text-md text-neutralText font-bold">{title}</span>
+      <FormLabel>{title}</FormLabel>ƒ
       <span className="text-sm text-gray-500">{children}</span>
     </div>
   );

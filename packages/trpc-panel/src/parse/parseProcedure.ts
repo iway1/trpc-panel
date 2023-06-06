@@ -65,7 +65,10 @@ function nodeAndInputSchemaFromInputs(
   if (!inputs.length) {
     return {
       parseInputResult: "success",
-      schema: zodToJsonSchema(emptyZodObject, { errorMessages: true }),
+      schema: zodToJsonSchema(emptyZodObject, {
+        errorMessages: true,
+        $refStrategy: "none",
+      }),
       node: inputParserMap["zod"](emptyZodObject, {
         path: [],
         options,
@@ -101,7 +104,10 @@ function nodeAndInputSchemaFromInputs(
 
   return {
     parseInputResult: "success",
-    schema: zodToJsonSchema(input as any, { errorMessages: true }), //
+    schema: zodToJsonSchema(input as any, {
+      errorMessages: true,
+      $refStrategy: "none",
+    }), //
     node: zodSelectorFunction((input as any)._def, {
       path: [],
       options,

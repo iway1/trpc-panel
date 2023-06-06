@@ -1,16 +1,14 @@
+import { useAllPaths } from "@src/react-app/components/contexts/AllPathsContext";
 import React, {
   createContext,
   ReactNode,
   useContext,
+  useMemo,
   useRef,
-  useState,
 } from "react";
+import { create } from "zustand";
 
 const Context = createContext<{
-  has: (path: string[]) => boolean;
-  hidePath: (path: string[]) => void;
-  showPath: (path: string[]) => void;
-  togglePath: (path: string[]) => void;
   scrollToPathIfMatches: (path: string[], element: Element) => boolean;
   markForScrollTo: (path: string[]) => void;
   openAndNavigateTo: (path: string[], closeOthers?: boolean) => void;
@@ -25,40 +23,90 @@ function forAllPaths(path: string[], callback: (current: string) => void) {
   }
 }
 
+const collapsablesStore = {
+  current: null as null | ReturnType<typeof create>,
+};
+
+function initialCollapsableStoreValues(allPaths: string[]) {
+  const vals: Record<string, boolean> = {};
+
+  for (const path of allPaths) {
+    vals[path] = false;
+  }
+  return vals;
+}
+
+function initCollapsablesStore(allPaths: string[]) {
+  collapsablesStore.current = create<any>(() => ({
+    ...initialCollapsableStoreValues(allPaths),
+  }));
+}
+
+function useInitCollapsablesStore(allPaths: string[]) {
+  const hasInitted = useRef(false);
+
+  if (!hasInitted.current) {
+    initCollapsablesStore(allPaths);
+    hasInitted.current = true;
+  }
+}
+
+export const collapsables = (() => {
+  const hide = (path: string[]) => {
+    const pathJoined = path.join(".");
+    forAllPaths(path, (current) => {
+      if (pathJoined.length <= current.length) {
+        collapsablesStore.current?.setState({
+          [current]: false,
+        });
+      }
+    });
+  };
+  const show = (path: string[]) => {
+    forAllPaths(path, (current) => {
+      collapsablesStore.current?.setState({
+        [current]: true,
+      });
+    });
+  };
+  return {
+    hide,
+    show,
+    toggle(path: string[]) {
+      const state = collapsablesStore.current!.getState() as any;
+      if (state[path.join(".")]) {
+        hide(path);
+      } else {
+        show(path);
+      }
+    },
+    hideAll() {
+      const state = collapsablesStore.current! as any;
+      const newValue: Record<string, boolean> = {};
+      for (const path in state) {
+        newValue[path] = false;
+      }
+      collapsablesStore.current!.setState(newValue);
+    },
+  };
+})();
+
+export function useCollapsableIsShowing(path: string[]) {
+  const p = useMemo(() => {
+    return path.join(".");
+  }, []);
+  return collapsablesStore.current!((s) => (s as any)[p]);
+}
+
 export function SiteNavigationContextProvider({
   children,
 }: {
   children: ReactNode;
 }) {
-  const [shownPaths, setShownPaths] = useState<Set<string>>(new Set());
+  const allPaths = useAllPaths();
+  useInitCollapsablesStore(allPaths.pathsArray);
 
   const scrollToPathRef = useRef<string[] | null>(null);
-
-  function hidePath(path: string[]) {
-    const newPaths = new Set<string>(shownPaths);
-    const pathJoined = path.join(".");
-    forAllPaths(path, (current) => {
-      if (pathJoined.length <= current.length) newPaths.delete(current);
-    });
-    setShownPaths(newPaths);
-  }
-
-  function showPath(path: string[]) {
-    const newPaths = new Set<string>(shownPaths);
-    forAllPaths(path, (current) => {
-      newPaths.add(current);
-    });
-    setShownPaths(newPaths);
-  }
-
-  function has(path: string[]) {
-    return shownPaths.has(path.join("."));
-  }
-
-  function toggle(path: string[]) {
-    if (has(path)) hidePath(path);
-    else showPath(path);
-  }
 
   function scrollToPathIfMatches(path: string[], element: Element) {
     if (
@@ -81,21 +129,16 @@ export function SiteNavigationContextProvider({
   }
 
   function openAndNavigateTo(path: string[], hideOthers?: boolean) {
-    const newSet = hideOthers ? new Set<string>() : new Set(shownPaths);
-    forAllPaths(path, (p) => {
-      newSet.add(p);
-    });
+    if (hideOthers) {
+      collapsables.hideAll();
+    }
+    collapsables.show(path);
     markForScrollTo(path);
-    setShownPaths(newSet);
   }
 
   return (
     <Context.Provider
       value={{
-        hidePath,
-        showPath,
-        has,
-        togglePath: toggle,
         scrollToPathIfMatches,
         markForScrollTo,
         openAndNavigateTo,

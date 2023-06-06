@@ -1,26 +1,31 @@
-import React from "react";
+import React, { useCallback } from "react";
 import type { ParsedRouter } from "../../parse/parseRouter";
 import type { ParsedProcedure } from "@src/parse/parseProcedure";
-import { useSiteNavigationContext } from "@src/react-app/components/contexts/SiteNavigationContext";
+import {
+  collapsables,
+  useCollapsableIsShowing,
+  useSiteNavigationContext,
+} from "@src/react-app/components/contexts/SiteNavigationContext";
 import { Chevron } from "@src/react-app/components/Chevron";
 import { colorSchemeForNode } from "@src/react-app/components/style-utils";
 import { ItemTypeIcon } from "@src/react-app/components/ItemTypeIcon";
 export function SideNav({
   rootRouter,
+  open,
 }: // setOpen,
 {
   open: boolean;
   rootRouter: ParsedRouter;
   setOpen: (value: boolean) => void;
 }) {
-  return (
+  return open ? (
     <div
       style={{ maxHeight: "calc(100vh - 4rem)" }}
       className="min-w-[16rem] overflow-scroll shadow-sm flex-col flex items-start p-2 pr-4 space-y-2 bg-actuallyWhite border-r-2 border-r-panelBorder"
     >
       <SideNavItem node={rootRouter} path={[]} />
     </div>
-  );
+  ) : null;
 }
 
 function SideNavItem({
@@ -30,13 +35,13 @@ function SideNavItem({
   node: ParsedRouter | ParsedProcedure;
   path: string[];
 }) {
-  const { togglePath, has, markForScrollTo } = useSiteNavigationContext();
-  const shown = has(path) || path.length == 0;
+  const { markForScrollTo } = useSiteNavigationContext();
+  const shown = useCollapsableIsShowing(path) || path.length === 0;
 
-  function onClick() {
-    togglePath(path);
+  const onClick = useCallback(function onClick() {
+    collapsables.toggle(path);
     markForScrollTo(path);
-  }
+  }, []);
 
   return (
     <>
@@ -65,9 +70,17 @@ function SideNavItem({
       {shown && node.nodeType === "router" && (
         <div className="pl-2 flex flex-col items-start space-y-2 self-stretch">
           {Object.entries(node.children).map(([key, node]) => {
-            const newPath = path.concat([key]);
-            const k = newPath.join(",");
-            return <SideNavItem path={newPath} node={node} key={k} />;
+            return (
+              <SideNavItem
+                path={
+                  node.nodeType === "procedure"
+                    ? node.pathFromRootRouter
+                    : node.path
+                }
+                node={node}
+                key={key}
+              />
+            );
           })}
         </div>
       )}
