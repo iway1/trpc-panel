@@ -4,18 +4,16 @@
   "description": "UI for testing tRPC backends",
   "main": "lib/index.js",
   "module": "lib/index.mjs",
-  "typings": "lib/src/index.d.ts",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "build": "npx rollup --bundleConfigAsCjs --config rollup.config.js",
+    "build": "npx rollup --config rollup.config.mjs",
     "dev": "rollup --config rollup.config.js --watch --bundleConfigAsCjs"
   },
   "author": "",
   "license": "ISC",
   "exports": {
     ".": {
-      "types": "./lib/src/index.d.ts",
       "import": "./lib/index.mjs",
       "require": "./lib/index.js",
       "default": "./lib/index.js"
@@ -74,6 +72,7 @@
     "react-hotkeys-hook": "^4.0.6",
     "rollup": "^3.7.4",
     "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-dts": "^5.3.0",
     "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-serve": "^2.0.1",

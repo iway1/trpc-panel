@@ -1,3 +1,5 @@
+// @ts-check
+import dts from 'rollup-plugin-dts';
 import typescript from "@rollup/plugin-typescript";
 import json from "@rollup/plugin-json";
 import babel from "@rollup/plugin-babel";
@@ -7,9 +9,23 @@ import copy from "rollup-plugin-copy";
 import replace from "@rollup/plugin-replace";
 import terser from "@rollup/plugin-terser";
 import postcss from "rollup-plugin-postcss";
-import path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
 const isWatching = process.env.ROLLUP_WATCH;
 
+/**
+ * @type {{
+*   peerDependencies: Record<string, string>;
+*   dependencies: Record<string, string>;
+*   exports: { ".": { "import": string, "require": string }}
+* }}
+*/
+const { peerDependencies, dependencies, exports } = JSON.parse(
+   fs.readFileSync('./package.json', { encoding: 'utf-8' }),
+);
+
+const external = [...Object.keys(peerDependencies ?? {}), ...Object.keys(dependencies ?? {})];
+/** @type { Array<import('rollup').RollupOptions> } */
 export default [
   {
     input: "src/index.ts",
@@ -26,6 +42,25 @@ export default [
     output: [
       { file: "lib/index.js", format: "cjs" },
       { file: "lib/index.mjs", format: "es" },
+    ],
+  },
+  {
+    input: "src/index.ts",
+    plugins: [
+      dts({
+        respectExternal: true,
+        tsconfig: './tsconfig.json',
+        compilerOptions: {
+          // see https://github.com/unjs/unbuild/pull/57/files
+          preserveSymlinks: false,
+          skipLibCheck: true,
+        } ,
+      }),
+    ],
+    external,
+    output: [
+      { file: "./lib/index.d.ts" },
+      { file: "./lib/index.d.mts" },
     ],
   },
   {
