@@ -1,5 +1,9 @@
 {
   "extends": "./tsconfig.build.json",
+  "compilerOptions": {
+    "declaration": false,
+    "noEmit": true
+  },
   "exclude": [
     "src/react-app",
   ], 

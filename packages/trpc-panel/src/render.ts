@@ -1,5 +1,5 @@
 import { Router } from "@trpc/server";
-import fs from "fs";
+import * as fs from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname } from "node:path";
 import {
