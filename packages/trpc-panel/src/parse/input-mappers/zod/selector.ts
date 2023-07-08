@@ -6,6 +6,7 @@ import {
   ZodDefaultDef,
   ZodEffectsDef,
   ZodEnumDef,
+  ZodNativeEnumDef,
   ZodFirstPartyTypeKind,
   ZodLiteralDef,
   ZodNullableDef,
@@ -28,6 +29,7 @@ import {
   ZodDiscriminatedUnionDefUnversioned,
 } from "./parsers/parseZodDiscriminatedUnionDef";
 import { parseZodEnumDef } from "./parsers/parseZodEnumDef";
+import { parseZodNativeEnumDef } from "./parsers/parseZodNativeEnumDef";
 import { parseZodLiteralDef } from "./parsers/parseZodLiteralDef";
 import { parseZodNumberDef } from "./parsers/parseZodNumberDef";
 import { parseZodObjectDef } from "./parsers/parseZodObjectDef";
@@ -63,6 +65,8 @@ export const zodSelectorFunction: ParserSelectorFunction<ZodDefWithType> = (
       );
     case ZodFirstPartyTypeKind.ZodEnum:
       return parseZodEnumDef(def as ZodEnumDef, references);
+    case ZodFirstPartyTypeKind.ZodNativeEnum:
+      return parseZodNativeEnumDef(def as ZodNativeEnumDef, references);
     case ZodFirstPartyTypeKind.ZodLiteral:
       return parseZodLiteralDef(def as ZodLiteralDef, references);
     case ZodFirstPartyTypeKind.ZodNumber:

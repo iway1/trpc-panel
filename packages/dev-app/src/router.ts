@@ -51,6 +51,11 @@ export const appRouter = createTRPCRouter({
       .query(() => {
         return "It's an input";
       }),
+    nativeEnumInput: procedure
+    .input(z.object({ aEnumInput: z.nativeEnum({ONE: "one", TWO: "two"}) }))
+    .query(() => {
+      return "It's an input";
+    }),
     stringArrayInput: procedure
       .input(z.object({ aStringArray: z.string().array() }))
       .query(() => {
