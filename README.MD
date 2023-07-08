@@ -151,6 +151,7 @@ The following are supported
 - Effects
 - Enum
 - Literal
+- NativeEnum
 - Nullable
 - Null
 - Nullish
