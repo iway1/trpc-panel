@@ -56,7 +56,7 @@ function DocumentationSubsection({
 }) {
   return (
     <div className="flex flex-col space-y-2">
-      <FormLabel>{title}</FormLabel>ƒ
+      <FormLabel>{title}</FormLabel>
       <span className="text-sm text-gray-500">{children}</span>
     </div>
   );
