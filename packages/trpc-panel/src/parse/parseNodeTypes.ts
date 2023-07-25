@@ -33,6 +33,11 @@ export type DiscriminatedUnionNode = {
   discriminatorName: string;
 } & SharedInputNodeProperties;
 
+export type UnionNode = {
+  type: "union";
+  values: LiteralNode[];
+} & SharedInputNodeProperties;
+
 /**
  * Any time you just want the front end to send back a value use this
  */
@@ -58,6 +63,7 @@ export type ParsedInputNode =
   | ObjectNode
   | EnumNode
   | DiscriminatedUnionNode
+  | UnionNode
   | LiteralNode
   | StringNode
   | NumberNode

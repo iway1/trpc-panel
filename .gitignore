@@ -46,3 +46,7 @@ testem.log
 Thumbs.db
 
 stats.html
+
+# Nix
+/.direnv/
+/.envrc

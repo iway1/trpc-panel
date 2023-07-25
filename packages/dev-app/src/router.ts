@@ -90,6 +90,15 @@ export const appRouter = createTRPCRouter({
       .query(() => {
         return "It's an input";
       }),
+    unionInput: procedure
+      .input(
+        z.object({
+          aUnion: z.union([z.literal("one"), z.literal(2)]),
+        })
+      )
+      .query(({ input }) => {
+        return input;
+      }),
     emailTextInput: procedure
       .input(
         z.object({
@@ -175,7 +184,7 @@ export const appRouter = createTRPCRouter({
         optionalEnum: z.enum(["Three", "Four"]).optional(),
         stringArray: z.string().array(),
         boolean: z.boolean(),
-        union: z.discriminatedUnion("disc", [
+        discriminatedUnion: z.discriminatedUnion("disc", [
           z.object({
             disc: z.literal("one"),
             oneProp: z.string(),
@@ -185,6 +194,7 @@ export const appRouter = createTRPCRouter({
             twoProp: z.enum(["one", "two"]),
           }),
         ]),
+        union: z.union([z.literal("one"), z.literal(2)]),
       })
     )
     .query(() => ({ goodJob: "yougotthedata" })),

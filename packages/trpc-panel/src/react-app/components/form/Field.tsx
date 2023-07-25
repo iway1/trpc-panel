@@ -10,6 +10,7 @@ import { LiteralField } from "./fields/LiteralField";
 import { NumberField } from "./fields/NumberField";
 import { ObjectField } from "./fields/ObjectField";
 import { TextField } from "./fields/TextField";
+import { UnionField } from "./fields/UnionField";
 
 export function Field({
   inputNode,
@@ -71,6 +72,15 @@ export function Field({
     case "discriminated-union":
       return (
         <DiscriminatedUnionField
+          name={path}
+          label={label}
+          control={control}
+          node={inputNode}
+        />
+      );
+    case "union":
+      return (
+        <UnionField
           name={path}
           label={label}
           control={control}
