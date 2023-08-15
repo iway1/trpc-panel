@@ -42,7 +42,7 @@ app.use("/panel", (_, res) => {
 
 `trpc-panel` just renders as a string, so it can be used with any backend.
 
-## NextJS / create-t3-app example
+## NextJS pages router / create-t3-app example
 
 In Nextjs you'd want to create an api route somewhere like `src/pages/api/panel.ts` and send a text response:
 
@@ -59,6 +59,31 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
     })
   );
 }
+```
+
+Then we can visit the url `http://localhost:3000/api/panel` to use the panel. Here we do `transformer: "superjson"` assuming we have `superjson` set as the transformer in tRPC (which create-t3-app does by default).
+
+## NextJS app router / create-t3-app example
+
+In Nextjs you'd want to create an api route somewhere like `src/app/api/panel/route.ts` and send a text response:
+
+```ts
+import { renderTrpcPanel } from "trpc-panel";
+import { appRouter } from "../../server/api/root";
+
+async function handler() {
+  return new Response(
+    renderTrpcPanel(appRouter, {
+      url: "http://localhost:3000/api/trpc",
+      transformer: "superjson",
+    }),
+    {
+      headers: {'Content-Type': 'text/html'}
+    }
+  );
+}
+
+export const { POST: handler, GET: handler }
 ```
 
 Then we can visit the url `http://localhost:3000/api/panel` to use the panel. Here we do `transformer: "superjson"` assuming we have `superjson` set as the transformer in tRPC (which create-t3-app does by default).
