@@ -3,6 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { RootComponent } from "./Root";
 import "./index.css";
+import 'jsoneditor/dist/jsoneditor.css';
 import { RenderOptions } from "@src/render";
 import { trpc } from "@src/react-app/trpc";
 

@@ -24,8 +24,8 @@ export default [
       // commonjs(),
     ],
     output: [
-      { file: "lib/index.js", format: "cjs" },
-      { file: "lib/index.mjs", format: "es" },
+      { file: "lib/index.js", format: "cjs", inlineDynamicImports: true },
+      { file: "lib/index.mjs", format: "es", inlineDynamicImports: true },
     ],
   },
   {
@@ -35,6 +35,7 @@ export default [
       format: "umd",
       sourcemap: true,
       name: "trpc-panel",
+      inlineDynamicImports: true,
     },
     plugins: [
       postcss({
