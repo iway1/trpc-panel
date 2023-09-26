@@ -26,7 +26,7 @@ export function RouterContainer({
     >
       <div
         className={
-          "space-y-3" + (!isRoot ? `border-l-grey-400 space-y-1 p-1` : "")
+          "space-y-3" + (!isRoot ? `border-l-grey-400 space-y-1 py-1 px-4` : "")
         }
       >
         {Object.entries(router.children).map(
