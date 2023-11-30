@@ -68,6 +68,7 @@ function nodeAndInputSchemaFromInputs(
       schema: zodToJsonSchema(emptyZodObject, {
         errorMessages: true,
         $refStrategy: "none",
+        ...options.zodToJsonSchema,
       }),
       node: inputParserMap["zod"](emptyZodObject, {
         path: [],
@@ -90,6 +91,7 @@ function nodeAndInputSchemaFromInputs(
     schema: zodToJsonSchema(input as any, {
       errorMessages: true,
       $refStrategy: "none",
+      ...options.zodToJsonSchema,
     }), //
     node: zodSelectorFunction((input as any)._def, {
       path: [],

@@ -4,6 +4,7 @@ import { Router as TRPCRouter } from "@trpc/server";
 import { zodToJsonSchema } from "zod-to-json-schema";
 import { logParseError } from "./parseErrorLogs";
 import { ParsedProcedure, parseProcedure } from "./parseProcedure";
+import type { Options as ZodToJsonSchemaOptions } from "zod-to-json-schema/src/Options";
 
 export type JSON7SchemaType = ReturnType<typeof zodToJsonSchema>;
 
@@ -64,6 +65,7 @@ function parseRouter(
 export type TrpcPanelExtraOptions = {
   logFailedProcedureParse?: boolean;
   transformer?: "superjson";
+  zodToJsonSchema?: Partial<Pick<ZodToJsonSchemaOptions, "$refStrategy">>;
 };
 
 export function parseRouterWithOptions(
