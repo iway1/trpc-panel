@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "test:panel": "yarn && npx nx test --project trpc-panel",
-    "build:panel": "yarn && npx nx build --project trpc-panel",
+    "test:panel": "yarn && npx nx test --project @joekarow/trpc-panel",
+    "build:panel": "yarn && npx nx build --project @joekarow/trpc-panel",
     "build:test-app": "yarn && npx nx build --project test-trpc-panel",
     "build:docs": "yarn && npx nx build --project docs",
     "cpy:readme": "cp README.MD packages/trpc-panel/README.md",
