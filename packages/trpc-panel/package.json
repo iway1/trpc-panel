@@ -72,10 +72,10 @@
   },
   "exports": {
     ".": {
-      "default": "./lib/index.js",
+      "types": "./lib/src/index.d.ts",
       "import": "./lib/index.mjs",
       "require": "./lib/index.js",
-      "types": "./lib/src/index.d.ts"
+      "default": "./lib/index.js"
     }
   },
   "files": [
