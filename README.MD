@@ -1,3 +1,8 @@
+> [!CAUTION]
+> **This project is no longer maintained and should not be used.**
+>
+> This repository has been archived. `trpc-panel` will not receive bug fixes, security patches, or updates, and issues and pull requests are no longer accepted.
+
 # tRPC.panel()
 
 Probably the easiest and cheapest way to build a testing UI and documentation for your tRPC endpoints. tRPC panel automatically generates a UI for manually testing your tRPC backend with 0 overhead:
